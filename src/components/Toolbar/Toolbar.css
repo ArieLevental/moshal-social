@@ -1,0 +1,11 @@
+.toolbar {
+  border: 2px solid red;
+  font-style: italic;
+  display: flex;
+  justify-content: space-between;
+  height: 12vh;
+}
+
+.toolbar-logo-img {
+  padding: 10px;
+}

@@ -1,0 +1,13 @@
+.footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border : 2px solid blue;
+    height: 8vh;
+}
+
+.footer-item{
+    border: 2px solid brown;
+    margin: 0 40px;
+    cursor: pointer;
+}

@@ -1,0 +1,15 @@
+.icons {
+  border: 2px solid purple;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+    width: 25px;
+    height: 25px;
+    padding: 5px;
+    border: 2px solid black;
+    margin: 3px;
+    cursor: pointer;
+}
