@@ -8,13 +8,13 @@ import { getDatabase, ref, onValue } from "firebase/database";
 import db from "../../../../config/firebase"
 
 
-// const users = ref(db, "users/");
-// onValue(users, (snapshot) => {
-//   const data = snapshot.val();
-//   console.log(data);
-// }, (error) => {
-//   console.error("Error fetching data from Firebase:", error);
-// });
+const users = ref(db, "users/");
+onValue(users, (snapshot) => {
+  const data = snapshot.val();
+  console.log(data);
+}, (error) => {
+  console.error("Error fetching data from Firebase:", error);
+});
 
 function DataBaseContainer(props) {
   const [data, setData] = useState(null);
