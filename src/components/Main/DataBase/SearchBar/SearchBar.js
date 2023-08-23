@@ -22,7 +22,7 @@ function SearchBar(props) {
       </button>
 
       <div className="filter-zone">
-        <label for="company" className="dropdown-label">Company:</label>
+        <label htmlFor="company" className="dropdown-label">Company:</label>
         <select className="dropdown-menu company" id="company">
           <option value="volvo">Intel</option>
           <option value="saab">Microsoft</option>
@@ -30,7 +30,7 @@ function SearchBar(props) {
           <option value="audi">Tnuva</option>
         </select>
 
-        <label for="uni" className="dropdown-label"> Uni: </label>
+        <label htmlFor="uni" className="dropdown-label"> Uni: </label>
         <select className="dropdown-menu uni" id="uni">
           <option value="volvo">HUJI</option>
           <option value="saab">TAU</option>
