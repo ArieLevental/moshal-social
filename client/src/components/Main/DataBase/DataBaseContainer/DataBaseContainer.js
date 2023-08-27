@@ -4,18 +4,6 @@ import { useState, useEffect } from "react";
 import "./DataBaseContainer.css";
 import UserCard from "../UserCard/UserCard";
 
-import { getDatabase, ref, onValue } from "firebase/database";
-import db from "../../../../config/firebase"
-
-
-const users = ref(db, "users/");
-onValue(users, (snapshot) => {
-  const data = snapshot.val();
-  console.log(data);
-}, (error) => {
-  console.error("Error fetching data from Firebase:", error);
-});
-
 function DataBaseContainer(props) {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
