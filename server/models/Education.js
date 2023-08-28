@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+import mongoose  from "mongoose";
+
 
 const educationSchema = mongoose.Schema(
   {
@@ -13,12 +14,12 @@ const educationSchema = mongoose.Schema(
     startYear: {
       type: Number,
       min: 1990,
-      max: new Date().getFullYear(),
+      max: new Date().getFullYear() + 1,
     },
     endYear: {
       type: Number,
       min: [1990, "endYear must be greater than or equal to 1990."],
-      max: [new Date().getFullYear(), "endYear cannot be in the future."],
+      max: new Date().getFullYear() + 10,
     },
     degree: {
       type: String,
