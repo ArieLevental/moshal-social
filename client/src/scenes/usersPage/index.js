@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import "./index.css";
 import DataBaseContainer from "./DataBaseContainer/DataBaseContainer";
-import SearchBar from "./SearchBar/SearchBar";
+import Searchbar from "./Searchbar/Searchbar";
 
 function UsersPage() {
   const [usersData, setUsersData] = useState(null);
@@ -19,8 +19,8 @@ function UsersPage() {
 
   return (
     <div className="database">
-      <h1>Users</h1>
-      <SearchBar usersData={usersData} setPresentedData={setPresentedData} />
+      <h1>Users database</h1>
+      <Searchbar usersData={usersData} setPresentedData={setPresentedData} />
       <DataBaseContainer presentedData={presentedData} />
     </div>
   );

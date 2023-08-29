@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
 
 import Toolbar from "./components/Toolbar/Toolbar";
 import Footer from "./components/Footer/Footer";
@@ -13,12 +14,16 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Toolbar />
-        <Sidebar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/users" element={<UsersPage />} />
-          <Route path="/user/:userId" element={<ProfilePage />} />
-        </Routes>
+        <div className="main">
+          <Sidebar className="sidebar" />
+          <div className="main-content">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/users" element={<UsersPage />} />
+              <Route path="/user/:userId" element={<ProfilePage />} />
+            </Routes>
+          </div>
+        </div>
         <Footer />
       </BrowserRouter>
     </div>

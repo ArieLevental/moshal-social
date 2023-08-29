@@ -6,7 +6,7 @@ const Sidebar = (props) => {
   };
 
   return (
-    <div>
+    <div className="sidebar">
       <div
         className="sidebar-item"
         onClick={() => {
