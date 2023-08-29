@@ -11,7 +11,8 @@ import { fileURLToPath } from "url";
 // import bcrypt from "bcrypt";
 // import jwt from "jsonwebtoken";
 
-import userRouter from "./routes/users.js";
+import userRouter from "./routes/user.js";
+import usersRouter from "./routes/users.js";
 // ...
 
 import User from "./models/User.js";
@@ -39,6 +40,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", userRouter);
+
+app.use("/users", usersRouter);
 
 // MONGOOSE SETUP
 const PORT = process.env.PORT || 6001;

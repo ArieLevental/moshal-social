@@ -2,10 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-
 import "./index.css";
-
-// import { genericUserImg } from "../../../public/assets/genericUser.png";
 
 const ProfilePage = () => {
   const { userId } = useParams();
