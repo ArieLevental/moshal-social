@@ -13,7 +13,11 @@ function UserCard(props) {
       />
       <div className="user-details">
         <div className="user-detail">{props.userData?.email}</div>
-        <div className="user-detail">{props.userData?.moshalStatus}</div>
+        <div className="user-detail">
+          <a href={`https://wa.me/+972${props.userData?.phoneNumber?.slice(1)}`} target="_blank">
+            whatsApp with Me
+          </a>
+        </div>
       </div>
     </div>
   );

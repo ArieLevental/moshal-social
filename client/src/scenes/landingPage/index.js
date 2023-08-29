@@ -13,6 +13,7 @@ const LandingPage = () => {
     firstName: "",
     lastName: "",
     email: "",
+    phoneNumber: "",
     password: "",
     passwordConfirmation: "",
   });
