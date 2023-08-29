@@ -45,12 +45,12 @@ export const Register = (props) => {
     ) {
       alert("Passwords are different!");
     }
-    await fetch("http://localhost:3001/register", {
+    await fetch("http://localhost:3001/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(event.target.values),
+      body: JSON.stringify(props.formData),
     })
       .then((res) =>
         res.status === 201 ? props.setActiveForm("login") : res.json()

@@ -1,4 +1,4 @@
-import "./Searchbar.css";
+import "./SearchBar.css";
 
 function Searchbar(props) {
   const searchUpdateHandler = (event) => {

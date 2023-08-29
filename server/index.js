@@ -13,6 +13,7 @@ import { fileURLToPath } from "url";
 
 import userRouter from "./routes/user.js";
 import usersRouter from "./routes/users.js";
+import authRouter from  "./routes/auth.js"
 // ...
 
 import User from "./models/User.js";
@@ -42,6 +43,8 @@ app.get("/", (req, res) => {
 app.use("/user", userRouter);
 
 app.use("/users", usersRouter);
+
+app.use("/auth", authRouter);
 
 // MONGOOSE SETUP
 const PORT = process.env.PORT || 6001;
