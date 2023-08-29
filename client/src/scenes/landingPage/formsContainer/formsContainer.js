@@ -100,6 +100,19 @@ export const Register = (props) => {
             });
           }}
         />
+                <br />
+        <label htmlFor="phoneNumber">phone Number:</label>
+        <input
+          type="phone"
+          id="phoneNumber"
+          name="phoneNumber"
+          onChange={(e) => {
+            props.setFormData({
+              ...props.formData,
+              [e.target.name]: e.target.value,
+            });
+          }}
+        />
         <br />
         <label htmlFor="password">Password:</label>
         <input
