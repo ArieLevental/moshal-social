@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
@@ -8,6 +9,9 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import HomePage from "./scenes/homePage/index";
 import UsersPage from "./scenes/usersPage/index";
 import ProfilePage from "./scenes/profilePage/index";
+import LandingPage from "./scenes/landingPage";
+
+
 
 function App() {
   return (
@@ -15,10 +19,14 @@ function App() {
       <BrowserRouter>
         <Toolbar />
         <div className="main">
-          <Sidebar className="sidebar" />
+          {/* Temp handle no sidebar in landing page */}
+          {/* {window.location.pathname + window.location.search != "/" && ( */}
+            <Sidebar className="sidebar" />
+          {/* )} */}
           <div className="main-content">
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/home" element={<HomePage />} />
               <Route path="/users" element={<UsersPage />} />
               <Route path="/user/:userId" element={<ProfilePage />} />
             </Routes>

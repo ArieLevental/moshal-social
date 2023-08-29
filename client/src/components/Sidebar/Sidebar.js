@@ -1,4 +1,5 @@
 import "./Sidebar.css";
+import { Link } from "react-router-dom";
 
 const Sidebar = (props) => {
   const changeMode = (modeId) => {
@@ -7,30 +8,15 @@ const Sidebar = (props) => {
 
   return (
     <div className="sidebar">
-      <div
-        className="sidebar-item"
-        onClick={() => {
-          changeMode(1);
-        }}
-      >
-        Homepage
-      </div>
-      <div
-        className="sidebar-item"
-        onClick={() => {
-          changeMode(2);
-        }}
-      >
+      <Link to="/" className="sidebar-item">
+        Home
+      </Link>
+      <Link to="/users" className="sidebar-item">
         Users database
-      </div>
-      <div
-        className="sidebar-item"
-        onClick={() => {
-          changeMode(3);
-        }}
-      >
+      </Link>
+      <Link to="/404notFound" className="sidebar-item">
         Job sharing
-      </div>
+      </Link>
     </div>
   );
 };
