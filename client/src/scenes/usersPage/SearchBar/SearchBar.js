@@ -1,9 +1,23 @@
-import { useState } from "react";
 import "./SearchBar.css";
 
 function SearchBar(props) {
-  const performRandomSearch = () => {
-    return;
+  const searchUpdateHandler = (event) => {
+    const value = event.target.value.toLowerCase();
+
+    props.setPresentedData(
+      props.usersData.filter((user) => {
+        return (
+          user.firstName.toLowerCase().includes(value) ||
+          user.lastName.toLowerCase().includes(value)
+        );
+      })
+    );
+  };
+
+  const randomMoshalnikHandler = (event) => {
+    props.setPresentedData(
+      Array(props.usersData[Math.floor(Math.random() * props.usersData.length)])
+    );
   };
 
   return (
@@ -12,17 +26,19 @@ function SearchBar(props) {
         className="input-placeholder"
         type="search"
         placeholder="Search user"
-        onChange={(event) => props.setPresentedData(event.target.value)}
+        onChange={searchUpdateHandler} // TODO: CHECK IF GOOD PRACTICE
       />
       <button
         className="search-button random-search-button"
-        onClick={performRandomSearch}
+        onClick={randomMoshalnikHandler} // TODO: CHECK IF GOOD PRACTICE
       >
         Random Moshalnik
       </button>
 
       <div className="filter-zone">
-        <label htmlFor="company" className="dropdown-label">Company:</label>
+        <label htmlFor="company" className="dropdown-label">
+          Company:
+        </label>
         <select className="dropdown-menu company" id="company">
           <option value="volvo">Intel</option>
           <option value="saab">Microsoft</option>
@@ -30,7 +46,10 @@ function SearchBar(props) {
           <option value="audi">Tnuva</option>
         </select>
 
-        <label htmlFor="uni" className="dropdown-label"> Uni: </label>
+        <label htmlFor="uni" className="dropdown-label">
+          {" "}
+          Uni:{" "}
+        </label>
         <select className="dropdown-menu uni" id="uni">
           <option value="volvo">HUJI</option>
           <option value="saab">TAU</option>

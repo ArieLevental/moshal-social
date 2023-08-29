@@ -1,27 +1,12 @@
-import React from "react";
 import { useState, useEffect } from "react";
 
-import "./DataBaseContainer.css";
 import UserCard from "../UserCard/UserCard";
+import "./DataBaseContainer.css";
 
 function DataBaseContainer(props) {
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    fetch(`http://localhost:3001/users`)
-      .then((res) => res.json())
-      .then((jsonData) => {
-        setData(jsonData);
-        setIsLoading(false);
-      });
-  }, [props?.presentedData]);
-
   return (
     <div className="database-container">
-      {/* Only shows 8 users */}
-      {isLoading && <h1 className="DELETE-ME-AND-REPLACE">LOADING</h1>}
-      {data && data.map((user) => <UserCard key={user?._id} userData={user} />)}
+      {props.presentedData && props.presentedData.map((user) => <UserCard key={user?._id} userData={user} />)}
     </div>
   );
 }
