@@ -40,6 +40,7 @@ function Searchbar(props) {
           Company:
         </label>
         <select className="dropdown-menu company" id="company">
+          <option value="none" selected />
           <option value="volvo">Intel</option>
           <option value="saab">Microsoft</option>
           <option value="mercedes">Lightricks</option>
@@ -47,10 +48,10 @@ function Searchbar(props) {
         </select>
 
         <label htmlFor="uni" className="dropdown-label">
-          {" "}
-          Uni:{" "}
+          Uni:
         </label>
-        <select className="dropdown-menu uni" id="uni">
+        <select className="dropdown-menu uni" id="uni" onChange={() => console.log("test")}>
+          <option value="none" selected />
           <option value="volvo">HUJI</option>
           <option value="saab">TAU</option>
           <option value="mercedes">Technion</option>
