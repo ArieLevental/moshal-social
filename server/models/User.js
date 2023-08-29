@@ -51,7 +51,6 @@ const userSchema = new mongoose.Schema(
     },
     linkedIn: {
       type: String,
-      unique: true,
     },
     moshalStatus: {
       type: String,

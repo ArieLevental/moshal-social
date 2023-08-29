@@ -9,7 +9,7 @@ function DataBaseContainer(props) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://dummyjson.com/users/search?q=${props.presentedData}`)
+    fetch(`http://localhost:3001/users`)
       .then((res) => res.json())
       .then((jsonData) => {
         setData(jsonData);
@@ -21,8 +21,7 @@ function DataBaseContainer(props) {
     <div className="database-container">
       {/* Only shows 8 users */}
       {isLoading && <h1 className="DELETE-ME-AND-REPLACE">LOADING</h1>}
-      {data &&
-        data.users.slice(0, 8).map((user) => <UserCard key={user.id} userData={user} />)}
+      {data && data.map((user) => <UserCard key={user?._id} userData={user} />)}
     </div>
   );
 }
