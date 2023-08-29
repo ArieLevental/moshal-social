@@ -1,7 +1,7 @@
 import { Footer } from "./components/Footer/Footer";
 import { Toolbar } from "./components/Toolbar/Toolbar";
-import { Main } from "./components/Main/Main";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Main from "./scenes/usersPage/Main";
 import ProfilePage from "./scenes/profilePage";
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
       <BrowserRouter>
         <Toolbar />
         <Routes>
-          <Route path="/" element={<Main />} />
+          <Route path="/" element={""} />
           <Route path="/users" element={<Main />} />
           <Route path="/user/:userId" element={<ProfilePage />} />
         </Routes>
