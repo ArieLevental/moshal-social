@@ -1,6 +1,6 @@
-import "./SearchBar.css";
+import "./Searchbar.css";
 
-function SearchBar(props) {
+function Searchbar(props) {
   const searchUpdateHandler = (event) => {
     const value = event.target.value.toLowerCase();
 
@@ -61,4 +61,4 @@ function SearchBar(props) {
   );
 }
 
-export default SearchBar;
+export default Searchbar;

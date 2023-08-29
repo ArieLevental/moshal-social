@@ -11,8 +11,9 @@ function UserCard(props) {
         src={props.userData?.picturePath || "/assets/genericUser.png"}
         alt={`${props.userData.firstName} ${props.userData.lastName}`}
       />
-      <div className="user-card-company">
-        {`${props.userData?.email} (${props.userData?.moshalStatus}) ${props.userData?.bio}`}
+      <div className="user-details">
+        <div className="user-detail">{props.userData?.email}</div>
+        <div className="user-detail">{props.userData?.moshalStatus}</div>
       </div>
     </div>
   );
