@@ -1,9 +1,40 @@
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { authContext } from "..";
+import { globalContext } from "../../../App";
+
 {
   /* LOGIN FORM*/
 }
 export const Login = (props) => {
-  const handleSubmit = (event) => {
+  const [INITIAL_FORMDATA, setActiveForm, formData, setFormData] =
+    useContext(authContext);
+  const [email, setEmail, token, setToken] = useContext(globalContext);
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    await fetch("http://localhost:3001/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(async (res) => {
+        const resJson = await res.json();
+        const handleSuccess = () => {
+          console.log(resJson);
+          setToken(resJson.token);
+          setEmail(resJson.user.email);
+          console.log(globalContext);
+          setFormData(INITIAL_FORMDATA);
+          navigate("/home");
+        };
+
+        return res.status === 200 ? handleSuccess() : resJson;
+      })
+      .then((resJson) => console.log(resJson));
   };
 
   return (
@@ -11,23 +42,41 @@ export const Login = (props) => {
       <h1>Log In</h1>
       <form onSubmit={(e) => handleSubmit(e)}>
         <label htmlFor="email">Email:</label>
-        <input type="email" id="email" name="email" />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          onChange={(e) => {
+            setFormData({
+              ...formData,
+              [e.target.name]: e.target.value,
+            });
+          }}
+        />
         <br />
         <label htmlFor="password">Password:</label>
-        <input type="password" id="password" name="password" />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          onChange={(e) => {
+            setFormData({
+              ...formData,
+              [e.target.name]: e.target.value,
+            });
+          }}
+        />
         <br />
         <input type="submit" value="Log in" />
       </form>
       <p
         onClick={(e) => {
-          props.setActiveForm("register");
+          setActiveForm("register");
         }}
       >
         Don't have an account? Sign up here!
       </p>
-      <p onClick={(e) => props.setActiveForm("recovery")}>
-        I forgot my password
-      </p>
+      <p onClick={(e) => setActiveForm("recovery")}>I forgot my password</p>
     </div>
   );
 };
@@ -36,6 +85,8 @@ export const Login = (props) => {
   /* REGISTER FORM*/
 }
 export const Register = (props) => {
+  const [INITIAL_FORMDATA, setActiveForm, formData, setFormData] =
+    useContext(authContext);
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -50,11 +101,12 @@ export const Register = (props) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(props.formData),
+      body: JSON.stringify(formData),
     })
-      .then((res) =>
-        res.status === 201 ? props.setActiveForm("login") : res.json()
-      )
+      .then((res) => {
+        setFormData(INITIAL_FORMDATA);
+        return res.status === 201 ? setActiveForm("login") : res.json();
+      })
       .then((resJson) => console.log(resJson));
   };
 
@@ -68,8 +120,8 @@ export const Register = (props) => {
           id="firstName"
           name="firstName"
           onChange={(e) => {
-            props.setFormData({
-              ...props.formData,
+            setFormData({
+              ...formData,
               [e.target.name]: e.target.value,
             });
           }}
@@ -81,8 +133,8 @@ export const Register = (props) => {
           id="lastName"
           name="lastName"
           onChange={(e) => {
-            props.setFormData({
-              ...props.formData,
+            setFormData({
+              ...formData,
               [e.target.name]: e.target.value,
             });
           }}
@@ -94,21 +146,21 @@ export const Register = (props) => {
           id="email"
           name="email"
           onChange={(e) => {
-            props.setFormData({
-              ...props.formData,
+            setFormData({
+              ...formData,
               [e.target.name]: e.target.value,
             });
           }}
         />
-                <br />
+        <br />
         <label htmlFor="phoneNumber">phone Number:</label>
         <input
           type="phone"
           id="phoneNumber"
           name="phoneNumber"
           onChange={(e) => {
-            props.setFormData({
-              ...props.formData,
+            setFormData({
+              ...formData,
               [e.target.name]: e.target.value,
             });
           }}
@@ -120,8 +172,8 @@ export const Register = (props) => {
           id="password"
           name="password"
           onChange={(e) => {
-            props.setFormData({
-              ...props.formData,
+            setFormData({
+              ...formData,
               [e.target.name]: e.target.value,
             });
           }}
@@ -133,8 +185,8 @@ export const Register = (props) => {
           id="passwordConfirmation"
           name="passwordConfirmation"
           onChange={(e) => {
-            props.setFormData({
-              ...props.formData,
+            setFormData({
+              ...formData,
               [e.target.name]: e.target.value,
             });
           }}
@@ -144,14 +196,12 @@ export const Register = (props) => {
       </form>
       <p
         onClick={(e) => {
-          props.setActiveForm("login");
+          setActiveForm("login");
         }}
       >
         Already have an account? Login here!
       </p>
-      <p onClick={(e) => props.setActiveForm("recovery")}>
-        I forgot my password
-      </p>
+      <p onClick={(e) => setActiveForm("recovery")}>I forgot my password</p>
     </div>
   );
 };
@@ -160,6 +210,8 @@ export const Register = (props) => {
   /* PASSWORD RECOVERY FORM*/
 }
 export const PasswordRecovery = (props) => {
+  const [INITIAL_FORMDATA, setActiveForm, formData, setFormData] =
+    useContext(authContext);
   const handleSubmit = (event) => {
     alert("RECOVERY submitted: " + event.target.email.value);
     event.preventDefault();
@@ -175,14 +227,14 @@ export const PasswordRecovery = (props) => {
       </form>
       <p
         onClick={(e) => {
-          props.setActiveForm("login");
+          setActiveForm("login");
         }}
       >
         Already have an account? Log in here!
       </p>
       <p
         onClick={(e) => {
-          props.setActiveForm("register");
+          setActiveForm("register");
         }}
       >
         Don't have an account? Sign up here!
