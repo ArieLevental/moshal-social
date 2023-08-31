@@ -39,8 +39,8 @@ function Searchbar(props) {
         <label htmlFor="company" className="dropdown-label">
           Company:
         </label>
-        <select className="dropdown-menu company" id="company">
-          <option value="none" selected />
+        <select className="dropdown-menu company" id="company" defaultValue="none">
+          <option value="none" />
           <option value="volvo">Intel</option>
           <option value="saab">Microsoft</option>
           <option value="mercedes">Lightricks</option>
@@ -50,8 +50,8 @@ function Searchbar(props) {
         <label htmlFor="uni" className="dropdown-label">
           Uni:
         </label>
-        <select className="dropdown-menu uni" id="uni" onChange={() => console.log("test")}>
-          <option value="none" selected />
+        <select className="dropdown-menu uni" id="uni" onChange={() => console.log("test")} defaultValue="none">
+          <option value="none" />
           <option value="volvo">HUJI</option>
           <option value="saab">TAU</option>
           <option value="mercedes">Technion</option>
