@@ -2,12 +2,20 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
+export const logout = async (req, res) => {
+  try {
+    res.clearCookie("token");
+    res.status(200).json({ message: "Logout successful" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email: email });
-    
 
     if (!user) return res.status(400).json({ msg: "User does not exist. " });
 
@@ -17,8 +25,8 @@ export const login = async (req, res) => {
     }
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    user.password = undefined;
     delete user.password; //TODO: FIX SOMETHING SO IT WONT STAY
-
     res.status(200).json({ token, user });
   } catch (err) {
     res.status(500).json({ error: err.message });

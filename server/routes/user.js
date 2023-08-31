@@ -7,9 +7,9 @@ import upload from "../middleware/storage.js";
 
 userRouter
   .route("/:id")
-  .get(getUser) // NEED IN ALL - VERYIFY TOKEN
-  .patch(updateUser)
-  .post(upload.single("userImage"), (req, res) => {
+  .get(verifyToken, getUser) // NEED IN ALL - VERYIFY TOKEN
+  .patch(verifyToken, updateUser)
+  .post(verifyToken, upload.single("userImage"), (req, res) => {
     res.send("nice");
   });
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 
 import Toolbar from "./components/Toolbar/Toolbar";
@@ -17,7 +17,7 @@ export const globalContext = createContext();
 function App() {
   // THIS IS THE STATES FOR THE GLOBAL STATE. EMAIL TOKEN
   const [email, setEmail] = useState("");
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(localStorage.getItem("token"));
   return (
     <div className="App">
       <globalContext.Provider value={[email, setEmail, token, setToken]}>
@@ -30,10 +30,22 @@ function App() {
             {/* )} */}
             <div className="main-content">
               <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/users" element={<UsersPage />} />
-                <Route path="/user/:userId" element={<ProfilePage />} />
+                <Route
+                  path="/"
+                  element={!token ? <LandingPage /> : <Navigate to="/home" />}
+                />
+                <Route
+                  path="/home"
+                  element={token ? <HomePage /> : <Navigate to="/" />}
+                />
+                <Route
+                  path="/users"
+                  element={token ? <UsersPage /> : <Navigate to="/" />}
+                />
+                <Route
+                  path="/user/:userId"
+                  element={token ? <ProfilePage /> : <Navigate to="/" />}
+                />
               </Routes>
             </div>
           </div>

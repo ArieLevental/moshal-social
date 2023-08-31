@@ -1,15 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import "./index.css";
 import DataBaseContainer from "./DataBaseContainer/DataBaseContainer";
 import Searchbar from "./Searchbar/Searchbar";
+import { globalContext } from "../../App";
 
 function UsersPage() {
   const [usersData, setUsersData] = useState(null);
   const [presentedData, setPresentedData] = useState(usersData);
+  const [email, setEmail, token, setToken] = useContext(globalContext);
+
+  // headers: { Authorization: `Bearer ${token}` },
 
   useEffect(() => {
-    fetch(`http://localhost:3001/users`)
+    fetch(`http://localhost:3001/users`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((res) => res.json())
       .then((jsonData) => {
         setUsersData(jsonData);

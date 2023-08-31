@@ -27,8 +27,8 @@ export const Login = (props) => {
           console.log(resJson);
           setToken(resJson.token);
           setEmail(resJson.user.email);
-          console.log(globalContext);
           setFormData(INITIAL_FORMDATA);
+          localStorage.setItem("token", resJson.token)
           navigate("/home");
         };
 

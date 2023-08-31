@@ -8,16 +8,13 @@ import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// import bcrypt from "bcrypt";
-// import jwt from "jsonwebtoken";
-
 import userRouter from "./routes/user.js";
 import usersRouter from "./routes/users.js";
-import authRouter from  "./routes/auth.js"
-// ...
+import authRouter from "./routes/auth.js";
 
-import User from "./models/User.js";
-import { users } from "./data/index.js";
+/* USED FOR ONE-TIME DATA LOAD */
+// import User from "./models/User.js";
+// import { users } from "./data/index.js";
 
 dotenv.config();
 const app = express();
@@ -32,19 +29,12 @@ app.use(cors());
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-// console.log(__dirname);
 
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
-app.get("/", (req, res) => {
-  res.send("Welcome X");
-});
-
-app.use("/user", userRouter);
-
-app.use("/users", usersRouter);
-
 app.use("/auth", authRouter);
+app.use("/user", userRouter);
+app.use("/users", usersRouter);
 
 // MONGOOSE SETUP
 const PORT = process.env.PORT || 6001;
