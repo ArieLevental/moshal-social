@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 
+// CURRENTLY NOT IN USE, FIX WHEN IMPLEMENTED IN FRONTEND
 export const getUser = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -10,6 +11,8 @@ export const getUser = async (req, res) => {
   }
 };
 
+
+// CURRENTLY NOT IN USE, FIX WHEN IMPLEMENTED IN FRONTEND
 export const updateUser = async (req, res) => {
   try {
     const userId = req.params.id;

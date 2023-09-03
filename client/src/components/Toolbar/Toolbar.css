@@ -1,11 +1,11 @@
 .toolbar {
-  border: 2px solid red;
+  background-color: rgb(194, 194, 194);
   font-style: italic;
   display: flex;
   justify-content: space-between;
   height: 12vh;
 }
 
-.toolbar-logo-img {
+.toolbar-logo {
   padding: 10px;
 }

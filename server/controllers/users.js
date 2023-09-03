@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 
+// get ALL Users from db and send to frontend
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find();

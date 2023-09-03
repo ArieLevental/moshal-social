@@ -7,15 +7,16 @@ const Sidebar = (props) => {
   };
 
   return (
-    <div className="sidebar">
+    // Routing to different pages in the app
+    <div className="main-sidebar">
       <Link to="/" className="sidebar-item">
         Home
       </Link>
       <Link to="/users" className="sidebar-item">
         Users database
       </Link>
-      <Link to="/404notFound" className="sidebar-item">
-        Job sharing
+      <Link to="/jobs" className="sidebar-item">
+        Jobs Board  
       </Link>
     </div>
   );

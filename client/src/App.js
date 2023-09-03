@@ -18,16 +18,19 @@ function App() {
   // THIS IS THE STATES FOR THE GLOBAL STATE. EMAIL TOKEN
   const [email, setEmail] = useState("");
   const [token, setToken] = useState(localStorage.getItem("token"));
+
   return (
-    <div className="App">
+    <div className="app">
       <globalContext.Provider value={[email, setEmail, token, setToken]}>
         <BrowserRouter>
           <Toolbar />
           <div className="main">
-            {/* Temp handle no sidebar in landing page */}
-            {/* {window.location.pathname + window.location.search != "/" && ( */}
-            <Sidebar className="sidebar" />
-            {/* )} */}
+            {token && (
+              <div className="main-sidebar">
+                <Sidebar />
+              </div>
+            )}
+
             <div className="main-content">
               <Routes>
                 <Route

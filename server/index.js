@@ -17,8 +17,9 @@ import authRouter from "./routes/auth.js";
 // import { users } from "./data/index.js";
 
 dotenv.config();
-const app = express();
 
+// APP CONFIG
+const app = express();
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
@@ -27,11 +28,12 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
+// ASSETS SETUP
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
+// ROUTES SETUP
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/users", usersRouter);

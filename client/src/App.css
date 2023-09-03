@@ -2,8 +2,9 @@
   display: flex;
 }
 
-.sidebar {
-  width: 20vw;
+.main-sidebar {
+  flex-grow: 15;
+  flex-basis: 15%;
 }
 
 .main-content {
@@ -11,6 +12,8 @@
   justify-self: center;
   align-items: center;
   justify-content: center;
-  width: 80vw;
   height: 80vh;
+  flex-grow: 85;
+  flex-basis: 85%;
+  background-color: tan;
 }

@@ -1,8 +1,8 @@
-.sidebar {
+.main-sidebar {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 2px solid rgb(103, 216, 165);
+  background-color: rgb(130, 130, 130);
 }
 
 .sidebar-item {
