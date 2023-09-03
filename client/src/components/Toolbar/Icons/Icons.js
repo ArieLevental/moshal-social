@@ -8,8 +8,7 @@ const Icons = (props) => {
       <FontAwesomeIcon className="icon" icon={faGear} />
       <FontAwesomeIcon className="icon" icon={faUser} />
       <FontAwesomeIcon className="icon" icon={faEnvelope} />
-      {/* If token is available in global state, render logout button */}
-      {props.token ? <FontAwesomeIcon className="icon" icon={faArrowRightFromBracket} onClick={props.handleLogout}/> : <div />}
+      <FontAwesomeIcon className="icon" icon={faArrowRightFromBracket} onClick={props.handleLogout}/>
     </div>
   );
 };

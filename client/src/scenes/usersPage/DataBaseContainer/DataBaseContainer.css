@@ -1,12 +1,14 @@
 .database-container {
-  border: 2px solid orange;
+  background-color: rgba(0, 0, 0, 0.128);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   row-gap: 10px;
   column-gap: 10px;
   flex-direction: row;
-  height: 61vh;
+  height: 62vh;
+  /* TODO */
+  /* flex-basis: 60%; */
   /* flex-grow: 1; */
   overflow-y: scroll;
 }
