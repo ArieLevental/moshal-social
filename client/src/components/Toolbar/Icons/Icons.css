@@ -3,13 +3,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 }
 
 .icon {
-  width: 25px;
+  flex-basis: auto;
   height: 25px;
   padding: 5px;
-  border: 2px solid black;
   margin: 3px;
   cursor: pointer;
 }

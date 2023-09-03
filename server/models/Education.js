@@ -1,5 +1,4 @@
-import mongoose  from "mongoose";
-
+import mongoose from "mongoose";
 
 const educationSchema = mongoose.Schema(
   {
@@ -15,16 +14,19 @@ const educationSchema = mongoose.Schema(
       type: Number,
       min: 1990,
       max: new Date().getFullYear() + 1,
+      default: 1990,
     },
     endYear: {
       type: Number,
       min: [1990, "endYear must be greater than or equal to 1990."],
       max: new Date().getFullYear() + 10,
+      default: 1990,
     },
     degree: {
       type: String,
       min: 4,
       max: 30,
+      default: "",
     },
   },
   { timestamps: true }

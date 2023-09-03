@@ -10,7 +10,8 @@
   margin: 20px 0;
 }
 
-a:link, a:visited {
+.sidebar-item:link,
+.sidebar-item:visited {
   background-color: #4e4bf5;
   color: white;
   padding: 14px 25px;
@@ -20,6 +21,7 @@ a:link, a:visited {
   border-radius: 5%;
 }
 
-a:hover, a:active {
+.sidebar-item:hover,
+.sidebar-item:active {
   background-color: rgb(77, 23, 225);
 }
