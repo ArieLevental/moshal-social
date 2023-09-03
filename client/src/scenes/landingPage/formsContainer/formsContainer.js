@@ -7,9 +7,10 @@ import { globalContext } from "../../../App";
   /* LOGIN FORM*/
 }
 export const Login = (props) => {
-  const [INITIAL_FORMDATA, setActiveForm, formData, setFormData] =
-    useContext(authContext);
+
+  const [INITIAL_FORMDATA, setActiveForm, formData, setFormData] = useContext(authContext);
   const [email, setEmail, token, setToken] = useContext(globalContext);
+  
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();

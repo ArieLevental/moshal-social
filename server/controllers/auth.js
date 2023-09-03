@@ -29,7 +29,7 @@ export const login = async (req, res) => {
 
     // generate a JWT token for the user
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "10", // Set the token to expire in 1 hour
+      expiresIn: "1d", // Set the token to expire in 1 day
     });
 
     // delete password from user JSON to be sent to frontend
