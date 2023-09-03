@@ -11,7 +11,8 @@ userRouter
   .get(verifyToken, getUser)
   .patch(verifyToken, updateUser)
   .post(verifyToken, upload.single("userImage"), (req, res) => {
-    res.send("nice");
+    console.log(req.file);
+    res.status(200).send("Image uploaded successfully");
   });
 
 export default userRouter;

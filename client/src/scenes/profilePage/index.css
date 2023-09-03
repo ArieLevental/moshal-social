@@ -2,3 +2,28 @@
   width: 100px;
   height: 100px;
 }
+
+.name-and-status {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 30vw;
+}
+
+.name {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.status {
+  border: 2px solid blue;
+  font-size: 10px;
+  width: 50px;
+  align-self: center;
+  text-align: center;
+}
+
+.active {
+  color: green;
+}

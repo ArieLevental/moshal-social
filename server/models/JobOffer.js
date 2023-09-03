@@ -1,5 +1,4 @@
-import mongoose  from "mongoose";
-
+import mongoose from "mongoose";
 
 const jobOfferSchema = mongoose.Schema(
   {
@@ -25,12 +24,15 @@ const jobOfferSchema = mongoose.Schema(
     },
     offerLink: {
       type: String,
+      default: "",
     },
     expReq: {
       type: String,
+      default: "",
     },
     referral: {
       type: String,
+      default: "",
     },
   },
   { timestamps: true }

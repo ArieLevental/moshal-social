@@ -1,4 +1,4 @@
-import mongoose  from "mongoose";
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
@@ -38,19 +38,23 @@ const userSchema = new mongoose.Schema(
       type: String,
       min: 2,
       max: 20,
+      default: "",
     },
     bio: {
       type: String,
       max: 200,
+      default: "",
     },
     phoneNumber: {
       type: String,
       min: 7,
       max: 17,
       unique: true,
+      default: "",
     },
     linkedIn: {
       type: String,
+      default: "",
     },
     moshalStatus: {
       type: String,

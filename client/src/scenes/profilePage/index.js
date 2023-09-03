@@ -1,133 +1,254 @@
-import { useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faWhatsapp, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import israelCities from "./israel_cities.json";
+
 import "./index.css";
+import { globalContext } from "../../App";
 
 const ProfilePage = () => {
   const { userId } = useParams();
   const [userData, setUserData] = useState(null);
+  const [detailsFormData, setDetailsFormData] = useState(null);
+  const [inEditMode, setInEditMode] = useState(false);
+  const [inImgMode, setInImgMode] = useState(false);
+  const [imgValue, setImgValue] = useState(null);
+  const [signedUserId, setSignedUserId, token, setToken, handleExpiredToken] =
+    useContext(globalContext);
 
   useEffect(() => {
-    fetchUserData();
-  }, []);
-
-  const fetchUserData = () => {
-    fetch(`http://localhost:3001/user/${userId}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setUserData(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
+    fetch(`http://localhost:3001/user/${userId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then(async (res) => {
+      const resJson = await res.json();
+      if (res.status === 200) {
+        setUserData(resJson);
+        setDetailsFormData({
+          location: resJson.location,
+          linkedIn: resJson.linkedIn,
+          bio: resJson.bio,
+        });
+      } else if (res.status === 401) {
+        alert("You are not authorized to view this page");
+        handleExpiredToken();
+      } else {
+        alert("Something went wrong, please try again later");
+      }
+    });
+    // TODO: this solution results api call for every "pen" click
+  }, [inEditMode]);
 
   const handleUpdate = (e) => {
     e.preventDefault();
     const updatedData = {
-      firstName: e.target.firstName.value,
-      lastName: e.target.lastName.value,
-      email: e.target.email.value,
+      location: e.target.location.value,
+      bio: e.target.bio.value,
+      moshalStatus: e.target.moshalStatus.value,
+      linkedIn: e.target.linkedIn.value,
     };
 
     fetch(`http://localhost:3001/user/${userId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(updatedData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        fetchUserData(); // Refresh user data after successful update
-      })
-      .catch((error) => {
-        console.error("Error updating data:", error);
-      });
+    }).then(async (res) => {
+      const resJson = await res.json();
+      if (res.status === 200) {
+        setInEditMode(false);
+        setUserData({ ...userData, ...resJson });
+      } else if (res.status === 401) {
+        alert("You are not authorized to view this page");
+        handleExpiredToken();
+      } else {
+        alert("Something went wrong, please try again later");
+      }
+    });
   };
 
-  const handlePictureUpdate = (e) => {
+  // Image upload handler
+  const handlePictureUpload = (e) => {
     e.preventDefault();
-    const updatedData = {
-      firstName: e.target.firstName.value,
-      lastName: e.target.lastName.value,
-      email: e.target.email.value,
-    };
-
+    const formData = new FormData(); // Create a
+    formData.append("userImage", imgValue);
     fetch(`http://localhost:3001/user/${userId}`, {
       method: "POST",
       headers: {
-        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        fetchUserData(); // Refresh user data after successful update
-      })
-      .catch((error) => {
-        console.error("Error updating data:", error);
-      });
+      body: formData,
+    }).then(async (res) => {
+      if (res.status === 200) {
+        setInImgMode(false);
+      } else if (res.status === 401) {
+        alert("You are not authorized to view this page");
+        handleExpiredToken();
+      } else {
+        alert("Something went wrong, please try again later");
+      }
+    });
   };
 
   return (
     <div>
       {userData && (
         <div>
-          <h1>
-            {userData?.firstName} {userData?.lastName}
-          </h1>
+          <div className="name-and-status">
+            <div className="name">
+              {userData.firstName} {userData.lastName}
+            </div>
+            <div className="status">{userData.moshalStatus || "Status"}</div>
+          </div>
+          <p>{userData.bio || "No bio available"}</p>
+          {/* <p>{userData.linkedIn || "No linkedIn available"}</p> */}
+
           <img
             className="user_image"
-            src={userData?.picturePath || "/assets/genericUser.png"}
+            src={userData.picturePath || "/assets/genericUser.png"}
+            alt={`${userData.firstName}'s Profile Picture`}
           />
-          <FontAwesomeIcon className="icon" icon={faPen} />
+          {/* Show picture edit pen when user id is matching */}
+          {signedUserId === userId && (
+            <FontAwesomeIcon
+              className={"icon"}
+              icon={faPen}
+              onClick={() => {
+                setInImgMode(!inImgMode);
+              }}
+            />
+          )}
+          {/* Edit picture mode is on */}
+          {inImgMode && (
+            <div>
+              <form onSubmit={handlePictureUpload}>
+                <input
+                  type="file"
+                  accept="image/*"
+                  name="userImage"
+                  id="userImage"
+                  onChange={(e) => setImgValue(e.target.files[0])}
+                />
+                <input type="submit" value="Submit" />
+              </form>
+            </div>
+          )}
           <div>
-            <h2>User Data:</h2>
-            <h3>{userData?.email}</h3>
-            <h3>{userData?.moshalStatus}</h3>
-            <form onSubmit={handleUpdate} className="form-example">
-              <div className="form-example">
-                <label htmlFor="firstName">Enter your first name: </label>
-                <input type="text" name="firstName" id="firstName" />
+            {/* Show profile edit pen when user id is matching */}
+            {signedUserId === userId && (
+              <FontAwesomeIcon
+                className={"icon" + (inEditMode ? " active" : "")}
+                icon={faPen}
+                onClick={() => {
+                  setInEditMode(!inEditMode);
+                }}
+              />
+            )}
+            <a href={userData.linkedIn} target="_blank">
+              <FontAwesomeIcon className="icon" icon={faLinkedin} />
+            </a>
+            <a
+              href={`https://wa.me/+972${userData.phoneNumber.slice(1)}`}
+              target="_blank"
+            >
+              <FontAwesomeIcon className="icon" icon={faWhatsapp} />
+            </a>
+            <a href={`mailto:${userData.email}`}>
+              <FontAwesomeIcon className="icon" icon={faEnvelope} />
+            </a>
+            {!inEditMode && (
+              <div>
+                <p>
+                  <strong>Location:</strong>{" "}
+                  {userData.location || "Not provided"}
+                </p>
+                <p>
+                  <strong>Phone Number:</strong>{" "}
+                  {userData.phoneNumber || "Not provided"}
+                </p>
+                <p>
+                  <strong>My field:</strong>{" "}
+                  {userData.education[0] || "Not provided"}
+                </p>
+                <p>
+                  <strong>I work at:</strong>{" "}
+                  {userData.occupation[0] || "No where, currently"}
+                </p>
               </div>
-              <div className="form-example">
-                <label htmlFor="lastName">Enter your last name: </label>
-                <input type="text" name="lastName" id="lastName" />
+            )}
+            {inEditMode && (
+              <div>
+                <form onSubmit={(e) => handleUpdate(e)}>
+                  <label htmlFor="location">Location: </label>
+                  <select
+                    type="text"
+                    id="location"
+                    name="location"
+                    onChange={(e) => {
+                      setDetailsFormData({
+                        ...detailsFormData,
+                        [e.target.name]: e.target.value,
+                      });
+                    }}
+                    value={detailsFormData.location}
+                  >
+                    {israelCities.city.map((c) => (
+                      <option key={c.city_symbol} value={c.english_name}>
+                        {c.english_name}
+                      </option>
+                    ))}
+                  </select>
+                  <br />
+                  <label htmlFor="linkedIn">Linkedin: </label>
+                  <input
+                    type="text"
+                    id="linkedIn"
+                    name="linkedIn"
+                    onChange={(e) => {
+                      setDetailsFormData({
+                        ...detailsFormData,
+                        [e.target.name]: e.target.value,
+                      });
+                    }}
+                    value={detailsFormData.linkedIn}
+                  />
+                  <br />
+                  <label htmlFor="bio">Bio: </label>
+                  <textarea
+                    style={{ resize: "none" }}
+                    rows="4"
+                    cols="32"
+                    id="bio"
+                    name="bio"
+                    onChange={(e) => {
+                      setDetailsFormData({
+                        ...detailsFormData,
+                        [e.target.name]: e.target.value,
+                      });
+                    }}
+                    value={detailsFormData.bio}
+                  />
+                  <br />
+                  <label htmlFor="moshalStatus">Moshal Status: </label>
+                  <select
+                    id="moshalStatus"
+                    name="moshalStatus"
+                    defaultValue={userData.moshalStatus}
+                  >
+                    <option value="Scholar">Scholar</option>
+                    <option value="Alumni">Alumni</option>
+                    <option value="Staff">Staff</option>
+                  </select>
+                  <br />
+
+                  <input type="submit" value="Submit" />
+                </form>
               </div>
-              <div className="form-example">
-                <label htmlFor="email">Enter your email: </label>
-                <input type="email" name="email" id="email" />
-              </div>
-              <div className="form-example">
-                <input type="submit" value="Update Profile" />
-              </div>
-            </form>
+            )}
           </div>
-          <form onSubmit={handlePictureUpdate} className="form-example">
-            <div className="form-example">
-              <label htmlFor="file">Upload </label>
-              <input type="file" id="file" name="filename" />
-            </div>
-            <div className="form-example">
-              <input type="submit" value="Update Profile" />
-            </div>
-          </form>
         </div>
       )}
     </div>

@@ -7,10 +7,11 @@ import { globalContext } from "../../../App";
   /* LOGIN FORM*/
 }
 export const Login = (props) => {
+  const [INITIAL_FORMDATA, setActiveForm, formData, setFormData] =
+    useContext(authContext);
+  const [signedUserId, setSignedUserId, token, setToken] =
+    useContext(globalContext);
 
-  const [INITIAL_FORMDATA, setActiveForm, formData, setFormData] = useContext(authContext);
-  const [email, setEmail, token, setToken] = useContext(globalContext);
-  
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,9 +28,10 @@ export const Login = (props) => {
         const handleSuccess = () => {
           console.log(resJson);
           setToken(resJson.token);
-          setEmail(resJson.user.email);
+          setSignedUserId(resJson.user._id);
           setFormData(INITIAL_FORMDATA);
-          localStorage.setItem("token", resJson.token)
+          localStorage.setItem("token", resJson.token);
+          localStorage.setItem("user_id", resJson.user._id);
           navigate("/home");
         };
 
