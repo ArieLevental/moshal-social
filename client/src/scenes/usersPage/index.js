@@ -8,19 +8,24 @@ import { globalContext } from "../../App";
 function UsersPage() {
   const [usersData, setUsersData] = useState(null);
   const [presentedData, setPresentedData] = useState(usersData);
-  const [email, setEmail, token, setToken] = useContext(globalContext);
-
-  // headers: { Authorization: `Bearer ${token}` },
+  const [email, setEmail, token, setToken, handleExpiredToken] =
+    useContext(globalContext);
 
   useEffect(() => {
     fetch(`http://localhost:3001/users`, {
       headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => res.json())
-      .then((jsonData) => {
-        setUsersData(jsonData);
-        setPresentedData(jsonData);
-      });
+    }).then(async (res) => {
+      const resJson = await res.json();
+      if (res.status === 200) {
+        setUsersData(resJson);
+        setPresentedData(resJson);
+      } else if (res.status === 401) {
+        alert("You are not authorized to view this page");
+        handleExpiredToken();
+      } else {
+        alert("Something went wrong, please try again later");
+      }
+    });
   }, []); // string "microsoft"
 
   return (

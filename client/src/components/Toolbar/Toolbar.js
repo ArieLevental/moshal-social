@@ -4,14 +4,10 @@ import { globalContext } from "../../App";
 import { useContext } from "react";
 
 const Toolbar = () => {
-  const [email, setEmail, token, setToken] = useContext(globalContext);
+  const [email, setEmail, token, setToken, handleExpiredToken] = useContext(globalContext);
 
-  const handleLogout = async (e) => {
-    await fetch("http://localhost:3001/auth/logout", { method: "POST" });
-    // TODO: Need to check if the response is ok
-    localStorage.removeItem("token");
-    setEmail("");
-    setToken("");
+  const handleLogout = () => {
+    handleExpiredToken()
   };
 
   return (

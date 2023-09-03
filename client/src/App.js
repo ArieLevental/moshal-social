@@ -18,10 +18,18 @@ function App() {
   // THIS IS THE STATES FOR THE GLOBAL STATE. EMAIL TOKEN
   const [email, setEmail] = useState("");
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const handleExpiredToken = () => {
+    fetch("http://localhost:3001/auth/logout", { method: "POST" });
+    // TODO: Need to check if the response is ok
+    localStorage.removeItem("token");
+    setEmail("");
+    setToken("");
+  };
+
 
   return (
     <div className="app">
-      <globalContext.Provider value={[email, setEmail, token, setToken]}>
+      <globalContext.Provider value={[email, setEmail, token, setToken, handleExpiredToken]}>
         <BrowserRouter>
           <Toolbar />
           <div className="main">
