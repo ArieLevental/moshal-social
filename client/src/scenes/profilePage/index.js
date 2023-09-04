@@ -1,12 +1,12 @@
 import { useContext, useState, useEffect } from "react";
+import { globalContext } from "../../App";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import israelCities from "./israel_cities.json";
-
 import "./index.css";
-import { globalContext } from "../../App";
+import EducationContainer from "./educationContainer/educationContainer.js";
 
 const ProfilePage = () => {
   const { userId } = useParams();
@@ -15,6 +15,7 @@ const ProfilePage = () => {
   const [inEditMode, setInEditMode] = useState(false);
   const [inImgMode, setInImgMode] = useState(false);
   const [imgValue, setImgValue] = useState(null);
+  const [url, setUrl] = useState(null);
   const [signedUserId, setSignedUserId, token, setToken, handleExpiredToken] =
     useContext(globalContext);
 
@@ -38,7 +39,7 @@ const ProfilePage = () => {
       }
     });
     // TODO: this solution results api call for every "pen" click
-  }, [inEditMode]);
+  }, [inEditMode, inImgMode]);
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -48,42 +49,25 @@ const ProfilePage = () => {
       moshalStatus: e.target.moshalStatus.value,
       linkedIn: e.target.linkedIn.value,
     };
-
-    fetch(`http://localhost:3001/user/${userId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(updatedData),
-    }).then(async (res) => {
-      const resJson = await res.json();
-      if (res.status === 200) {
-        setInEditMode(false);
-        setUserData({ ...userData, ...resJson });
-      } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
-        handleExpiredToken();
-      } else {
-        alert("Something went wrong, please try again later");
-      }
-    });
   };
 
-  // Image upload handler
-  const handlePictureUpload = (e) => {
+  const handleProfileImgUpload = (e) => {
     e.preventDefault();
-    const formData = new FormData(); // Create a
+
+    const formData = new FormData();
     formData.append("userImage", imgValue);
-    fetch(`http://localhost:3001/user/${userId}`, {
+
+    console.log(formData, imgValue);
+
+    fetch(`http://localhost:3001/storage/profile/${userId}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
       body: formData,
     }).then(async (res) => {
+      setInImgMode(false);
       if (res.status === 200) {
-        setInImgMode(false);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
         handleExpiredToken();
@@ -109,7 +93,7 @@ const ProfilePage = () => {
           <img
             className="user_image"
             src={userData.picturePath || "/assets/genericUser.png"}
-            alt={`${userData.firstName}'s Profile Picture`}
+            alt={userData.firstName + "'s Profile Picture"}
           />
           {/* Show picture edit pen when user id is matching */}
           {signedUserId === userId && (
@@ -124,7 +108,7 @@ const ProfilePage = () => {
           {/* Edit picture mode is on */}
           {inImgMode && (
             <div>
-              <form onSubmit={handlePictureUpload}>
+              <form onSubmit={(e) => handleProfileImgUpload(e)}>
                 <input
                   type="file"
                   accept="image/*"
@@ -248,6 +232,12 @@ const ProfilePage = () => {
                 </form>
               </div>
             )}
+          </div>
+          <div className="education">
+            <h4>Education:</h4>
+            <EducationContainer />
+            {/* COMPONENT FOR EDUCATION BOXES */}
+            {/* RUN WITH FOREACH AND LET ADD */}
           </div>
         </div>
       )}

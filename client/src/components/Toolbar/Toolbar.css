@@ -3,7 +3,8 @@
   font-style: italic;
   display: flex;
   justify-content: space-between;
-  height: 12vh;
+  height: 10vh;
+  position: sticky;
 }
 
 .toolbar-logo {

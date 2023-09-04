@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
 import "./App.css";
 
 import Toolbar from "./components/Toolbar/Toolbar";
@@ -18,20 +19,29 @@ function App() {
   // THIS IS THE STATES FOR THE GLOBAL STATE. EMAIL TOKEN
   const [email, setEmail] = useState("");
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const [signedUserId, setSignedUserId] = useState(localStorage.getItem("user_id"))
+  const [signedUserId, setSignedUserId] = useState(
+    localStorage.getItem("user_id")
+  );
   const handleExpiredToken = () => {
     fetch("http://localhost:3001/auth/logout", { method: "POST" });
     // TODO: Need to check if the response is ok
     localStorage.removeItem("token");
     setEmail("");
     setToken("");
-    setSignedUserId("")
+    setSignedUserId("");
   };
-
 
   return (
     <div className="app">
-      <globalContext.Provider value={[signedUserId, setSignedUserId, token, setToken, handleExpiredToken]}>
+      <globalContext.Provider
+        value={[
+          signedUserId,
+          setSignedUserId,
+          token,
+          setToken,
+          handleExpiredToken,
+        ]}
+      >
         <BrowserRouter>
           <Toolbar />
           <div className="main">

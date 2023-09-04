@@ -1,0 +1,11 @@
+.education-container {
+  background-color: grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.education-add-new {
+  border: 1px solid black;
+}
