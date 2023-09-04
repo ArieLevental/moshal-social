@@ -11,6 +11,7 @@ import { fileURLToPath } from "url";
 import userRouter from "./routes/user.js";
 import usersRouter from "./routes/users.js";
 import authRouter from "./routes/auth.js";
+import storageRouter from "./routes/storage.js";
 
 /* USED FOR ONE-TIME DATA LOAD */
 // import User from "./models/User.js";
@@ -37,6 +38,7 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/users", usersRouter);
+app.use("/storage", storageRouter);
 
 // MONGOOSE SETUP
 const PORT = process.env.PORT || 6001;

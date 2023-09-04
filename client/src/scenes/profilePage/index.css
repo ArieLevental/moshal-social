@@ -8,10 +8,10 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  width: 30vw;
 }
 
 .name {
+  padding-right: 5px;
   font-size: 30px;
   font-weight: bold;
 }
