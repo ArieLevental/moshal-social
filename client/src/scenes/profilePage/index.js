@@ -11,6 +11,7 @@ import EducationContainer from "./educationContainer/educationContainer.js";
 const ProfilePage = () => {
   const { userId } = useParams();
   const [userData, setUserData] = useState(null);
+  const [institutionsData, setInstitutionsData] = useState(null);
   const [detailsFormData, setDetailsFormData] = useState(null);
   const [inEditMode, setInEditMode] = useState(false);
   const [inImgMode, setInImgMode] = useState(false);
@@ -18,6 +19,23 @@ const ProfilePage = () => {
   const [url, setUrl] = useState(null);
   const [signedUserId, setSignedUserId, token, setToken, handleExpiredToken] =
     useContext(globalContext);
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/institutions`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then(async (res) => {
+      const resJson = await res.json();
+      if (res.status === 200) {
+        setInstitutionsData(resJson);
+      } else if (res.status === 401) {
+        alert("You are not authorized to view this page");
+        handleExpiredToken();
+      } else {
+        alert("Something went wrong, please try again later");
+      }
+    });
+    // TODO: merge with second useEffect
+  }, []);
 
   useEffect(() => {
     fetch(`http://localhost:3001/user/${userId}`, {
@@ -49,8 +67,26 @@ const ProfilePage = () => {
       moshalStatus: e.target.moshalStatus.value,
       linkedIn: e.target.linkedIn.value,
     };
+    fetch(`http://localhost:3001/user/${userId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(updatedData),
+    }).then(async (res) => {
+      const resJson = await res.json();
+      if (res.status === 200) {
+        setInEditMode(false);
+        setUserData({ ...userData, ...resJson });
+      } else if (res.status === 401) {
+        alert("You are not authorized to view this page");
+        handleExpiredToken();
+      } else {
+        alert("Something went wrong, please try again later");
+      }
+    });
   };
-
   const handleProfileImgUpload = (e) => {
     e.preventDefault();
 
@@ -154,10 +190,6 @@ const ProfilePage = () => {
                   {userData.phoneNumber || "Not provided"}
                 </p>
                 <p>
-                  <strong>My field:</strong>{" "}
-                  {userData.education[0] || "Not provided"}
-                </p>
-                <p>
                   <strong>I work at:</strong>{" "}
                   {userData.occupation[0] || "No where, currently"}
                 </p>
@@ -235,7 +267,7 @@ const ProfilePage = () => {
           </div>
           <div className="education">
             <h4>Education:</h4>
-            <EducationContainer />
+            <EducationContainer institutionsData={institutionsData} setUserData={setUserData} userData={userData} />
             {/* COMPONENT FOR EDUCATION BOXES */}
             {/* RUN WITH FOREACH AND LET ADD */}
           </div>

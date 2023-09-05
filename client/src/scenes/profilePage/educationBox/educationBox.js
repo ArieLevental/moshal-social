@@ -3,10 +3,10 @@ import { globalContext } from "../../../App";
 import { useParams } from "react-router-dom";
 import "./educationBox.css";
 
-const EducationBox = () => {
+const EducationBox = (props) => {
   return (
     <div className="education-box">
-      <p>EducationBox</p>
+      <p>{props.educationId}</p>
     </div>
   );
 };

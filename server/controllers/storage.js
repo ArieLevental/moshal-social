@@ -3,12 +3,24 @@ import User from "../models/User.js";
 import { storage } from "../firebase.js";
 
 export const uploadProfileImg = async (req, res) => {
-  console.log(storage);
   try {
-    // TODO: fix double upload, upload picture not working for new users !!!
-    const pathReference = ref(storage, `profile/${req.params.id}.jpeg`);
-    const url = await getDownloadURL(pathReference);
+    // Check if the request contains a file to upload
+    if (!req.file) {
+      return res.status(400).json({ message: "No file provided" });
+    }
 
+    // Create a reference for the file to be uploaded
+    const storageRef = ref(storage, `profile/${req.params.id}.jpeg`);
+
+    // Upload the file
+    await uploadBytes(storageRef, req.file.buffer).then((snapshot) => {
+      console.log("Uploaded a blob or file! ", snapshot);
+    });
+
+    // Get the download URL of the uploaded file
+    const url = await getDownloadURL(storageRef);
+
+    // Update the user's picturePath with the download URL
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
       { picturePath: url },
@@ -22,14 +34,11 @@ export const uploadProfileImg = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const storageRef = ref(storage, "profile/" + `${req.params.id}.jpeg`);
-    await uploadBytes(storageRef, req.file.buffer);
-
     console.log("File uploaded successfully");
-    res.status(200).json({ storageRef });
+    res.status(200).json({ pathReference: url });
   } catch (err) {
     // Handle any errors that occurred during the upload
-    console.log(err.message);
+    console.error(err.message);
     res.status(500).json({ message: err.message });
   }
 };
