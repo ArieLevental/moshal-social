@@ -10,8 +10,31 @@ const currentYear = new Date().getFullYear();
 
 const EducationContainer = (props) => {
   const [inAddMode, setInAddMode] = useState(false);
+  const [userEducationData, setUserEducationData] = useState(null);
   const [signedUserId, setSignedUserId, token, setToken, handleExpiredToken] =
     useContext(globalContext);
+
+  useEffect(() => {
+    fetch(
+      `http://localhost:3001/user/getEducationItems/${localStorage.user_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    ).then(async (res) => {
+      const resJson = await res.json();
+      if (res.status === 200) {
+        setUserEducationData(resJson);
+        console.log(resJson);
+      } else if (res.status === 401) {
+        alert("You are not authorized to view this page");
+        handleExpiredToken();
+      } else {
+        alert("Something went wrong, please try again later");
+      }
+    });
+  }, [inAddMode]);
 
   const handleAdd = (e) => {
     e.preventDefault();
@@ -97,7 +120,8 @@ const EducationContainer = (props) => {
             </form>
           </div>
         )}
-        {!inAddMode && (
+        {/* Add button will render only if the user is signed in and the profile is his */}
+        {!inAddMode && signedUserId === props.userData._id && (
           <button onClick={() => setInAddMode(!inAddMode)}>+</button>
         )}
       </div>

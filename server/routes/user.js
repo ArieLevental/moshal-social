@@ -1,5 +1,5 @@
 import express from "express";
-import { getUser, updateUser, addEducationItem } from "../controllers/user.js";
+import { getUser, updateUser, addEducationItem, getEducationItems } from "../controllers/user.js";
 import { verifyToken } from "../middleware/auth.js";
 
 // Handle all routes that start with /user
@@ -11,5 +11,7 @@ userRouter
   .patch(verifyToken, updateUser);
 
 userRouter.route("/addEducationItem/:id").post(verifyToken, addEducationItem);
+
+userRouter.route("/getEducationItems/:id").get(verifyToken, getEducationItems);
 
 export default userRouter;

@@ -84,3 +84,44 @@ export const addEducationItem = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
+// export const getEducationItems = async (req, res) => {
+//   try {
+//     const userId = req.params.id;
+//     const user = await User.findById(userId);
+//     const educationItems = await Education.find({
+//       _id: { $in: user.education },
+//     });
+
+//     // educationItems.map(async (item) => {
+//     //   item.Institution = await Institution.findById(item.InstitutionId);
+//     // });
+//     await educationItems.forEach(async (item) => {
+//       item.Institution = await Institution.findById(item.InstitutionId);
+//     });
+
+//     res
+//       .status(200)
+//       .json({ message: "Profile updated successfully", educationItems });
+//   } catch (err) {
+//     res.status(400).json({ message: err.message });
+//   }
+// };
+
+export const getEducationItems = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findById(userId);
+    const educationItems = await Education.find({
+      _id: { $in: user.education },
+    });
+
+    // TODO: fix the iteration
+
+    res
+      .status(200)
+      .json({ message: "Profile updated successfully", educationItems });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
