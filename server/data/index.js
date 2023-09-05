@@ -1,3 +1,5 @@
+// USED FOR ONE TIME DATA LOAD, MAINLY FOR TESTING
+
 import mongoose from "mongoose";
 
 const userIds = [
@@ -27,8 +29,6 @@ export const users = [
     phoneNumber: "0541591325",
     linkedIn: "",
     moshalStatus: "Scholar",
-    education: [],
-    occupation: [],
     __v: 0,
   },
   {
@@ -44,8 +44,6 @@ export const users = [
     phoneNumber: "0521591513",
     linkedIn: "",
     moshalStatus: "Scholar",
-    education: [],
-    occupation: [],
     __v: 0,
   },
   {
@@ -61,8 +59,6 @@ export const users = [
     phoneNumber: "0551291395",
     linkedIn: "",
     moshalStatus: "Scholar",
-    education: [],
-    occupation: [],
     __v: 0,
   },
   {
@@ -78,8 +74,6 @@ export const users = [
     phoneNumber: "0541591234",
     linkedIn: "",
     moshalStatus: "Staff",
-    education: [],
-    occupation: [],
     __v: 0,
   },
   {
@@ -95,8 +89,6 @@ export const users = [
     phoneNumber: "05419324595",
     linkedIn: "",
     moshalStatus: "Alumni",
-    education: [],
-    occupation: [],
     __v: 0,
   },
   {
@@ -112,8 +104,6 @@ export const users = [
     phoneNumber: "0541592432",
     linkedIn: "",
     moshalStatus: "Alumni",
-    education: [],
-    occupation: [],
     __v: 0,
   },
   {
@@ -129,8 +119,6 @@ export const users = [
     phoneNumber: "0544564564",
     linkedIn: "",
     moshalStatus: "Staff",
-    education: [],
-    occupation: [],
     __v: 0,
   },
   {
@@ -146,8 +134,6 @@ export const users = [
     phoneNumber: "0582242110",
     linkedIn: "",
     moshalStatus: "Scholar",
-    education: [],
-    occupation: [],
     __v: 0,
   },
   {
@@ -163,8 +149,6 @@ export const users = [
     phoneNumber: "0559929992",
     linkedIn: "",
     moshalStatus: "Scholar",
-    education: [],
-    occupation: [],
     __v: 0,
   },
   {
@@ -180,8 +164,6 @@ export const users = [
     phoneNumber: "0555535542",
     linkedIn: "",
     moshalStatus: "Staff",
-    education: [],
-    occupation: [],
     __v: 0,
   },
 ];

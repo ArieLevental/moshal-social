@@ -9,10 +9,14 @@ const companySchema = mongoose.Schema(
       max: 50,
       unique: true,
     },
-    employees: {
-      type: Array,
-      default: [],
-    },
+    employees: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        unique: true, // Ensures uniqueness within the array
+        // sparse: true, // Allows null (empty) values without causing conflicts
+      },
+    ],
     logoPath: {
       type: String,
       default: "",

@@ -61,14 +61,18 @@ const userSchema = new mongoose.Schema(
       enum: ["", "Scholar", "Alumni", "Staff"],
       default: "",
     },
-    education: {
-      type: Array,
-      default: [],
-    },
-    occupation: {
-      type: Array,
-      default: [],
-    },
+    education: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Education",
+      },
+    ],
+    occupation: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Occupation",
+      },
+    ],
   },
   { timestamps: true }
 );

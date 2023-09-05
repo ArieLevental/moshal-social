@@ -1,3 +1,5 @@
+// USED FOR ONE TIME DATA LOAD, MAINLY FOR TESTING
+
 import mongoose from "mongoose";
 import { ref, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase.js";

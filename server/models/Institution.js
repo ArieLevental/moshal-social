@@ -1,5 +1,4 @@
-import mongoose  from "mongoose";
-
+import mongoose from "mongoose";
 
 const institutionSchema = mongoose.Schema(
   {
@@ -9,10 +8,14 @@ const institutionSchema = mongoose.Schema(
       min: 2,
       max: 50,
     },
-    students: {
-      type: Array,
-      default: [],
-    },
+    students: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        unique: true,
+        sparse: true,
+      },
+    ],
     logoPath: {
       type: String,
       default: "",
