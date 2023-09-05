@@ -3,7 +3,13 @@ import mongoose from "mongoose";
 const jobOfferSchema = mongoose.Schema(
   {
     userId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    companyId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Company",
       required: true,
     },
     content: {
@@ -11,10 +17,6 @@ const jobOfferSchema = mongoose.Schema(
       required: true,
       min: 10,
       max: 2000,
-    },
-    companyId: {
-      type: String,
-      required: true,
     },
     offerTitle: {
       type: String,

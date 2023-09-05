@@ -16,12 +16,12 @@ import institutionRouter from "./routes/institution.js";
 import institutionsRouter from "./routes/institutions.js";
 
 /* USED FOR ONE-TIME DATA LOAD */
-// import User from "./models/User.js";
-// import { users } from "./data/index.js";
+import User from "./models/User.js";
+import { users } from "./data/index.js";
 
 /* USED FOR ONE-TIME DATA LOAD */
-// import Institution from "./models/Institution.js";
-// import { institutions } from "./data/institutions.js";
+import Institution from "./models/Institution.js";
+import { institutions } from "./data/institutions.js";
 
 dotenv.config();
 

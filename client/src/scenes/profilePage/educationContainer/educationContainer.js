@@ -10,23 +10,21 @@ const currentYear = new Date().getFullYear();
 
 const EducationContainer = (props) => {
   const [inAddMode, setInAddMode] = useState(false);
-  const [userEducationData, setUserEducationData] = useState(null);
+  const [userEducationData, setUserEducationData] = useState([]);
   const [signedUserId, setSignedUserId, token, setToken, handleExpiredToken] =
     useContext(globalContext);
+  const { userId } = useParams();
 
   useEffect(() => {
-    fetch(
-      `http://localhost:3001/user/getEducationItems/${localStorage.user_id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    ).then(async (res) => {
+    fetch(`http://localhost:3001/user/getEducationItems/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
-        setUserEducationData(resJson);
-        console.log(resJson);
+        console.log(resJson.educationItems);
+        setUserEducationData(resJson.educationItems);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
         handleExpiredToken();
@@ -45,17 +43,14 @@ const EducationContainer = (props) => {
       endYear: e.target.endYear.value,
       degree: e.target.degree.value,
     };
-    fetch(
-      `http://localhost:3001/user/addEducationItem/${localStorage.user_id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(educationItemData),
-      }
-    ).then(async (res) => {
+    fetch(`http://localhost:3001/user/addEducationItem/${userId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(educationItemData),
+    }).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
         props.setUserData({ ...props.userData, ...resJson });
@@ -70,6 +65,10 @@ const EducationContainer = (props) => {
 
   return (
     <div className="education-container">
+      {/* Add button will render only if the user is signed in and the profile is his */}
+      {!inAddMode && signedUserId === props.userData._id && (
+        <button onClick={() => setInAddMode(!inAddMode)}>+</button>
+      )}
       <div className="education-add-new">
         {inAddMode && (
           <div>
@@ -120,14 +119,13 @@ const EducationContainer = (props) => {
             </form>
           </div>
         )}
-        {/* Add button will render only if the user is signed in and the profile is his */}
-        {!inAddMode && signedUserId === props.userData._id && (
-          <button onClick={() => setInAddMode(!inAddMode)}>+</button>
-        )}
       </div>
-      {props.userData.education.map((educationId) => (
-        <EducationBox educationId={educationId} />
-      ))}
+
+      <div className="education-section">
+        {userEducationData.map((educationItem) => (
+          <EducationBox key={educationItem._id} educationItem={educationItem} />
+        ))}
+      </div>
     </div>
   );
 };

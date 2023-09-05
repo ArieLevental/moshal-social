@@ -3,11 +3,13 @@ import mongoose from "mongoose";
 const educationSchema = mongoose.Schema(
   {
     userId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     institutionId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Institution",
       required: true,
     },
     startYear: {

@@ -1,14 +1,15 @@
-import mongoose  from "mongoose";
-
+import mongoose from "mongoose";
 
 const occupationSchema = new mongoose.Schema(
   {
     userId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     companyId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Company",
       required: true,
     },
     position: {
