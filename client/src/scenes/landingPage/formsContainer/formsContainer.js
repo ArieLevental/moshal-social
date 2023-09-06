@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { authContext } from "..";
 import { globalContext } from "../../../App";
+import "./formsContainer.css";
 
 {
   /* LOGIN FORM*/
@@ -41,45 +42,61 @@ export const Login = (props) => {
   };
 
   return (
-    <div className="login-form">
+    <div className="login-form-container">
       <h1>Log In</h1>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          onChange={(e) => {
-            setFormData({
-              ...formData,
-              [e.target.name]: e.target.value,
-            });
-          }}
-        />
-        <br />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          onChange={(e) => {
-            setFormData({
-              ...formData,
-              [e.target.name]: e.target.value,
-            });
-          }}
-        />
-        <br />
-        <input type="submit" value="Log in" />
+
+      <form onSubmit={(e) => handleSubmit(e)} className="login-form">
+        <div className="form-element">
+          <label htmlFor="email" className="login-form-label">
+            Email:
+          </label>
+          <input
+            className="login-form-input"
+            type="email"
+            id="email"
+            name="email"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                [e.target.name]: e.target.value,
+              });
+            }}
+          />
+        </div>
+        <div className="form-element">
+          <label htmlFor="password" className="login-form-label">
+            Password:
+          </label>
+          <input
+            className="login-form-input"
+            type="password"
+            id="password"
+            name="password"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                [e.target.name]: e.target.value,
+              });
+            }}
+          />
+        </div>
+
+        <button type="submit">Log In</button>
       </form>
       <p
+        className="landing-page-action-link"
         onClick={(e) => {
           setActiveForm("register");
         }}
       >
         Don't have an account? Sign up here!
       </p>
-      <p onClick={(e) => setActiveForm("recovery")}>I forgot my password</p>
+      <p
+        onClick={(e) => setActiveForm("recovery")}
+        className="landing-page-action-link"
+      >
+        I forgot my password
+      </p>
     </div>
   );
 };
@@ -114,97 +131,127 @@ export const Register = (props) => {
   };
 
   return (
-    <div>
+    <div className="register-form-container">
       <h1>Sign Up</h1>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <label htmlFor="firstName">First name:</label>
-        <input
-          type="text"
-          id="firstName"
-          name="firstName"
-          onChange={(e) => {
-            setFormData({
-              ...formData,
-              [e.target.name]: e.target.value,
-            });
-          }}
-        />
-        <br />
-        <label htmlFor="lastName">Last name:</label>
-        <input
-          type="text"
-          id="lastName"
-          name="lastName"
-          onChange={(e) => {
-            setFormData({
-              ...formData,
-              [e.target.name]: e.target.value,
-            });
-          }}
-        />
-        <br />
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          onChange={(e) => {
-            setFormData({
-              ...formData,
-              [e.target.name]: e.target.value,
-            });
-          }}
-        />
-        <br />
-        <label htmlFor="phoneNumber">phone Number:</label>
-        <input
-          type="phone"
-          id="phoneNumber"
-          name="phoneNumber"
-          onChange={(e) => {
-            setFormData({
-              ...formData,
-              [e.target.name]: e.target.value,
-            });
-          }}
-        />
-        <br />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          onChange={(e) => {
-            setFormData({
-              ...formData,
-              [e.target.name]: e.target.value,
-            });
-          }}
-        />
-        <br />
-        <label htmlFor="lname">Password Confirmation:</label>
-        <input
-          type="password"
-          id="passwordConfirmation"
-          name="passwordConfirmation"
-          onChange={(e) => {
-            setFormData({
-              ...formData,
-              [e.target.name]: e.target.value,
-            });
-          }}
-        />
-        <br />
-        <input type="submit" value="Sign up" />
+      <form onSubmit={(e) => handleSubmit(e)} className="register-form">
+        <div className="form-element">
+          <label htmlFor="firstName" className="register-form-label">
+            First name:
+          </label>
+          <input
+            className="register-form-input"
+            type="text"
+            id="firstName"
+            name="firstName"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                [e.target.name]: e.target.value,
+              });
+            }}
+          />
+        </div>
+        <div className="form-element">
+          <label htmlFor="lastName" className="register-form-label">
+            Last name:
+          </label>
+          <input
+            className="register-form-input"
+            type="text"
+            id="lastName"
+            name="lastName"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                [e.target.name]: e.target.value,
+              });
+            }}
+          />
+        </div>
+        <div className="form-element">
+          <label htmlFor="email" className="register-form-label">
+            Email:
+          </label>
+          <input
+            className="register-form-input"
+            type="email"
+            id="email"
+            name="email"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                [e.target.name]: e.target.value,
+              });
+            }}
+          />
+        </div>
+        <div className="form-element">
+          <label htmlFor="phoneNumber" className="register-form-label">
+            phone Number:
+          </label>
+          <input
+            className="register-form-input"
+            type="phone"
+            id="phoneNumber"
+            name="phoneNumber"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                [e.target.name]: e.target.value,
+              });
+            }}
+          />
+        </div>
+        <div className="form-element">
+          <label htmlFor="password" className="register-form-label">
+            Password:
+          </label>
+          <input
+            className="register-form-input"
+            type="password"
+            id="password"
+            name="password"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                [e.target.name]: e.target.value,
+              });
+            }}
+          />
+        </div>
+        <div className="form-element">
+          <label htmlFor="passwordConfirmation" className="register-form-label">
+            Password Confirmation:
+          </label>
+          <input
+            className="register-form-input"
+            type="password"
+            id="passwordConfirmation"
+            name="passwordConfirmation"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                [e.target.name]: e.target.value,
+              });
+            }}
+          />
+        </div>
+        <button type="submit">Sign up</button>
       </form>
       <p
+        className="landing-page-action-link"
         onClick={(e) => {
           setActiveForm("login");
         }}
       >
         Already have an account? Login here!
       </p>
-      <p onClick={(e) => setActiveForm("recovery")}>I forgot my password</p>
+      <p
+        onClick={(e) => setActiveForm("recovery")}
+        className="landing-page-action-link"
+      >
+        I forgot my password
+      </p>
     </div>
   );
 };
@@ -229,6 +276,7 @@ export const PasswordRecovery = (props) => {
         <input type="submit" value="Recover" />
       </form>
       <p
+        className="landing-page-action-link"
         onClick={(e) => {
           setActiveForm("login");
         }}
@@ -236,6 +284,7 @@ export const PasswordRecovery = (props) => {
         Already have an account? Log in here!
       </p>
       <p
+        className="landing-page-action-link"
         onClick={(e) => {
           setActiveForm("register");
         }}

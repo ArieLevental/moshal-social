@@ -11,6 +11,7 @@ const currentYear = new Date().getFullYear();
 const EducationContainer = (props) => {
   const [inAddMode, setInAddMode] = useState(false);
   const [userEducationData, setUserEducationData] = useState([]);
+  const [educationEditMode, setEducationEditMode] = useState(false);
   const [signedUserId, setSignedUserId, token, setToken, handleExpiredToken] =
     useContext(globalContext);
   const { userId } = useParams();
@@ -63,11 +64,20 @@ const EducationContainer = (props) => {
     });
   };
 
+  const handleRemoveItems = () => {
+    setEducationEditMode(!educationEditMode);
+  };
+
   return (
     <div className="education-container">
       {/* Add button will render only if the user is signed in and the profile is his */}
       {!inAddMode && signedUserId === props.userData._id && (
-        <button onClick={() => setInAddMode(!inAddMode)}>+</button>
+        <button
+          className="education-container-add-button"
+          onClick={() => setInAddMode(!inAddMode)}
+        >
+          Add new item
+        </button>
       )}
       <div className="education-add-new">
         {inAddMode && (
@@ -122,8 +132,13 @@ const EducationContainer = (props) => {
       </div>
 
       <div className="education-section">
+        <button className="education-section-remove-controller" onClick={handleRemoveItems}>Remove items</button>
         {userEducationData.map((educationItem) => (
-          <EducationBox key={educationItem._id} educationItem={educationItem} />
+          <EducationBox
+            key={educationItem._id}
+            educationItem={educationItem}
+            educationEditMode={educationEditMode}
+          />
         ))}
       </div>
     </div>

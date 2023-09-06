@@ -87,13 +87,12 @@ const ProfilePage = () => {
       }
     });
   };
+
   const handleProfileImgUpload = (e) => {
     e.preventDefault();
 
     const formData = new FormData();
     formData.append("userImage", imgValue);
-
-    console.log(formData, imgValue);
 
     fetch(`http://localhost:3001/storage/profile/${userId}`, {
       method: "POST",
@@ -114,47 +113,59 @@ const ProfilePage = () => {
   };
 
   return (
-    <div>
+    <>
       {userData && (
-        <div>
-          <div className="name-and-status">
-            <div className="name">
+        <div className="profile-page">
+          <div className="profile-page-name-and-status">
+            <div className="profile-page-name">
               {userData.firstName} {userData.lastName}
             </div>
-            <div className="status">{userData.moshalStatus || "Status"}</div>
+            <div className="profile-page-status">
+              {userData.moshalStatus || "Status"}
+            </div>
           </div>
           <p>{userData.bio || "No bio available"}</p>
           {/* <p>{userData.linkedIn || "No linkedIn available"}</p> */}
 
-          <img
-            className="user_image"
-            src={userData.picturePath || "/assets/genericUser.png"}
-            alt={userData.firstName + "'s Profile Picture"}
-          />
-          {/* Show picture edit pen when user id is matching */}
-          {signedUserId === userId && (
-            <FontAwesomeIcon
-              className={"icon"}
-              icon={faPen}
-              onClick={() => {
-                setInImgMode(!inImgMode);
-              }}
+          <div className="profile-page-img-container">
+            <img
+              className="profile-page-img"
+              src={userData.picturePath || "/assets/genericUser.png"}
+              alt={userData.firstName + "'s Profile Picture"}
             />
-          )}
+            {/* Show picture edit pen when user id is matching */}
+            {signedUserId === userId && (
+              <FontAwesomeIcon
+                className={"icon profile-page-img-edit"}
+                icon={faPen}
+                onClick={() => {
+                  setInImgMode(!inImgMode);
+                }}
+              />
+            )}
+          </div>
+
           {/* Edit picture mode is on */}
           {inImgMode && (
-            <div>
-              <form onSubmit={(e) => handleProfileImgUpload(e)}>
-                <input
-                  type="file"
-                  accept="image/*"
-                  name="userImage"
-                  id="userImage"
-                  onChange={(e) => setImgValue(e.target.files[0])}
-                />
-                <input type="submit" value="Submit" />
-              </form>
-            </div>
+            <form
+              className="profile-page-picture-form"
+              onSubmit={(e) => handleProfileImgUpload(e)}
+            >
+              <input
+                className="profile-page-picture-form-input"
+                type="file"
+                accept="image/*"
+                name="userImage"
+                id="userImage"
+                onChange={(e) => setImgValue(e.target.files[0])}
+              />
+              <button
+                className="profile-page-picture-form-button"
+                type="submit"
+              >
+                Pic-a-Boo!
+              </button>
+            </form>
           )}
           <div>
             {/* Show profile edit pen when user id is matching */}
@@ -182,83 +193,105 @@ const ProfilePage = () => {
             {!inEditMode && (
               <div>
                 <p>
-                  <strong>Location:</strong>{" "}
+                  <strong>My city:</strong>{" "}
                   {userData.location || "Not provided"}
                 </p>
                 <p>
-                  <strong>Phone Number:</strong>{" "}
+                  <strong>Catch me at:</strong>{" "}
                   {userData.phoneNumber || "Not provided"}
                 </p>
                 <p>
-                  <strong>I work at:</strong>{" "}
+                  <strong>Current workplace:</strong>{" "}
                   {userData.occupation[0] || "No where, currently"}
                 </p>
               </div>
             )}
             {inEditMode && (
               <div>
-                <form onSubmit={(e) => handleUpdate(e)}>
-                  <label htmlFor="location">Location: </label>
-                  <select
-                    type="text"
-                    id="location"
-                    name="location"
-                    onChange={(e) => {
-                      setDetailsFormData({
-                        ...detailsFormData,
-                        [e.target.name]: e.target.value,
-                      });
-                    }}
-                    value={detailsFormData.location}
-                  >
-                    {israelCities.city.map((c) => (
-                      <option key={c.city_symbol} value={c.english_name}>
-                        {c.english_name}
-                      </option>
-                    ))}
-                  </select>
-                  <br />
-                  <label htmlFor="linkedIn">Linkedin: </label>
-                  <input
-                    type="text"
-                    id="linkedIn"
-                    name="linkedIn"
-                    onChange={(e) => {
-                      setDetailsFormData({
-                        ...detailsFormData,
-                        [e.target.name]: e.target.value,
-                      });
-                    }}
-                    value={detailsFormData.linkedIn}
-                  />
-                  <br />
-                  <label htmlFor="bio">Bio: </label>
-                  <textarea
-                    style={{ resize: "none" }}
-                    rows="4"
-                    cols="32"
-                    id="bio"
-                    name="bio"
-                    onChange={(e) => {
-                      setDetailsFormData({
-                        ...detailsFormData,
-                        [e.target.name]: e.target.value,
-                      });
-                    }}
-                    value={detailsFormData.bio}
-                  />
-                  <br />
-                  <label htmlFor="moshalStatus">Moshal Status: </label>
-                  <select
-                    id="moshalStatus"
-                    name="moshalStatus"
-                    defaultValue={userData.moshalStatus}
-                  >
-                    <option value="Scholar">Scholar</option>
-                    <option value="Alumni">Alumni</option>
-                    <option value="Staff">Staff</option>
-                  </select>
-                  <br />
+                <form
+                  onSubmit={(e) => handleUpdate(e)}
+                  className="user-data-form"
+                >
+                  <div className="form-element">
+                    <label htmlFor="location" className="form-element-label">
+                      Location:
+                    </label>
+                    <select
+                      className="form-element-input"
+                      type="text"
+                      id="location"
+                      name="location"
+                      onChange={(e) => {
+                        setDetailsFormData({
+                          ...detailsFormData,
+                          [e.target.name]: e.target.value,
+                        });
+                      }}
+                      value={detailsFormData.location}
+                    >
+                      {israelCities.city.map((c) => (
+                        <option key={c.city_symbol} value={c.english_name}>
+                          {c.english_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-element">
+                    <label htmlFor="linkedIn" className="form-element-label">
+                      Linkedin:{" "}
+                    </label>
+                    <input
+                      className="form-element-input"
+                      type="text"
+                      id="linkedIn"
+                      name="linkedIn"
+                      onChange={(e) => {
+                        setDetailsFormData({
+                          ...detailsFormData,
+                          [e.target.name]: e.target.value,
+                        });
+                      }}
+                      value={detailsFormData.linkedIn}
+                    />
+                  </div>
+                  <div className="form-element">
+                    <label htmlFor="bio" className="form-element-label">
+                      Bio:{" "}
+                    </label>
+                    <textarea
+                      className="form-element-input"
+                      style={{ resize: "none" }}
+                      id="bio"
+                      name="bio"
+                      onChange={(e) => {
+                        setDetailsFormData({
+                          ...detailsFormData,
+                          [e.target.name]: e.target.value,
+                        });
+                      }}
+                      value={detailsFormData.bio}
+                    />
+                  </div>
+                  <div className="form-element">
+                    <label
+                      htmlFor="moshalStatus"
+                      className="form-element-label"
+                    >
+                      Moshal Status:
+                    </label>
+                    <select
+                      className="form-element-input"
+                      id="moshalStatus"
+                      name="moshalStatus"
+                      defaultValue={userData.moshalStatus}
+                    >
+                      <option value="Scholar">Scholar</option>
+                      <option value="Alumni">Alumni</option>
+                      <option value="Staff">Staff</option>
+                    </select>
+                  </div>
+                  <div className="form-element"></div>
+                  <div className="form-element"></div>
 
                   <input type="submit" value="Submit" />
                 </form>
@@ -267,13 +300,15 @@ const ProfilePage = () => {
           </div>
           <div className="education">
             <h4>Education:</h4>
-            <EducationContainer institutionsData={institutionsData} setUserData={setUserData} userData={userData} />
-            {/* COMPONENT FOR EDUCATION BOXES */}
-            {/* RUN WITH FOREACH AND LET ADD */}
+            <EducationContainer
+              institutionsData={institutionsData}
+              setUserData={setUserData}
+              userData={userData}
+            />
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

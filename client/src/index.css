@@ -1,15 +1,91 @@
+:root {
+  --primary-color: #1d5297;
+  --primary-color-brighter: #225fae;
+  --dark-background: #191b1c;
+  --slightly-darker-background: #191b1c;
+  --almost-white: #f4f2ee;
+  --light-blue: #6bade8;
+  --accent-color: #ffc51b;
+  --darker-accent-color: #a17100;
+}
+
+/* Custom fonts */
+@font-face {
+  font-family: "FenomenSans-Book";
+  src: url("../public/assets/FenomenSans-Book.woff2") format("woff2"),
+    url("../public/assets/FenomenSans-Book.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NarkissBlock-Regular";
+  src: url("../public/assets/NarkissBlock-Regular.woff2") format("woff2"),
+    url("../public/assets/NarkissBlock-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "FenomenSans-Book", "NarkissBlock-Regular", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
 }
 
 /* Cancel link visited or active styling */
-a:link, a:visited, a:hover, a:active {
+a:link,
+a:visited,
+a:hover,
+a:active {
   text-decoration: none;
   color: inherit;
+}
+
+button {
+  background-color: var(--primary-color-brighter);
+  color: var(--almost-white);
+  text-align: center;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+button:hover {
+  background-color: var(--primary-color);
+}
+
+input {
+  border: 1px solid var(--dark-background);
+  border-radius: 5px;
+  padding: 5px;
+  font-family: inherit;
+}
+
+input:focus {
+  border: 1px solid var(--primary-color);
+  outline: none;
+}
+
+select {
+  border: 1px solid var(--dark-background);
+  background-color: var(--almost-white);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+select:focus {
+  border: 1px solid var(--primary-color);
+  outline: none;
+}
+
+select option {
+  background-color: var(--almost-white);
+  font-family: monospace;
 }

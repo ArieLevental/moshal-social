@@ -1,13 +1,13 @@
-.main {
+.app-main {
   display: flex;
 }
 
-.main-sidebar {
+.app-main-sidebar {
   flex-grow: 15;
   flex-basis: 15%;
 }
 
-.main-content {
+.app-main-content {
   display: flex;
   justify-content: center;
   height: 84vh;

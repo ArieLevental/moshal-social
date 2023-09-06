@@ -32,9 +32,6 @@ const EducationBox = (props) => {
   };
   return (
     <div className="education-box">
-      {props.educationItem.userId === signedUserId && (
-        <button onClick={handleEducationDelete}>X</button>
-      )}
       <p className="education-box-institution-name">
         {props.educationItem.institutionId.name}{" "}
       </p>
@@ -46,6 +43,10 @@ const EducationBox = (props) => {
         {props.educationItem.startYear} - {props.educationItem.endYear}
       </p>
       <p className="education-box-degree"> {props.educationItem.degree} </p>
+      {props.educationItem.userId === signedUserId &&
+        props.educationEditMode && (
+          <button className="education-box-remove-button" onClick={handleEducationDelete}>Remove</button>
+        )}
     </div>
   );
 };
