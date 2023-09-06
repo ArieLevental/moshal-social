@@ -8,12 +8,12 @@ const Sidebar = (props) => {
 
   return (
     // Routing to different pages in the app
-    <div className="main-sidebar">
+    <div className="sidebar">
       <Link to="/" className="sidebar-item">
         Home
       </Link>
       <Link to="/users" className="sidebar-item">
-        Users database
+        Users Database
       </Link>
       <Link to="/jobs" className="sidebar-item">
         Jobs Board  

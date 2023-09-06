@@ -44,14 +44,14 @@ function App() {
       >
         <BrowserRouter>
           <Toolbar />
-          <div className="main">
+          <div className="app-main">
             {token && (
-              <div className="main-sidebar">
+              <div className="app-main-sidebar">
                 <Sidebar />
               </div>
             )}
 
-            <div className="main-content">
+            <div className="app-main-content">
               <Routes>
                 <Route
                   path="/"

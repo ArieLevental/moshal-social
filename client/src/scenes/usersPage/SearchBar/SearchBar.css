@@ -16,6 +16,7 @@ background-color: rgba(0, 0, 0, 0.386);
     display: flex;
     margin-left: 20px;
     justify-content: space-between;
+    align-items: center;
 }
 
 .dropdown-label

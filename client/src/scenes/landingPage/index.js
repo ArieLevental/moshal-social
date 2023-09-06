@@ -24,7 +24,7 @@ const LandingPage = () => {
   const [formData, setFormData] = useState(INITIAL_FORMDATA);
 
   return (
-    <div>
+    <div className="landing-page-container">
       <authContext.Provider value={[INITIAL_FORMDATA, setActiveForm, formData, setFormData]}>
         {/* Render the active form based on the state */}
         {activeForm === "login" && (

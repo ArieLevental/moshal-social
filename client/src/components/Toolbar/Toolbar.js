@@ -4,21 +4,22 @@ import { globalContext } from "../../App";
 import { useContext } from "react";
 
 const Toolbar = () => {
-  const [signedUserId, setSignedUserId, token, setToken, handleExpiredToken] = useContext(globalContext);
+  const [signedUserId, setSignedUserId, token, setToken, handleExpiredToken] =
+    useContext(globalContext);
 
   const handleLogout = () => {
-    handleExpiredToken()
+    handleExpiredToken();
   };
 
   return (
     <div className="toolbar">
-      <img
-        className="toolbar-logo"
-        src="/assets/512logo.png"
-        alt="Moshal Logo"
-      />
+      <div className="toolbar-logo">
+        <img className="toolbar-logo-img" src="/assets/white-logo.png" alt="Moshal Logo" />
+      </div>
+      {/* If user is logged in, show the icons */}
       {token && (
-        <Icons signedUserId={signedUserId}
+        <Icons
+          signedUserId={signedUserId}
           className="toolbar-icons"
           handleLogout={handleLogout}
         />

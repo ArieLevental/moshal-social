@@ -1,8 +1,10 @@
-.main-sidebar {
+.sidebar {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: rgb(130, 130, 130);
+  background-color: var(--almost-white);
+  width: 15vw;
+  height: 100%;
 }
 
 .sidebar-item {
@@ -12,16 +14,16 @@
 
 .sidebar-item:link,
 .sidebar-item:visited {
-  background-color: #4e4bf5;
+  background-color: var(--primary-color-brighter);
   color: white;
   padding: 14px 25px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  border-radius: 5%;
+  border-bottom: 4px solid var(--dark-background);
 }
 
 .sidebar-item:hover,
 .sidebar-item:active {
-  background-color: rgb(77, 23, 225);
+  background-color: var(--primary-color);
 }

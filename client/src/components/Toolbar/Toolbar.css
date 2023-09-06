@@ -1,5 +1,5 @@
 .toolbar {
-  background-color: rgb(194, 194, 194);
+  background-color: var(--almost-white);
   font-style: italic;
   display: flex;
   justify-content: space-between;
@@ -8,5 +8,10 @@
 }
 
 .toolbar-logo {
-  padding: 10px;
+  background-color: var(--primary-color);
+  width: 15vw;
+}
+
+.toolbar-logo-img {
+  width: 10vh;
 }
