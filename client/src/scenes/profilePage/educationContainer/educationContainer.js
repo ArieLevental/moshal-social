@@ -12,7 +12,7 @@ const EducationContainer = (props) => {
   const [inAddMode, setInAddMode] = useState(false);
   const [userEducationData, setUserEducationData] = useState([]);
   const [educationEditMode, setEducationEditMode] = useState(false);
-  const [signedUserId, setSignedUserId, token, setToken, handleExpiredToken] =
+  const {signedUserId, token, handleExpiredToken} =
     useContext(globalContext);
   const { userId } = useParams();
 
