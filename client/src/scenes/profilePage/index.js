@@ -7,17 +7,20 @@ import { faWhatsapp, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import israelCities from "./israel_cities.json";
 import "./index.css";
 import EducationContainer from "./educationContainer/educationContainer.js";
+import OccupationContainer from "./occupationContainer/occupationContainer";
 
 const ProfilePage = () => {
   const { userId } = useParams();
   const [userData, setUserData] = useState(null);
   const [institutionsData, setInstitutionsData] = useState(null);
+  const [companiesData, setCompaniesData] = useState(null);
   const [detailsFormData, setDetailsFormData] = useState(null);
   const [inEditMode, setInEditMode] = useState(false);
   const [inImgMode, setInImgMode] = useState(false);
   const [imgValue, setImgValue] = useState(null);
   const [url, setUrl] = useState(null);
   const { signedUserId, token, handleExpiredToken } = useContext(globalContext);
+  const [currentWorkplace, setCurrentWorkplace] = useState("")
 
   useEffect(() => {
     fetch(`http://localhost:3001/institutions`, {
@@ -26,6 +29,23 @@ const ProfilePage = () => {
       const resJson = await res.json();
       if (res.status === 200) {
         setInstitutionsData(resJson);
+      } else if (res.status === 401) {
+        alert("You are not authorized to view this page");
+        handleExpiredToken();
+      } else {
+        alert("Something went wrong, please try again later");
+      }
+    });
+    // TODO: merge with second useEffect
+  }, []);
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/companies`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then(async (res) => {
+      const resJson = await res.json();
+      if (res.status === 200) {
+        setCompaniesData(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
         handleExpiredToken();
@@ -201,7 +221,8 @@ const ProfilePage = () => {
                 </p>
                 <p>
                   <strong>Current workplace:</strong>{" "}
-                  {userData.occupation[0] || "No where, currently"}
+                  {/* {userData.occupation[0] || "No where, currently"} */}
+                  {currentWorkplace || "No where, currently"}
                 </p>
               </div>
             )}
@@ -302,13 +323,24 @@ const ProfilePage = () => {
               </div>
             )}
           </div>
-          <div className="education">
-            <h4>Education:</h4>
-            <EducationContainer
-              institutionsData={institutionsData}
-              setUserData={setUserData}
-              userData={userData}
-            />
+          <div className="education-occupation-container">
+            <div className="education">
+              <h4>Education:</h4>
+              <EducationContainer
+                institutionsData={institutionsData}
+                setUserData={setUserData}
+                userData={userData}
+              />
+            </div>
+            <div className="occupation">
+              <h4>Occupation:</h4>
+              <OccupationContainer
+                companiesData={companiesData}
+                setUserData={setUserData}
+                userData={userData}
+                setCurrentWorkplace={setCurrentWorkplace}
+              />
+            </div>
           </div>
         </div>
       )}
