@@ -20,14 +20,11 @@ import companiesRouter from "./routes/companies.js";
 
 /* USED FOR ONE-TIME DATA LOAD */
 import User from "./models/User.js";
-import { users } from "./data/index.js";
-
-/* USED FOR ONE-TIME DATA LOAD */
 import Institution from "./models/Institution.js";
-import { institutions } from "./data/institutions.js";
-
 import Company from "./models/Company.js";
-import { companies } from "./data/companies.js";
+import Occupation from "./models/Occupation.js";
+import Education from "./models/Education.js";
+import { users, companies, institutions, occupations, educations } from "./data/index.js";
 
 dotenv.config();
 
@@ -57,7 +54,6 @@ app.use("/jobs", jobsRouter);
 app.use("/company", companyRouter);
 app.use("/companies", companiesRouter);
 
-
 // MONGOOSE SETUP
 const PORT = process.env.PORT || 6001;
 mongoose
@@ -72,6 +68,7 @@ mongoose
     // User.insertMany(users);
     // Institution.insertMany(institutions);
     // Company.insertMany(companies);
-
+    // Occupation.insertMany(occupations);
+    // Education.insertMany(educations);
   })
   .catch((error) => console.log(`${error} did not connect`));

@@ -1,8 +1,10 @@
 // USED FOR ONE TIME DATA LOAD, MAINLY FOR TESTING
 
 import mongoose from "mongoose";
+import { ref, getDownloadURL } from "firebase/storage";
+import { storage } from "../firebase.js";
 
-const userIds = [
+export const userIds = [
   new mongoose.Types.ObjectId(),
   new mongoose.Types.ObjectId(),
   new mongoose.Types.ObjectId(),
@@ -63,14 +65,14 @@ export const users = [
   },
   {
     _id: userIds[3],
-    firstName: "Hila",
-    lastName: "Masheu",
+    firstName: "Amir",
+    lastName: "Hubara",
     email: "Hila@moshal.com",
     password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
     picturePath: "",
     bannerPath: "",
     location: "Ramat Gan",
-    bio: "AMAZINGGGGG!",
+    bio: "Amazing!",
     phoneNumber: "0541591234",
     linkedIn: "",
     moshalStatus: "Staff",
@@ -130,7 +132,7 @@ export const users = [
     picturePath: "",
     bannerPath: "",
     location: "New York, City",
-    bio: "Oev et kulam, rak lo odim",
+    bio: "Oev et kulam, rak lo oti",
     phoneNumber: "0582242110",
     linkedIn: "",
     moshalStatus: "Scholar",
@@ -145,7 +147,7 @@ export const users = [
     picturePath: "",
     bannerPath: "",
     location: "Jerusalem, IR",
-    bio: "oev et kulam, rak lo aravim",
+    bio: "Stam masheu",
     phoneNumber: "0559929992",
     linkedIn: "",
     moshalStatus: "Scholar",
@@ -155,7 +157,7 @@ export const users = [
     _id: userIds[9],
     firstName: "Noa",
     lastName: "Levy",
-    email: "sexyClown@moshal.co.il",
+    email: "bruhClown@moshal.co.il",
     password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
     picturePath: "",
     bannerPath: "",
@@ -168,144 +170,343 @@ export const users = [
   },
 ];
 
-// export const posts = [
-//   {
-//     _id: new mongoose.Types.ObjectId(),
-//     userId: userIds[1],
-//     firstName: "Steve",
-//     lastName: "Ralph",
-//     location: "New York, CA",
-//     description: "Some really long random description",
-//     picturePath: "post1.jpeg",
-//     userPicturePath: "p3.jpeg",
-//     likes: new Map([
-//       [userIds[0], true],
-//       [userIds[2], true],
-//       [userIds[3], true],
-//       [userIds[4], true],
-//     ]),
-//     comments: [
-//       "random comment",
-//       "another random comment",
-//       "yet another random comment",
-//     ],
-//   },
-//   {
-//     _id: new mongoose.Types.ObjectId(),
-//     userId: userIds[3],
-//     firstName: "Whatcha",
-//     lastName: "Doing",
-//     location: "Korea, CA",
-//     description:
-//       "Another really long random description. This one is longer than the previous one.",
-//     picturePath: "post2.jpeg",
-//     userPicturePath: "p6.jpeg",
-//     likes: new Map([
-//       [userIds[7], true],
-//       [userIds[4], true],
-//       [userIds[1], true],
-//       [userIds[2], true],
-//     ]),
-//     comments: [
-//       "one more random comment",
-//       "and another random comment",
-//       "no more random comments",
-//       "I lied, one more random comment",
-//     ],
-//   },
-//   {
-//     _id: new mongoose.Types.ObjectId(),
-//     userId: userIds[4],
-//     firstName: "Jane",
-//     lastName: "Doe",
-//     location: "Utah, CA",
-//     description:
-//       "This is the last really long random description. This one is longer than the previous one.",
-//     picturePath: "post3.jpeg",
-//     userPicturePath: "p5.jpeg",
-//     likes: new Map([
-//       [userIds[1], true],
-//       [userIds[6], true],
-//       [userIds[3], true],
-//       [userIds[5], true],
-//     ]),
-//     comments: [
-//       "one more random comment",
-//       "I lied, one more random comment",
-//       "I lied again, one more random comment",
-//       "Why am I doing this?",
-//       "I'm bored",
-//     ],
-//   },
-//   {
-//     _id: new mongoose.Types.ObjectId(),
-//     userId: userIds[5],
-//     firstName: "Harvey",
-//     lastName: "Dunn",
-//     location: "Los Angeles, CA",
-//     description:
-//       "This is the last really long random description. This one is longer than the previous one. Man I'm bored. I'm going to keep typing until I run out of things to say.",
-//     picturePath: "post4.jpeg",
-//     userPicturePath: "p7.jpeg",
-//     likes: new Map([
-//       [userIds[1], true],
-//       [userIds[6], true],
-//       [userIds[3], true],
-//     ]),
-//     comments: [
-//       "I lied again, one more random comment",
-//       "Why am I doing this?",
-//       "I'm bored",
-//       "I'm still bored",
-//       "All I want to do is play video games",
-//       "I'm going to play video games",
-//     ],
-//   },
-//   {
-//     _id: new mongoose.Types.ObjectId(),
-//     userId: userIds[6],
-//     firstName: "Carly",
-//     lastName: "Vowel",
-//     location: "Chicago, IL",
-//     description:
-//       "Just a short description. I'm tired of typing. I'm going to play video games now.",
-//     picturePath: "post5.jpeg",
-//     userPicturePath: "p8.jpeg",
-//     likes: new Map([
-//       [userIds[1], true],
-//       [userIds[3], true],
-//       [userIds[5], true],
-//       [userIds[7], true],
-//     ]),
-//     comments: [
-//       "I lied again, one more random comment",
-//       "Why am I doing this?",
-//       "Man I'm bored",
-//       "What should I do?",
-//       "I'm going to play video games",
-//     ],
-//   },
-//   {
-//     _id: new mongoose.Types.ObjectId(),
-//     userId: userIds[7],
-//     firstName: "Jessica",
-//     lastName: "Dunn",
-//     location: "Washington, DC",
-//     description:
-//       "For the last time, I'm going to play video games now. I'm tired of typing. I'm going to play video games now.",
-//     picturePath: "post6.jpeg",
-//     userPicturePath: "p9.jpeg",
-//     likes: new Map([
-//       [userIds[1], true],
-//       [userIds[2], true],
-//     ]),
+const companyUrl0 = await getDownloadURL(ref(storage, "logos/Intel.jpg"));
+const companyUrl1 = await getDownloadURL(ref(storage, "logos/Microsoft.jpg"));
+const companyUrl2 = await getDownloadURL(ref(storage, "logos/Tnuva.jpg"));
+const companyUrl3 = await getDownloadURL(ref(storage, "logos/Mobileye.jpg"));
+const companyUrl4 = await getDownloadURL(ref(storage, "logos/Wix.jpg"));
+const companyUrl5 = await getDownloadURL(ref(storage, "logos/Meta.jpg"));
 
-//     comments: [
-//       "Can I play video games now?",
-//       "No let's actually study",
-//       "Never mind, I'm going to play video games",
-//       "Stop it.",
-//       "Michael, stop it.",
-//     ],
-//   },
-// ];
+const companyIds = [
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+];
+
+export const companies = [
+  {
+    _id: companyIds[0],
+    name: "Intel",
+    logoPath: companyUrl0,
+  },
+  {
+    _id: companyIds[1],
+    name: "Microsoft",
+    logoPath: companyUrl1,
+  },
+  {
+    _id: companyIds[2],
+    name: "Tnuva",
+    logoPath: companyUrl2,
+  },
+  {
+    _id: companyIds[3],
+    name: "Mobileye",
+    logoPath: companyUrl3,
+  },
+  {
+    _id: companyIds[4],
+    name: "Wix",
+    logoPath: companyUrl4,
+  },
+  {
+    _id: companyIds[5],
+    name: "Meta",
+    logoPath: companyUrl5,
+  },
+];
+
+const institutionUrl0 = await getDownloadURL(ref(storage, "logos/Ariel.jpg"));
+const institutionUrl1 = await getDownloadURL(
+  ref(storage, "logos/Bar-Ilan.jpg")
+);
+const institutionUrl2 = await getDownloadURL(
+  ref(storage, "logos/Ben-Gurion.jpg")
+);
+const institutionUrl3 = await getDownloadURL(ref(storage, "logos/Haifa.jpg"));
+const institutionUrl4 = await getDownloadURL(ref(storage, "logos/Hebrew.jpg"));
+const institutionUrl5 = await getDownloadURL(
+  ref(storage, "logos/Technion.jpg")
+);
+const institutionUrl6 = await getDownloadURL(
+  ref(storage, "logos/Tel-Aviv.jpg")
+);
+const institutionUrl7 = await getDownloadURL(ref(storage, "logos/Open.jpg"));
+const institutionUrl8 = await getDownloadURL(
+  ref(storage, "logos/Weizmann.jpg")
+);
+
+const institutionId = [
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+];
+
+export const institutions = [
+  {
+    _id: institutionId[0],
+    name: "Ariel University",
+    logoPath: institutionUrl0,
+  },
+  {
+    _id: institutionId[1],
+    name: "Bar-Ilan University",
+    logoPath: institutionUrl1,
+  },
+  {
+    _id: institutionId[2],
+    name: "Ben-Gurion University",
+    logoPath: institutionUrl2,
+  },
+  {
+    _id: institutionId[3],
+    name: "Haifa University",
+    logoPath: institutionUrl3,
+  },
+  {
+    _id: institutionId[4],
+    name: "Hebrew University",
+    logoPath: institutionUrl4,
+  },
+  {
+    _id: institutionId[5],
+    name: "Technion",
+    logoPath: institutionUrl5,
+  },
+  {
+    _id: institutionId[6],
+    name: "Tel-Aviv University",
+    logoPath: institutionUrl6,
+  },
+  {
+    _id: institutionId[7],
+    name: "The Open University",
+    logoPath: institutionUrl7,
+  },
+  {
+    _id: institutionId[8],
+    name: "Weizmann",
+    logoPath: institutionUrl8,
+  },
+];
+
+const occupationIds = [
+  new mongoose.Types.ObjectId(), // 1
+  new mongoose.Types.ObjectId(), // 2
+  new mongoose.Types.ObjectId(), // 3
+  new mongoose.Types.ObjectId(), // 4
+  new mongoose.Types.ObjectId(), // 5
+  new mongoose.Types.ObjectId(), // 6
+  new mongoose.Types.ObjectId(), // 7
+  new mongoose.Types.ObjectId(), // 8
+  new mongoose.Types.ObjectId(), // 9
+  new mongoose.Types.ObjectId(), // 10
+  new mongoose.Types.ObjectId(), // 11
+  new mongoose.Types.ObjectId(), // 12
+];
+
+export const occupations = [
+  {
+    _id: occupationIds[0],
+    userId: userIds[0],
+    companyId: companyIds[0],
+    position: "Full Stack Developer",
+    startYear: 2017,
+    endYear: 2019,
+    __v: 0,
+  },
+  {
+    _id: occupationIds[1],
+    userId: userIds[1],
+    companyId: companyIds[0],
+    position: "Software Engineer",
+    startYear: 2016,
+    endYear: 2021,
+    __v: 0,
+  },
+  {
+    _id: occupationIds[2],
+    userId: userIds[2],
+    companyId: companyIds[1],
+    position: "Data Scientist",
+    startYear: 2021,
+    endYear: 2023,
+    __v: 0,
+  },
+  {
+    _id: occupationIds[3],
+    userId: userIds[3],
+    companyId: companyIds[1],
+    position: "Cybersecurity Analyst",
+    startYear: 2005,
+    endYear: 2007,
+    __v: 0,
+  },
+  {
+    _id: occupationIds[4],
+    userId: userIds[1],
+    companyId: companyIds[1],
+    position: "Cloud Solutions Architect",
+    startYear: 2022,
+    endYear: 2022,
+    __v: 0,
+  },
+  {
+    _id: occupationIds[5],
+    userId: userIds[5],
+    companyId: companyIds[2],
+    position: "DevOps Engineer",
+    startYear: 2015,
+    endYear: 2016,
+    __v: 0,
+  },
+  {
+    _id: occupationIds[6],
+    userId: userIds[5],
+    companyId: companyIds[3],
+    position: "Machine Learning Engineer",
+    startYear: 2021,
+    endYear: 2023,
+    __v: 0,
+  },
+  {
+    _id: occupationIds[7],
+    userId: userIds[6],
+    companyId: companyIds[3],
+    position: "Network Engineer",
+    startYear: 2009,
+    endYear: 2011,
+    __v: 0,
+  },
+  {
+    _id: occupationIds[8],
+    userId: userIds[7],
+    companyId: companyIds[4],
+    position: "AI Ethicist",
+    startYear: 2017,
+    endYear: 2019,
+    __v: 0,
+  },
+  {
+    _id: occupationIds[9],
+    userId: userIds[9],
+    companyId: companyIds[4],
+    position: "Quantum Computing Researcher",
+    startYear: 2021,
+    endYear: 2022,
+    __v: 0,
+  },
+  {
+    _id: occupationIds[10],
+    userId: userIds[9],
+    companyId: companyIds[5],
+    position: "AR/VR Developer",
+    startYear: 2014,
+    endYear: 2018,
+    __v: 0,
+  },
+  {
+    _id: occupationIds[11],
+    userId: userIds[0],
+    companyId: companyIds[5],
+    position: "Blockchain Developer",
+    startYear: 2013,
+    endYear: 2019,
+    __v: 0,
+  },
+];
+
+const educationIds = [
+  new mongoose.Types.ObjectId(), // 1
+  new mongoose.Types.ObjectId(), // 2
+  new mongoose.Types.ObjectId(), // 3
+  new mongoose.Types.ObjectId(), // 4
+  new mongoose.Types.ObjectId(), // 5
+  new mongoose.Types.ObjectId(), // 6
+  new mongoose.Types.ObjectId(), // 7
+  new mongoose.Types.ObjectId(), // 8
+];
+
+export const educations = [
+  {
+    _id: educationIds[0],
+    userId: userIds[0],
+    institutionId: institutionId[0],
+    startYear: 2013,
+    endYear: 2016,
+    degree: "Computer Science",
+    __v: 0,
+  },
+  {
+    _id: educationIds[1],
+    userId: userIds[0],
+    institutionId: institutionId[1],
+    startYear: 2012,
+    endYear: 2013,
+    degree: "Biomedical Engineering",
+    __v: 0,
+  },
+  {
+    _id: educationIds[2],
+    userId: userIds[1],
+    institutionId: institutionId[2],
+    startYear: 2019,
+    endYear: 2021,
+    degree: "Environmental Science",
+    __v: 0,
+  },
+  {
+    _id: educationIds[3],
+    userId: userIds[1],
+    institutionId: institutionId[3],
+    startYear: 2017,
+    endYear: 2019,
+    degree: "Psychology",
+    __v: 0,
+  },
+  {
+    _id: educationIds[4],
+    userId: userIds[2],
+    institutionId: institutionId[3],
+    startYear: 2013,
+    endYear: 2016,
+    degree: "Business Administration",
+    __v: 0,
+  },
+  {
+    _id: educationIds[5],
+    userId: userIds[3],
+    institutionId: institutionId[4],
+    startYear: 2011,
+    endYear: 2015,
+    degree: "Mechanical Engineering",
+    __v: 0,
+  },
+  {
+    _id: educationIds[6],
+    userId: userIds[4],
+    institutionId: institutionId[5],
+    startYear: 2017,
+    endYear: 2020,
+    degree: "Economics",
+    __v: 0,
+  },
+  {
+    _id: educationIds[7],
+    userId: userIds[5],
+    institutionId: institutionId[6],
+    startYear: 2015,
+    endYear: 2019,
+    degree: "Biology",
+    __v: 0,
+  },
+];

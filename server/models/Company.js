@@ -13,8 +13,6 @@ const companySchema = mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        unique: true, // Ensures uniqueness within the array
-        // sparse: true, // Allows null (empty) values without causing conflicts
       },
     ],
     logoPath: {

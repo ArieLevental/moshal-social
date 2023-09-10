@@ -25,9 +25,9 @@ const OccupationContainer = (props) => {
       if (res.status === 200) {
         console.log(resJson.occupationItems);
         //TODO: currently just takes the last item's, but it's not necessarily the case
-        props.setCurrentWorkplace(
-          resJson.occupationItems.slice(-1)[0].companyId.name
-        );
+        // props.setCurrentWorkplace(
+        //   resJson.occupationItems.slice(-1)[0].companyId.name
+        // );
         setUserOccupationData(resJson.occupationItems);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");

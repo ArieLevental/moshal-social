@@ -11,8 +11,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
-  width: 50%;
+  justify-content: center;
 }
 
 .profile-page-name {
@@ -101,7 +100,7 @@
   align-self: center;
 }
 
-.education-occupation-container{
+.education-occupation-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
