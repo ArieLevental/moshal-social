@@ -1,0 +1,43 @@
+.occupation-box {
+    /* border: 1px solid rgba(0, 0, 0, 0.366); */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .occupation-box-company-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .occupation-box-company-logo {
+    border: 1px solid black;
+    height: 60px;
+    width: 60px;
+    /* padding: 5px; */
+    margin: 8px;
+  }
+  
+  .occupation-box-duration {
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .occupation-box-position {
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .occupation-box-remove-button {
+    margin-top: 5px;
+  }
