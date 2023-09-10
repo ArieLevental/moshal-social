@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  column-gap: 10%;
+  column-gap: 1%;
 }
 
 .login-form-label {
@@ -27,7 +27,7 @@
 }
 
 .register-form-label {
-  flex-basis: 50%;
+  flex-basis: 60%;
   text-align: left;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .register-form-input {
-  flex-basis: 75%;
+  flex-basis: 40%;
   flex-grow: 0;
 }
 
@@ -46,6 +46,7 @@
   border-bottom: 4px solid var(--primary-color-brighter);
   /* border-right: 3px solid var(--primary-color-brighter); */
   padding-bottom: 0px;
+  outline: none;
 }
 
 .register-form-input:focus {
@@ -53,6 +54,7 @@
   border-bottom: 4px solid var(--primary-color-brighter);
   /* border-right: 3px solid var(--primary-color-brighter); */
   padding-bottom: 0px;
+  outline: none;
 }
 
 .landing-page-action-link {
@@ -62,4 +64,10 @@
 
 .landing-page-action-link:hover {
   color: var(--light-blue);
+}
+
+.login-form-submit-button,
+.register-form-submit-button {
+  width: 40%;
+  align-self: center;
 }

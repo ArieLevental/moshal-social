@@ -51,6 +51,7 @@ export const Login = (props) => {
             Email:
           </label>
           <input
+            tabIndex="1"
             className="login-form-input"
             type="email"
             id="email"
@@ -68,6 +69,7 @@ export const Login = (props) => {
             Password:
           </label>
           <input
+            tabIndex="2"
             className="login-form-input"
             type="password"
             id="password"
@@ -81,9 +83,12 @@ export const Login = (props) => {
           />
         </div>
 
-        <button type="submit">Log In</button>
+        <button type="submit" tabIndex="3" className="login-form-submit-button">
+          Log In
+        </button>
       </form>
       <p
+        tabIndex="4"
         className="landing-page-action-link"
         onClick={(e) => {
           setActiveForm("register");
@@ -92,6 +97,7 @@ export const Login = (props) => {
         Don't have an account? Sign up here!
       </p>
       <p
+        tabIndex="5"
         onClick={(e) => setActiveForm("recovery")}
         className="landing-page-action-link"
       >
@@ -139,6 +145,7 @@ export const Register = (props) => {
             First name:
           </label>
           <input
+          tabIndex="1"
             className="register-form-input"
             type="text"
             id="firstName"
@@ -156,6 +163,7 @@ export const Register = (props) => {
             Last name:
           </label>
           <input
+          tabIndex="2"
             className="register-form-input"
             type="text"
             id="lastName"
@@ -173,6 +181,7 @@ export const Register = (props) => {
             Email:
           </label>
           <input
+          tabIndex="3"
             className="register-form-input"
             type="email"
             id="email"
@@ -190,6 +199,7 @@ export const Register = (props) => {
             phone Number:
           </label>
           <input
+          tabIndex="4"
             className="register-form-input"
             type="phone"
             id="phoneNumber"
@@ -207,6 +217,7 @@ export const Register = (props) => {
             Password:
           </label>
           <input
+          tabIndex="5"
             className="register-form-input"
             type="password"
             id="password"
@@ -224,6 +235,7 @@ export const Register = (props) => {
             Password Confirmation:
           </label>
           <input
+          tabIndex="6"
             className="register-form-input"
             type="password"
             id="passwordConfirmation"
@@ -236,9 +248,10 @@ export const Register = (props) => {
             }}
           />
         </div>
-        <button type="submit">Sign up</button>
+        <button type="submit" tabIndex="7" className="register-form-submit-button">Sign up</button>
       </form>
       <p
+      tabIndex="8"
         className="landing-page-action-link"
         onClick={(e) => {
           setActiveForm("login");
@@ -247,6 +260,7 @@ export const Register = (props) => {
         Already have an account? Login here!
       </p>
       <p
+      tabIndex="9"
         onClick={(e) => setActiveForm("recovery")}
         className="landing-page-action-link"
       >

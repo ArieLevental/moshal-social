@@ -28,9 +28,9 @@
 
 body {
   margin: 0;
-  font-family: "FenomenSans-Book", "NarkissBlock-Regular", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue", sans-serif;
+  font-family: "FenomenSans-Book", "NarkissBlock-Regular", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -61,21 +61,25 @@ button:hover {
   background-color: var(--primary-color);
 }
 
-input {
+input,
+textarea {
   border: 1px solid var(--dark-background);
   border-radius: 5px;
   padding: 5px;
   font-family: inherit;
 }
 
-input:focus {
+input:focus,
+textarea:focus {
   border: 1px solid var(--primary-color);
   outline: none;
+  border-bottom: 4px solid var(--primary-color-brighter);
+  padding-bottom: 0px;
 }
 
 select {
   border: 1px solid var(--dark-background);
-  background-color: var(--almost-white);
+  /* background-color: var(--almost-white); */
   border-radius: 5px;
   padding: 5px;
 }
@@ -86,6 +90,6 @@ select:focus {
 }
 
 select option {
-  background-color: var(--almost-white);
+  /* background-color: var(--almost-white); */
   font-family: monospace;
 }

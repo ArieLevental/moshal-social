@@ -8,11 +8,11 @@
 }
 
 .app-main-content {
-  display: flex;
-  justify-content: center;
+  /* display: flex; */
+  /* justify-content: center; */
   height: 84vh;
   flex-grow: 85;
   flex-basis: 85%;
-  background-color: rgb(255, 241, 223);
+  background-color: #fbfbfb;
   overflow-y: scroll;
 }

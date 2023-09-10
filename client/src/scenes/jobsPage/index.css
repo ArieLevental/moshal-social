@@ -1,0 +1,33 @@
+.jobs-page {
+  width: 100%;
+  height: 100%;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+}
+
+.jobs-page-new-job-offer {
+  /* width: 100%; */
+  /* height: 100%; */
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 5px;
+  margin-bottom: 25px;
+}
+
+.jobs-page-new-job-offer-form {
+  width: 40%;
+  /* height: 100%; */
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  margin-bottom: 25px;
+}
+
+label {
+  align-self: flex-start;
+}
