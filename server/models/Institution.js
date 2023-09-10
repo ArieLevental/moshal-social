@@ -12,8 +12,6 @@ const institutionSchema = mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        unique: true,
-        sparse: true,
       },
     ],
     logoPath: {
