@@ -12,13 +12,14 @@
 .filter-zone {
   display: flex;
   margin-left: 20px;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
 .dropdown-label {
   font-weight: 600;
   margin-left: 10px;
+  margin-right: 5px;
 }
 
 .dropdown-menu {
