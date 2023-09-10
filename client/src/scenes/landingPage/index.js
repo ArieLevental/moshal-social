@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import "./index.css";
 import {
@@ -25,30 +25,32 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page-container">
-      <authContext.Provider value={[INITIAL_FORMDATA, setActiveForm, formData, setFormData]}>
+      <authContext.Provider
+        value={(INITIAL_FORMDATA, setActiveForm, formData, setFormData)}
+      >
         {/* Render the active form based on the state */}
         {activeForm === "login" && (
           <Login
-            // setActiveForm={setActiveForm}
-            // formData={formData}
-            // setFormData={setFormData}
-            // initialFormData={INITIAL_FORMDATA}
+          // setActiveForm={setActiveForm}
+          // formData={formData}
+          // setFormData={setFormData}
+          // initialFormData={INITIAL_FORMDATA}
           />
         )}
         {activeForm === "register" && (
           <Register
-            // setActiveForm={setActiveForm}
-            // formData={formData}
-            // setFormData={setFormData}
-            // initialFormData={INITIAL_FORMDATA}
+          // setActiveForm={setActiveForm}
+          // formData={formData}
+          // setFormData={setFormData}
+          // initialFormData={INITIAL_FORMDATA}
           />
         )}
         {activeForm === "recovery" && (
           <PasswordRecovery
-            // setActiveForm={setActiveForm}
-            // formData={formData}
-            // setFormData={setFormData}
-            // initialFormData={INITIAL_FORMDATA}
+          // setActiveForm={setActiveForm}
+          // formData={formData}
+          // setFormData={setFormData}
+          // initialFormData={INITIAL_FORMDATA}
           />
         )}
       </authContext.Provider>
