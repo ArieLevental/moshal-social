@@ -36,13 +36,13 @@ function App() {
   return (
     <div className="app">
       <globalContext.Provider
-        value={[
+        value={{
           signedUserId,
           setSignedUserId,
           token,
           setToken,
           handleExpiredToken,
-        ]}
+        }}
       >
         <BrowserRouter>
           <Toolbar />

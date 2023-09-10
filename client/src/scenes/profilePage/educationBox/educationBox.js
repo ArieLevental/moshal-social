@@ -4,8 +4,7 @@ import { globalContext } from "../../../App";
 import { useParams } from "react-router-dom";
 
 const EducationBox = (props) => {
-  const [signedUserId, setSignedUserId, token, setToken, handleExpiredToken] =
-    useContext(globalContext);
+  const { signedUserId, token, handleExpiredToken } = useContext(globalContext);
   const { userId } = useParams();
 
   const handleEducationDelete = (e) => {
@@ -45,7 +44,12 @@ const EducationBox = (props) => {
       <p className="education-box-degree"> {props.educationItem.degree} </p>
       {props.educationItem.userId === signedUserId &&
         props.educationEditMode && (
-          <button className="education-box-remove-button" onClick={handleEducationDelete}>Remove</button>
+          <button
+            className="education-box-remove-button"
+            onClick={handleEducationDelete}
+          >
+            Remove
+          </button>
         )}
     </div>
   );

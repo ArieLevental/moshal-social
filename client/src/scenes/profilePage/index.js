@@ -17,8 +17,7 @@ const ProfilePage = () => {
   const [inImgMode, setInImgMode] = useState(false);
   const [imgValue, setImgValue] = useState(null);
   const [url, setUrl] = useState(null);
-  const [signedUserId, setSignedUserId, token, setToken, handleExpiredToken] =
-    useContext(globalContext);
+  const { signedUserId, token, handleExpiredToken } = useContext(globalContext);
 
   useEffect(() => {
     fetch(`http://localhost:3001/institutions`, {
@@ -293,7 +292,12 @@ const ProfilePage = () => {
                   <div className="form-element"></div>
                   <div className="form-element"></div>
 
-                  <button type="submit" className="user-data-form-submit-button">Submit</button>
+                  <button
+                    type="submit"
+                    className="user-data-form-submit-button"
+                  >
+                    Submit
+                  </button>
                 </form>
               </div>
             )}
