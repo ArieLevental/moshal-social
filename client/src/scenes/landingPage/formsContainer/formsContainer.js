@@ -7,11 +7,10 @@ import "./formsContainer.css";
 {
   /* LOGIN FORM*/
 }
-export const Login = (props) => {
-  const [INITIAL_FORMDATA, setActiveForm, formData, setFormData] =
+export const Login = () => {
+  const { INITIAL_FORMDATA, setActiveForm, formData, setFormData } =
     useContext(authContext);
-  const [signedUserId, setSignedUserId, token, setToken] =
-    useContext(globalContext);
+  const { setSignedUserId, setToken } = useContext(globalContext);
 
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
@@ -110,8 +109,8 @@ export const Login = (props) => {
 {
   /* REGISTER FORM*/
 }
-export const Register = (props) => {
-  const [INITIAL_FORMDATA, setActiveForm, formData, setFormData] =
+export const Register = () => {
+  const { INITIAL_FORMDATA, setActiveForm, formData, setFormData } =
     useContext(authContext);
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -145,7 +144,7 @@ export const Register = (props) => {
             First name:
           </label>
           <input
-          tabIndex="1"
+            tabIndex="1"
             className="register-form-input"
             type="text"
             id="firstName"
@@ -163,7 +162,7 @@ export const Register = (props) => {
             Last name:
           </label>
           <input
-          tabIndex="2"
+            tabIndex="2"
             className="register-form-input"
             type="text"
             id="lastName"
@@ -181,7 +180,7 @@ export const Register = (props) => {
             Email:
           </label>
           <input
-          tabIndex="3"
+            tabIndex="3"
             className="register-form-input"
             type="email"
             id="email"
@@ -199,7 +198,7 @@ export const Register = (props) => {
             phone Number:
           </label>
           <input
-          tabIndex="4"
+            tabIndex="4"
             className="register-form-input"
             type="phone"
             id="phoneNumber"
@@ -217,7 +216,7 @@ export const Register = (props) => {
             Password:
           </label>
           <input
-          tabIndex="5"
+            tabIndex="5"
             className="register-form-input"
             type="password"
             id="password"
@@ -235,7 +234,7 @@ export const Register = (props) => {
             Password Confirmation:
           </label>
           <input
-          tabIndex="6"
+            tabIndex="6"
             className="register-form-input"
             type="password"
             id="passwordConfirmation"
@@ -248,10 +247,16 @@ export const Register = (props) => {
             }}
           />
         </div>
-        <button type="submit" tabIndex="7" className="register-form-submit-button">Sign up</button>
+        <button
+          type="submit"
+          tabIndex="7"
+          className="register-form-submit-button"
+        >
+          Sign up
+        </button>
       </form>
       <p
-      tabIndex="8"
+        tabIndex="8"
         className="landing-page-action-link"
         onClick={(e) => {
           setActiveForm("login");
@@ -260,7 +265,7 @@ export const Register = (props) => {
         Already have an account? Login here!
       </p>
       <p
-      tabIndex="9"
+        tabIndex="9"
         onClick={(e) => setActiveForm("recovery")}
         className="landing-page-action-link"
       >
@@ -274,7 +279,8 @@ export const Register = (props) => {
   /* PASSWORD RECOVERY FORM*/
 }
 export const PasswordRecovery = (props) => {
-  const [INITIAL_FORMDATA, setActiveForm, formData, setFormData] =
+  // TODO: add functionallity
+  const { INITIAL_FORMDATA, setActiveForm, formData, setFormData } =
     useContext(authContext);
   const handleSubmit = (event) => {
     alert("RECOVERY submitted: " + event.target.email.value);

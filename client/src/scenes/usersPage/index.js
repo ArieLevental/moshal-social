@@ -9,8 +9,7 @@ function UsersPage() {
   const [usersData, setUsersData] = useState(null);
   const [presentedData, setPresentedData] = useState(usersData);
   const [institutionsData, setInstitutionsData] = useState(null);
-  const [email, setEmail, token, setToken, handleExpiredToken] =
-    useContext(globalContext);
+  const { token, handleExpiredToken } = useContext(globalContext);
 
   useEffect(() => {
     fetch(`http://localhost:3001/users`, {
