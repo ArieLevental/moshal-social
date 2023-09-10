@@ -6,8 +6,7 @@ import Searchbar from "./Searchbar/Searchbar";
 import "./index.css";
 
 const JobsPage = () => {
-  const [signedUserId, setSignedUserId, token, setToken, handleExpiredToken] =
-    useContext(globalContext);
+  const { signedUserId, token, handleExpiredToken } = useContext(globalContext);
   const [jobsData, setJobsData] = useState([]);
   const [presentedJobsData, setPresentedJobsData] = useState([]);
   const [newJobOfferForm, setNewJobOfferForm] = useState(false);
@@ -88,41 +87,6 @@ const JobsPage = () => {
       })
       .catch((err) => console.log(err));
   };
-
-  // userId: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User",
-  //   required: true,
-  // },
-  // companyId: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "Company",
-  //   required: true,
-  // },
-  // content: {
-  //   type: String,
-  //   required: true,
-  //   min: 10,
-  //   max: 2000,
-  // },
-  // offerTitle: {
-  //   type: String,
-  //   required: true,
-  //   min: 2,
-  //   max: 100,
-  // },
-  // offerLink: {
-  //   type: String,
-  //   default: "",
-  // },
-  // expReq: {
-  //   type: String,
-  //   default: "",
-  // },
-  // referral: {
-  //   type: String,
-  //   default: "",
-  // },
 
   return (
     <div className="jobs-page">
