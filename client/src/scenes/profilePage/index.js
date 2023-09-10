@@ -167,7 +167,7 @@ const ProfilePage = () => {
               </button>
             </form>
           )}
-          <div>
+          <div className="user-data-container">
             {/* Show profile edit pen when user id is matching */}
             {signedUserId === userId && (
               <FontAwesomeIcon
@@ -293,7 +293,7 @@ const ProfilePage = () => {
                   <div className="form-element"></div>
                   <div className="form-element"></div>
 
-                  <input type="submit" value="Submit" />
+                  <button type="submit" className="user-data-form-submit-button">Submit</button>
                 </form>
               </div>
             )}

@@ -79,60 +79,64 @@ const EducationContainer = (props) => {
           Add new item
         </button>
       )}
-      <div className="education-add-new">
-        {inAddMode && (
-          <div>
-            <form onSubmit={handleAdd}>
-              <label htmlFor="institutionId">Institution:</label>
-              <select id="institutionId" name="institutionId">
-                {props?.institutionsData.map((institution) => (
-                  <option key={institution._id} value={institution._id}>
-                    {institution.name}
-                  </option>
-                ))}
-              </select>
-              <br />
-              <label htmlFor="startYear">Start year:</label>
-              <input
-                type="number"
-                min="1990"
-                max={currentYear + 1}
-                defaultValue="1990"
-                name="startYear"
-                id="startYear"
-              ></input>
 
-              <br />
-              <label htmlFor="endYear">End year:</label>
-              <input
-                type="number"
-                min="1990"
-                max={currentYear + 10}
-                defaultValue="2000"
-                name="endYear"
-                id="endYear"
-              ></input>
-              <br />
-              <label htmlFor="degree">Degree:</label>
-              <input type="text" name="degree" id="degree"></input>
-              <br />
-              <button type="submit">
-                <FontAwesomeIcon className="icon" icon={faCheck} />
-              </button>
-              <button
-                onClick={(e) => {
-                  setInAddMode(!inAddMode);
-                }}
-              >
-                <FontAwesomeIcon className="icon" icon={faX} />
-              </button>
-            </form>
-          </div>
-        )}
-      </div>
+      {inAddMode && (
+        <form className="education-container-new-form" onSubmit={handleAdd}>
+          <label htmlFor="institutionId">Institution:</label>
+          <select id="institutionId" name="institutionId">
+            {props?.institutionsData.map((institution) => (
+              <option key={institution._id} value={institution._id}>
+                {institution.name}
+              </option>
+            ))}
+          </select>
+          <br />
+          <label htmlFor="startYear">Start year:</label>
+          <input
+            type="number"
+            min="1990"
+            max={currentYear + 1}
+            defaultValue="1990"
+            name="startYear"
+            id="startYear"
+          ></input>
+
+          <br />
+          <label htmlFor="endYear">End year:</label>
+          <input
+            type="number"
+            min="1990"
+            max={currentYear + 10}
+            defaultValue="2000"
+            name="endYear"
+            id="endYear"
+          ></input>
+          <br />
+          <label htmlFor="degree">Degree:</label>
+          <input type="text" name="degree" id="degree"></input>
+          <br />
+          <button type="submit">
+            <FontAwesomeIcon className="icon" icon={faCheck} />
+          </button>
+          <button
+            onClick={(e) => {
+              setInAddMode(!inAddMode);
+            }}
+          >
+            <FontAwesomeIcon className="icon" icon={faX} />
+          </button>
+        </form>
+      )}
 
       <div className="education-section">
-        <button className="education-section-remove-controller" onClick={handleRemoveItems}>Remove items</button>
+        {signedUserId === props.userData._id && (
+          <button
+            className="education-section-remove-controller"
+            onClick={handleRemoveItems}
+          >
+            Remove items
+          </button>
+        )}
         {userEducationData.map((educationItem) => (
           <EducationBox
             key={educationItem._id}

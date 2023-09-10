@@ -11,6 +11,8 @@ import HomePage from "./scenes/homePage/index";
 import UsersPage from "./scenes/usersPage/index";
 import ProfilePage from "./scenes/profilePage/index";
 import LandingPage from "./scenes/landingPage";
+import JobsPage from "./scenes/jobsPage/index";
+
 import { createContext } from "react";
 
 export const globalContext = createContext();
@@ -68,6 +70,10 @@ function App() {
                 <Route
                   path="/user/:userId"
                   element={token ? <ProfilePage /> : <Navigate to="/" />}
+                />
+                <Route
+                  path="/jobs"
+                  element={token ? <JobsPage /> : <Navigate to="/" />}
                 />
               </Routes>
             </div>
