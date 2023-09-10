@@ -1,0 +1,25 @@
+.occupation-container {
+    background-color: rgba(0, 0, 0, 0.156);
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    width: 30vw;
+  }
+  
+  .occupation-container-add-button {
+    margin: 10px;
+  }
+  
+  .occupation-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .occupation-section-remove-controller {
+    margin-top: 10px;
+  }
+  

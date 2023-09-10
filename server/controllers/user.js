@@ -196,8 +196,8 @@ export const addOccupationItem = async (req, res) => {
       }
     );
 
-    if (!updatedInstitution) {
-      return res.status(404).json({ message: "Institution not found" });
+    if (!updatedCompany) {
+      return res.status(404).json({ message: "Company not found" });
     }
 
     res
@@ -268,7 +268,7 @@ export const deleteOccupationItem = async (req, res) => {
       );
 
       if (!updatedCompany) {
-        return res.status(404).json({ message: "Institution not found" });
+        return res.status(404).json({ message: "Company not found" });
       }
     }
 

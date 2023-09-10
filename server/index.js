@@ -15,6 +15,7 @@ import storageRouter from "./routes/storage.js";
 import institutionRouter from "./routes/institution.js";
 import institutionsRouter from "./routes/institutions.js";
 import jobsRouter from "./routes/jobs.js";
+import companyRouter from "./routes/company.js";
 import companiesRouter from "./routes/companies.js";
 
 /* USED FOR ONE-TIME DATA LOAD */
@@ -53,6 +54,7 @@ app.use("/storage", storageRouter);
 app.use("/institution", institutionRouter);
 app.use("/institutions", institutionsRouter);
 app.use("/jobs", jobsRouter);
+app.use("/company", companyRouter);
 app.use("/companies", companiesRouter);
 
 
