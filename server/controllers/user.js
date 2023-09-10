@@ -1,6 +1,8 @@
 import User from "../models/User.js";
 import Institution from "../models/Institution.js";
 import Education from "../models/Education.js";
+import Company from "../models/Company.js";
+import Occupation from "../models/Occupation.js";
 
 // Currently, this function is not used in the app
 export const getUser = async (req, res) => {
@@ -145,6 +147,127 @@ export const deleteEducationItem = async (req, res) => {
       );
 
       if (!updatedInstitution) {
+        return res.status(404).json({ message: "Institution not found" });
+      }
+    }
+
+    res
+      .status(200)
+      .json({ message: "Profile updated successfully", user: updatedUser });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+export const addOccupationItem = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { companyId, startYear, endYear, position } = req.body; // Assuming the request body contains the updated data
+    const newOccupation = new Occupation({
+      userId,
+      companyId,
+      startYear,
+      endYear,
+      position,
+    });
+    const savedOccupation = await newOccupation.save();
+
+    // Update user data
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $push: { occupation: savedOccupation._id } },
+      {
+        new: true, // This option returns the updated document
+        runValidators: true, // This option runs the validation on the updated data
+      }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update user data
+    const updatedCompany = await Company.findByIdAndUpdate(
+      companyId,
+      { $push: { employees: userId } },
+      {
+        new: true, // This option returns the updated document
+        runValidators: true, // This option runs the validation on the updated data
+      }
+    );
+
+    if (!updatedInstitution) {
+      return res.status(404).json({ message: "Institution not found" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Profile updated successfully", user: updatedUser });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+export const getOccupationItems = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findById(userId);
+    const occupationItems = await Occupation.find({
+      _id: { $in: user.occupation },
+    }).populate("companyId");
+
+    res
+      .status(200)
+      .json({ message: "Profile updated successfully", occupationItems });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+export const deleteOccupationItem = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { occupationId, companyId } = req.body; // Assuming the request body contains the updated data
+
+    // Update user data
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { occupation: occupationId } },
+      {
+        new: true, // This option returns the updated document
+        runValidators: true, // This option runs the validation on the updated data
+      }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // TODO - double request to the DB, can be optimized
+    const user = await User.findById(userId);
+    // Loop through the user's education items and check if the there is an institutionId matching
+    // the newly removed education item
+    // If there is no other education item with the same institutionId, remove the user from the institution's students list
+    let shouldRemove = false;
+    user.occupation.forEach((occupationId) => {
+      if (occupationId.companyId === companyId) {
+        shouldRemove = true;
+        return;
+      }
+    });
+
+    // Update user data
+    if (shouldRemove) {
+      const updatedCompany = await Company.findByIdAndUpdate(
+        companyId,
+        { $pull: { employees: userId } },
+        {
+          new: true, // This option returns the updated document
+          runValidators: true, // This option runs the validation on the updated data
+        }
+      );
+
+      if (!updatedCompany) {
         return res.status(404).json({ message: "Institution not found" });
       }
     }
