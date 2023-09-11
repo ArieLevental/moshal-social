@@ -5,7 +5,7 @@ import { globalContext } from "../../App";
 import { useContext } from "react";
 
 const Navbar = () => {
-  const { signedUserId, token, handleExpiredToken } = useContext(globalContext);
+  const { signedUserData, token, handleExpiredToken } = useContext(globalContext);
   const handleLogout = () => {
     handleExpiredToken();
   };
@@ -24,7 +24,8 @@ const Navbar = () => {
         <>
         <Navigation />
         <Icons
-          signedUserId={signedUserId}
+          signedUserId={signedUserData._id}
+          singedUserPicturePath={signedUserData.picturePath}
           className="navbar-icons"
           handleLogout={handleLogout}
         />
