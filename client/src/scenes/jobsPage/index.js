@@ -116,7 +116,7 @@ const JobsPage = () => {
           {newJobOfferForm ? (
             <button onClick={revealNewJobOfferForm}>Cancel</button>
           ) : (
-            <button onClick={revealNewJobOfferForm}>Add Job Offer</button>
+            <button onClick={revealNewJobOfferForm}>Add New Job Offer</button>
           )}
         </div>
         {newJobOfferForm ? (

@@ -1,6 +1,7 @@
 :root {
-  --primary-color: #1d5297;
-  --primary-color-brighter: #225fae;
+  --primary-color: rgb(29, 82, 151, 1);
+  --primary-color-brighter: rgb(29, 82, 151, 0.8);
+  --primary-color-brightest: rgb(29, 82, 151, 0.6);
   --color-icon-nav: rgba(0, 0, 0, 0.6);
   --color-icon-nav-hover: rgba(0, 0, 0, 0.9);
   --dark-background: #191b1c;

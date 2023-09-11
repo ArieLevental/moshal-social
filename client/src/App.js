@@ -18,7 +18,7 @@ import { createContext } from "react";
 export const globalContext = createContext();
 
 function App() {
-  // THIS IS THE STATES FOR THE GLOBAL STATE. EMAIL TOKEN
+  // Global state for the app
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [signedUserId, setSignedUserId] = useState(
     localStorage.getItem("user_id")

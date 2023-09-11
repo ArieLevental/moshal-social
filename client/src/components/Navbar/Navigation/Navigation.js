@@ -1,10 +1,7 @@
 import "./Navigation.css";
 import { Link } from "react-router-dom";
-import {
-  IconHome,
-  IconUsersGroup,
-  IconBrandFlipboard,
-} from "@tabler/icons-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHouse, faUsers, faClipboard } from "@fortawesome/free-solid-svg-icons";
 
 const Navigation = (props) => {
   const changeMode = (modeId) => {
@@ -15,15 +12,15 @@ const Navigation = (props) => {
     // Routing to different pages in the app
     <div className="navigation">
       <Link to="/" className="navigation-item">
-        <IconHome className="navigation-icon" />
+        <FontAwesomeIcon className="navigation-icon" icon={faHouse} />
         <div className="navigation-icon-text">Home</div>
       </Link>
       <Link to="/users" className="navigation-item">
-        <IconUsersGroup className="navigation-icon" />
+        <FontAwesomeIcon className="navigation-icon" icon={faUsers} />
         <div className="navigation-icon-text">DB</div>
       </Link>
       <Link to="/jobs" className="navigation-item">
-        <IconBrandFlipboard className="navigation-icon" />
+        <FontAwesomeIcon className="navigation-icon" icon={faClipboard} />
         <div className="navigation-icon-text">Jobs</div>
       </Link>
     </div>
