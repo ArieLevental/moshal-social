@@ -12,7 +12,8 @@ const OccupationContainer = (props) => {
   const [inAddMode, setInAddMode] = useState(false);
   const [userOccupationData, setUserOccupationData] = useState([]);
   const [occupationEditMode, setOccupationEditMode] = useState(false);
-  const { signedUserData, token, handleExpiredToken } = useContext(globalContext);
+  const { signedUserData, token, handleExpiredToken } =
+    useContext(globalContext);
   const { userId } = useParams();
 
   useEffect(() => {
@@ -25,9 +26,11 @@ const OccupationContainer = (props) => {
       if (res.status === 200) {
         console.log(resJson.occupationItems);
         //TODO: currently just takes the last item's, but it's not necessarily the case
-        // props.setCurrentWorkplace(
-        //   resJson.occupationItems.slice(-1)[0].companyId.name
-        // );
+        if (resJson.occupationItems.length > 0) {
+          props.setCurrentWorkplace(
+            resJson.occupationItems.slice(-1)[0].companyId.name
+          );
+        }
         setUserOccupationData(resJson.occupationItems);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
