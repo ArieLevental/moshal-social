@@ -1,17 +1,24 @@
 .navbar {
-  background-color: var(--almost-white);
-  font-style: italic;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  background-color: var(--almost-white);
+  /* background-color: rgb(244, 242, 238, 0.8); */
   height: 10vh;
   position: sticky;
 }
 
 .navbar-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: var(--primary-color);
-  width: 15vw;
+  border-radius: 50%;
+  padding: 0.4rem;
+  margin-right: 7rem;
+  margin-left: 1rem;
 }
 
 .navbar-logo-img {
-  width: 10vh;
+  width: 7vh;
 }

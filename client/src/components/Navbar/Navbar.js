@@ -12,6 +12,7 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
+
       <div className="navbar-logo">
         <img
           className="navbar-logo-img"
@@ -19,6 +20,7 @@ const Navbar = () => {
           alt="Moshal Logo"
         />
       </div>
+      
       {/* If user is logged in, show the icons */}
       {token && (
         <>
