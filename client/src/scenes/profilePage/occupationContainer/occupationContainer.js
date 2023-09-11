@@ -12,7 +12,7 @@ const OccupationContainer = (props) => {
   const [inAddMode, setInAddMode] = useState(false);
   const [userOccupationData, setUserOccupationData] = useState([]);
   const [occupationEditMode, setOccupationEditMode] = useState(false);
-  const { signedUserId, token, handleExpiredToken } = useContext(globalContext);
+  const { signedUserData, token, handleExpiredToken } = useContext(globalContext);
   const { userId } = useParams();
 
   useEffect(() => {
@@ -74,7 +74,7 @@ const OccupationContainer = (props) => {
   return (
     <div className="occupation-container">
       {/* Add button will render only if the user is signed in and the profile is his */}
-      {!inAddMode && signedUserId === props.userData._id && (
+      {!inAddMode && signedUserData._id === props.userData._id && (
         <button
           className="occupation-container-add-button"
           onClick={() => setInAddMode(!inAddMode)}
@@ -132,7 +132,7 @@ const OccupationContainer = (props) => {
       )}
 
       <div className="occupation-section">
-        {signedUserId === props.userData._id && (
+        {signedUserData._id === props.userData._id && (
           <button
             className="occupation-section-remove-controller"
             onClick={handleRemoveItems}
