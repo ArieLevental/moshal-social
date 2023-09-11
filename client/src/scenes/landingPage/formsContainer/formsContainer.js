@@ -10,7 +10,7 @@ import "./formsContainer.css";
 export const Login = () => {
   const { INITIAL_FORMDATA, setActiveForm, formData, setFormData } =
     useContext(authContext);
-  const { setSignedUserId, setToken } = useContext(globalContext);
+  const { setSignedUserData, setToken } = useContext(globalContext);
 
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
@@ -27,11 +27,17 @@ export const Login = () => {
         const resJson = await res.json();
         const handleSuccess = () => {
           console.log(resJson);
+          const userData = {
+            _id: resJson.user._id,
+            firstName: resJson.user.firstName,
+            lastName: resJson.user.lastName,
+            picturePath: resJson.user.picturePath,
+          };
           setToken(resJson.token);
-          setSignedUserId(resJson.user._id);
+          setSignedUserData(userData);
           setFormData(INITIAL_FORMDATA);
           localStorage.setItem("token", resJson.token);
-          localStorage.setItem("user_id", resJson.user._id);
+          localStorage.setItem("user_data", JSON.stringify(userData));
           navigate("/home");
         };
 

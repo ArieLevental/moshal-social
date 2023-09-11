@@ -8,7 +8,7 @@ import "./index.css";
 
 const JobsPage = () => {
   const {
-    signedUserId,
+    signedUserData,
     token,
     handleExpiredToken,
     israelCities,
@@ -67,7 +67,7 @@ const JobsPage = () => {
   const addJobOfferHandler = (e) => {
     e.preventDefault();
     const newJobOffer = {
-      userId: signedUserId,
+      userId: signedUserData._id,
       companyId: e.target.company.value,
       content: e.target.content.value,
       offerTitle: e.target.title.value,
