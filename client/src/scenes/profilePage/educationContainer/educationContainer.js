@@ -12,7 +12,7 @@ const EducationContainer = (props) => {
   const [inAddMode, setInAddMode] = useState(false);
   const [userEducationData, setUserEducationData] = useState([]);
   const [educationEditMode, setEducationEditMode] = useState(false);
-  const {signedUserId, token, handleExpiredToken} =
+  const {signedUserData, token, handleExpiredToken} =
     useContext(globalContext);
   const { userId } = useParams();
 
@@ -71,7 +71,7 @@ const EducationContainer = (props) => {
   return (
     <div className="education-container">
       {/* Add button will render only if the user is signed in and the profile is his */}
-      {!inAddMode && signedUserId === props.userData._id && (
+      {!inAddMode && signedUserData._id === props.userData._id && (
         <button
           className="education-container-add-button"
           onClick={() => setInAddMode(!inAddMode)}
@@ -129,7 +129,7 @@ const EducationContainer = (props) => {
       )}
 
       <div className="education-section">
-        {signedUserId === props.userData._id && (
+        {signedUserData._id === props.userData._id && (
           <button
             className="education-section-remove-controller"
             onClick={handleRemoveItems}

@@ -4,7 +4,7 @@ import { globalContext } from "../../../App";
 import { useParams } from "react-router-dom";
 
 const OccupationBox = (props) => {
-  const { signedUserId, token, handleExpiredToken } = useContext(globalContext);
+  const { signedUserData, token, handleExpiredToken } = useContext(globalContext);
   const { userId } = useParams();
 
   const handleOccupationDelete = (e) => {
@@ -42,7 +42,7 @@ const OccupationBox = (props) => {
         {props.occupationItem.startYear} - {props.occupationItem.endYear}
       </p>
       <p className="occupation-box-position"> {props.occupationItem.position} </p>
-      {props.occupationItem.userId === signedUserId &&
+      {props.occupationItem.userId === signedUserData._id &&
         props.occupationEditMode && (
           <button
             className="occupation-box-remove-button"

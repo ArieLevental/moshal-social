@@ -10,6 +10,16 @@ import EducationContainer from "./educationContainer/educationContainer.js";
 import OccupationContainer from "./occupationContainer/occupationContainer";
 
 const ProfilePage = () => {
+  const {
+    signedUserData,
+    token,
+    handleExpiredToken,
+    israelCities,
+    institutionsData,
+    setInstitutionsData,
+    companiesData,
+    setCompaniesData,
+  } = useContext(globalContext);
   const { userId } = useParams();
   const [userData, setUserData] = useState(null);
   // const [institutionsData, setInstitutionsData] = useState(
@@ -23,16 +33,6 @@ const ProfilePage = () => {
   const [inImgMode, setInImgMode] = useState(false);
   const [imgValue, setImgValue] = useState(null);
   const [url, setUrl] = useState(null);
-  const {
-    signedUserId,
-    token,
-    handleExpiredToken,
-    israelCities,
-    institutionsData,
-    setInstitutionsData,
-    companiesData,
-    setCompaniesData,
-  } = useContext(globalContext);
   const [currentWorkplace, setCurrentWorkplace] = useState("");
 
   useEffect(() => {
@@ -168,7 +168,7 @@ const ProfilePage = () => {
               alt={userData.firstName + "'s Profile Picture"}
             />
             {/* Show picture edit pen when user id is matching */}
-            {signedUserId === userId && (
+            {signedUserData._id === userId && (
               <FontAwesomeIcon
                 className={"icon profile-page-img-edit"}
                 icon={faPen}
@@ -203,7 +203,7 @@ const ProfilePage = () => {
           )}
           <div className="user-data-container">
             {/* Show profile edit pen when user id is matching */}
-            {signedUserId === userId && (
+            {signedUserData._id === userId && (
               <FontAwesomeIcon
                 className={"icon" + (inEditMode ? " active" : "")}
                 icon={faPen}

@@ -20,8 +20,8 @@ export const globalContext = createContext();
 function App() {
   // Global state for the app
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const [signedUserId, setSignedUserId] = useState(
-    localStorage.getItem("user_id")
+  const [signedUserData, setSignedUserData] = useState(
+    JSON.parse(localStorage.getItem("user_data"))
   );
   const [usersDbData, setUsersDbData] = useState(
     JSON.parse(localStorage.getItem("users_db_data"))
@@ -42,15 +42,15 @@ function App() {
     localStorage.removeItem("token");
     // setEmail("");
     setToken("");
-    setSignedUserId("");
+    setSignedUserData(null);
   };
 
   return (
     <div className="app">
       <globalContext.Provider
         value={{
-          signedUserId,
-          setSignedUserId,
+          signedUserData,
+          setSignedUserData,
           token,
           setToken,
           handleExpiredToken,
