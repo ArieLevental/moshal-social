@@ -14,8 +14,8 @@ const Icons = (props) => {
       <FontAwesomeIcon className="icon" icon={faGear} />
 
       <a href={`/user/${props.signedUserId}`}>
-        <FontAwesomeIcon className="icon" icon={faUser} />
-        <img />
+        {/* <FontAwesomeIcon className="icon" icon={faUser} /> */}
+        <img className="navbar-user-picture" src={props.singedUserPicturePath} />
       </a>
 
       <FontAwesomeIcon className="icon" icon={faEnvelope} />
