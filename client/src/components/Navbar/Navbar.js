@@ -1,5 +1,6 @@
 import "./Navbar.css";
 import Icons from "./Icons/Icons";
+import Navigation from "./Navigation/Navigation";
 import { globalContext } from "../../App";
 import { useContext } from "react";
 
@@ -20,11 +21,14 @@ const Navbar = () => {
       </div>
       {/* If user is logged in, show the icons */}
       {token && (
+        <>
+        <Navigation />
         <Icons
           signedUserId={signedUserId}
           className="navbar-icons"
           handleLogout={handleLogout}
         />
+        </>
       )}
     </div>
   );

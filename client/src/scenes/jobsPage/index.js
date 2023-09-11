@@ -2,16 +2,25 @@ import { useContext, useState, useEffect } from "react";
 import { globalContext } from "../../App";
 import FeedContainer from "./FeedContainer/FeedContainer";
 import Searchbar from "./Searchbar/Searchbar";
-import israelCities from "./israel_cities.json";
+// import israelCities from "./israel_cities.json";
 
 import "./index.css";
 
 const JobsPage = () => {
-  const { signedUserId, token, handleExpiredToken } = useContext(globalContext);
-  const [jobsData, setJobsData] = useState([]);
-  const [presentedJobsData, setPresentedJobsData] = useState([]);
+  const {
+    signedUserId,
+    token,
+    handleExpiredToken,
+    israelCities,
+    jobsData,
+    setJobsData,
+    companiesData,
+    setCompaniesData,
+  } = useContext(globalContext);
+  // const [jobsData, setJobsData] = useState([]);
+  const [presentedJobsData, setPresentedJobsData] = useState(jobsData);
   const [newJobOfferForm, setNewJobOfferForm] = useState(false);
-  const [companiesData, setCompaniesData] = useState(null); // Maybe empty array?
+  // const [companiesData, setCompaniesData] = useState(null); // Maybe empty array?
 
   useEffect(() => {
     fetch(`http://localhost:3001/jobs`, {
@@ -19,7 +28,8 @@ const JobsPage = () => {
     }).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
-        console.log(resJson);
+        // console.log(resJson);
+        localStorage.setItem("jobs_data", JSON.stringify(resJson));
         setJobsData(resJson);
         setPresentedJobsData(resJson);
         // console.log(jobsData);
@@ -39,7 +49,7 @@ const JobsPage = () => {
     }).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
-        console.log(resJson);
+        // console.log(resJson);
         setCompaniesData(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
@@ -78,6 +88,10 @@ const JobsPage = () => {
         const resJson = await res.json();
         if (res.status === 201) {
           console.log(resJson);
+          localStorage.setItem(
+            "jobs_data",
+            JSON.stringify([...jobsData, resJson])
+          );
           setJobsData([...jobsData, resJson]);
           revealNewJobOfferForm();
         } else if (res.status === 401) {
@@ -92,7 +106,6 @@ const JobsPage = () => {
 
   return (
     <div className="jobs-page">
-      <h1>Jobs Page</h1>
       <Searchbar
         jobsData={jobsData}
         setPresentedJobsData={setPresentedJobsData}
@@ -113,9 +126,7 @@ const JobsPage = () => {
           >
             <label htmlFor="title">Title</label>
             <input type="text" name="title" required tabIndex="1" />
-            <label htmlFor="company" >
-              Company
-            </label>
+            <label htmlFor="company">Company</label>
             <select type="text" name="company" required tabIndex="2">
               {companiesData?.map((company) => (
                 <option key={company._id} value={company._id}>

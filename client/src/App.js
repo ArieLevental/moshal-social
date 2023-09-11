@@ -2,10 +2,10 @@ import { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import "./App.css";
+import israelCities from "./data/israel_cities.json";
 
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
-import Sidebar from "./components/Sidebar/Sidebar";
 
 import HomePage from "./scenes/homePage/index";
 import UsersPage from "./scenes/usersPage/index";
@@ -19,16 +19,28 @@ export const globalContext = createContext();
 
 function App() {
   // THIS IS THE STATES FOR THE GLOBAL STATE. EMAIL TOKEN
-  const [email, setEmail] = useState("");
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [signedUserId, setSignedUserId] = useState(
     localStorage.getItem("user_id")
   );
+  const [usersDbData, setUsersDbData] = useState(
+    JSON.parse(localStorage.getItem("users_db_data"))
+  );
+  const [institutionsData, setInstitutionsData] = useState(
+    JSON.parse(localStorage.getItem("institutions_data"))
+  );
+  const [companiesData, setCompaniesData] = useState(
+    JSON.parse(localStorage.getItem("companies_data"))
+  );
+  const [jobsData, setJobsData] = useState(
+    JSON.parse(localStorage.getItem("jobs_data"))
+  );
+
   const handleExpiredToken = () => {
     fetch("http://localhost:3001/auth/logout", { method: "POST" });
     // TODO: Need to check if the response is ok
     localStorage.removeItem("token");
-    setEmail("");
+    // setEmail("");
     setToken("");
     setSignedUserId("");
   };
@@ -42,17 +54,20 @@ function App() {
           token,
           setToken,
           handleExpiredToken,
+          usersDbData,
+          setUsersDbData,
+          israelCities,
+          institutionsData,
+          setInstitutionsData,
+          companiesData,
+          setCompaniesData,
+          jobsData,
+          setJobsData,
         }}
       >
         <BrowserRouter>
           <Navbar />
           <div className="app-main">
-            {token && (
-              <div className="app-main-sidebar">
-                <Sidebar />
-              </div>
-            )}
-
             <div className="app-main-content">
               <Routes>
                 <Route

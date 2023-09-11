@@ -10,7 +10,7 @@ const Searchbar = (props) => {
   // Functions
   const activateFilter = (query, companyFilter, universityFilter) => {
     props.setPresentedData(
-      props.usersData.filter((user) => {
+      props.usersDbData.filter((user) => {
         return (
           (query
             ? user.firstName.toLowerCase().includes(query) ||
@@ -60,7 +60,7 @@ const Searchbar = (props) => {
 
   const randomMoshalnikHandler = (event) => {
     props.setPresentedData(
-      Array(props.usersData[Math.floor(Math.random() * props.usersData.length)])
+      Array(props.usersDbData[Math.floor(Math.random() * props.usersDbData.length)])
     );
   };
 

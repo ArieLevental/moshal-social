@@ -6,11 +6,26 @@ import Searchbar from "./Searchbar/Searchbar";
 import { globalContext } from "../../App";
 
 function UsersPage() {
-  const [usersData, setUsersData] = useState(null);
-  const [presentedData, setPresentedData] = useState(usersData);
-  const [institutionsData, setInstitutionsData] = useState(null);
-  const [companiesData, setCompaniesData] = useState(null);
-  const { token, handleExpiredToken } = useContext(globalContext);
+  const {
+    token,
+    handleExpiredToken,
+    usersDbData,
+    setUsersDbData,
+    institutionsData,
+    setInstitutionsData,
+    companiesData,
+    setCompaniesData,
+  } = useContext(globalContext);
+  // console.log(usersDbData);
+  // const [presentedData, setPresentedData] = useState(usersDbData);
+  const [presentedData, setPresentedData] = useState(usersDbData);
+  // const [usersData, setUsersData] = useState(null);
+  // const [institutionsData, setInstitutionsData] = useState(
+  //   JSON.parse(localStorage.getItem("institutions_data"))
+  // );
+  // const [companiesData, setCompaniesData] = useState(
+  //   JSON.parse(localStorage.getItem("companies_data"))
+  // );
 
   useEffect(() => {
     fetch(`http://localhost:3001/users`, {
@@ -18,7 +33,8 @@ function UsersPage() {
     }).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
-        setUsersData(resJson);
+        localStorage.setItem("users_db_data", JSON.stringify(resJson));
+        setUsersDbData(resJson);
         setPresentedData(resJson);
         console.log(resJson);
       } else if (res.status === 401) {
@@ -36,6 +52,7 @@ function UsersPage() {
     }).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
+        localStorage.setItem("institutions_data", JSON.stringify(resJson));
         setInstitutionsData(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
@@ -53,6 +70,7 @@ function UsersPage() {
     }).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
+        localStorage.setItem("companies_data", JSON.stringify(resJson));
         setCompaniesData(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
@@ -66,9 +84,8 @@ function UsersPage() {
 
   return (
     <div className="database">
-      <h1>Users database</h1>
       <Searchbar
-        usersData={usersData}
+        usersDbData={usersDbData}
         setPresentedData={setPresentedData}
         institutionsData={institutionsData}
         companiesData={companiesData}
