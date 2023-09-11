@@ -19,3 +19,8 @@
   color: var(--color-icon-nav-hover);
   /* border-bottom: 2px solid var(--color-icon-nav-hover); */
 }
+
+.navbar-user-picture {
+  width: 34px;
+  border-radius: 50%;
+}
