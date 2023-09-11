@@ -1,19 +1,19 @@
-import "./Toolbar.css";
+import "./Navbar.css";
 import Icons from "./Icons/Icons";
 import { globalContext } from "../../App";
 import { useContext } from "react";
 
-const Toolbar = () => {
+const Navbar = () => {
   const { signedUserId, token, handleExpiredToken } = useContext(globalContext);
   const handleLogout = () => {
     handleExpiredToken();
   };
 
   return (
-    <div className="toolbar">
-      <div className="toolbar-logo">
+    <div className="navbar">
+      <div className="navbar-logo">
         <img
-          className="toolbar-logo-img"
+          className="navbar-logo-img"
           src="/assets/white-logo.png"
           alt="Moshal Logo"
         />
@@ -22,7 +22,7 @@ const Toolbar = () => {
       {token && (
         <Icons
           signedUserId={signedUserId}
-          className="toolbar-icons"
+          className="navbar-icons"
           handleLogout={handleLogout}
         />
       )}
@@ -30,4 +30,4 @@ const Toolbar = () => {
   );
 };
 
-export default Toolbar;
+export default Navbar;

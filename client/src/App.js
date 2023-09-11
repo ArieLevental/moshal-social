@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import "./App.css";
 
-import Toolbar from "./components/Toolbar/Toolbar";
+import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Sidebar from "./components/Sidebar/Sidebar";
 
@@ -45,7 +45,7 @@ function App() {
         }}
       >
         <BrowserRouter>
-          <Toolbar />
+          <Navbar />
           <div className="app-main">
             {token && (
               <div className="app-main-sidebar">

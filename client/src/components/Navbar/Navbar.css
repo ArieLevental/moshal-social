@@ -1,4 +1,4 @@
-.toolbar {
+.navbar {
   background-color: var(--almost-white);
   font-style: italic;
   display: flex;
@@ -7,11 +7,11 @@
   position: sticky;
 }
 
-.toolbar-logo {
+.navbar-logo {
   background-color: var(--primary-color);
   width: 15vw;
 }
 
-.toolbar-logo-img {
+.navbar-logo-img {
   width: 10vh;
 }

@@ -24,7 +24,8 @@ import Institution from "./models/Institution.js";
 import Company from "./models/Company.js";
 import Occupation from "./models/Occupation.js";
 import Education from "./models/Education.js";
-import { users, companies, institutions, occupations, educations } from "./data/index.js";
+import JobOffer from "./models/JobOffer.js";
+import { users, companies, institutions, occupations, educations, jobs } from "./data/index.js";
 
 dotenv.config();
 
@@ -70,5 +71,6 @@ mongoose
     // Company.insertMany(companies);
     // Occupation.insertMany(occupations);
     // Education.insertMany(educations);
+    // JobOffer.insertMany(jobs);
   })
   .catch((error) => console.log(`${error} did not connect`));

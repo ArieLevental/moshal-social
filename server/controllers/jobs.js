@@ -22,6 +22,7 @@ export const newJobOffer = async (req, res) => {
       content,
       offerTitle,
       offerLink,
+      location,
       expReq,
       referral,
     } = req.body;
@@ -33,6 +34,7 @@ export const newJobOffer = async (req, res) => {
       content,
       offerTitle,
       offerLink,
+      location,
       expReq,
       referral,
     });

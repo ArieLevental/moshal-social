@@ -1,6 +1,8 @@
 :root {
   --primary-color: #1d5297;
   --primary-color-brighter: #225fae;
+  --color-icon-nav: rgba(0, 0, 0, 0.6);
+  --color-icon-nav-hover: rgba(0, 0, 0, 0.9);
   --dark-background: #191b1c;
   --slightly-darker-background: #191b1c;
   --almost-white: #f4f2ee;
