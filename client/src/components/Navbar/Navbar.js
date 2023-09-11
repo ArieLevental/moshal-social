@@ -1,35 +1,37 @@
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { globalContext } from "../../App";
 import "./Navbar.css";
 import Icons from "./Icons/Icons";
 import Navigation from "./Navigation/Navigation";
-import { globalContext } from "../../App";
-import { useContext } from "react";
 
 const Navbar = () => {
-  const { signedUserData, token, handleExpiredToken } = useContext(globalContext);
+  const { signedUserData, token, handleExpiredToken } =
+    useContext(globalContext);
   const handleLogout = () => {
     handleExpiredToken();
   };
 
   return (
     <div className="navbar">
-      <div className="navbar-logo">
+      <Link to="/" className="navbar-logo">
         <img
           className="navbar-logo-img"
           src="/assets/white-logo.png"
           alt="Moshal Logo"
         />
-      </div>
-      
+      </Link>
+
       {/* If user is logged in, show the icons */}
       {token && (
         <>
-        <Navigation />
-        <Icons
-          signedUserId={signedUserData._id}
-          singedUserPicturePath={signedUserData.picturePath}
-          className="navbar-icons"
-          handleLogout={handleLogout}
-        />
+          <Navigation />
+          <Icons
+            signedUserId={signedUserData._id}
+            singedUserPicturePath={signedUserData.picturePath}
+            className="navbar-icons"
+            handleLogout={handleLogout}
+          />
         </>
       )}
     </div>
