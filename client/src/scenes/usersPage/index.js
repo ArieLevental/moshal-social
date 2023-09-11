@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 
-import "./index.css";
 import DataBaseContainer from "./DataBaseContainer/DataBaseContainer";
 import Searchbar from "./Searchbar/Searchbar";
 import { globalContext } from "../../App";
