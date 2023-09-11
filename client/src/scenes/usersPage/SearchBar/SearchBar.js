@@ -16,12 +16,12 @@ const Searchbar = (props) => {
             ? user.firstName.toLowerCase().includes(query) ||
               user.lastName.toLowerCase().includes(query)
             : true) &&
-          // (companyFilter
-          //   ? user.firstName.toLowerCase().includes(companyFilter)
-          //   : true) &&
+          (companyFilter
+            ? user.occupation.some((occupation) => occupation.companyId === companyFilter)
+            : true) &&
           (universityFilter
             ? user.education.some(
-                (edu) => edu.institutionId === universityFilter
+                (education) => education.institutionId === universityFilter
               )
             : true)
         );
@@ -81,20 +81,21 @@ const Searchbar = (props) => {
       </button>
 
       <div className="filter-zone">
-        <label htmlFor="company" className="dropdown-label">
+        <label htmlFor="companyId" className="dropdown-label">
           Company:
         </label>
         <select
-          className="dropdown-menu-company"
-          id="company"
-          defaultValue="none"
+          id="companyId"
+          name="companyId"
           onChange={searchCompanyHandler}
+          defaultValue="none"
         >
-          <option value="" />
-          <option value="volvo">Intel</option>
-          <option value="saab">Microsoft</option>
-          <option value="mercedes">Lightricks</option>
-          <option value="audi">Tnuva</option>
+          <option value=""></option>
+          {props.companiesData?.map((company) => (
+            <option key={company._id} value={company._id}>
+              {company.name}
+            </option>
+          ))}
         </select>
 
         <label htmlFor="institutionId" className="dropdown-label">

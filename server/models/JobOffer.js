@@ -24,6 +24,12 @@ const jobOfferSchema = mongoose.Schema(
       min: 2,
       max: 100,
     },
+    location: {
+      type: String,
+      required: true,
+      min: 2,
+      max: 50,
+    },
     offerLink: {
       type: String,
       default: "",

@@ -48,6 +48,10 @@ const JobOffer = (props) => {
           <div className="job-offer-detail">{props.job.expReq}</div>
         </div>
       )}
+      <div className="job-offer-detail-holder">
+          Location:
+          <div className="job-offer-detail">{props.job.location}</div>
+        </div>
 
       {props.job.referral && (
         <div className="job-offer-detail-holder">

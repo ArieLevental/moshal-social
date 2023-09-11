@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { globalContext } from "../../App";
 import FeedContainer from "./FeedContainer/FeedContainer";
 import Searchbar from "./Searchbar/Searchbar";
+import israelCities from "./israel_cities.json";
 
 import "./index.css";
 
@@ -61,6 +62,7 @@ const JobsPage = () => {
       content: e.target.content.value,
       offerTitle: e.target.title.value,
       offerLink: e.target.link.value,
+      location: e.target.location.value,
       expReq: e.target.expReq.value,
       referral: e.target.referral.value,
     };
@@ -111,7 +113,9 @@ const JobsPage = () => {
           >
             <label htmlFor="title">Title</label>
             <input type="text" name="title" required tabIndex="1" />
-            <label htmlFor="company">Company</label>
+            <label htmlFor="company" >
+              Company
+            </label>
             <select type="text" name="company" required tabIndex="2">
               {companiesData?.map((company) => (
                 <option key={company._id} value={company._id}>
@@ -130,11 +134,32 @@ const JobsPage = () => {
               maxLength="2000"
               placeholder="Describe the job offer"
             />
+            <label htmlFor="location" required>
+              Location:
+            </label>
+            <select
+              // type="text"
+              id="location"
+              name="location"
+              // onChange={(e) => {
+              //   setDetailsFormData({
+              //     ...detailsFormData,
+              //     [e.target.name]: e.target.value,
+              //   });
+              // }}
+              // value={detailsFormData.location}
+            >
+              {israelCities.city.map((c) => (
+                <option key={c.city_symbol} value={c.english_name}>
+                  {c.english_name}
+                </option>
+              ))}
+            </select>
             <label htmlFor="link">Link</label>
-            <input type="text" name="link" tabIndex="4" />
+            <input type="text" name="link" tabIndex="5" />
             <label htmlFor="expReq">Experience Required</label>
             <textarea
-              tabIndex="4"
+              tabIndex="6"
               name="expReq"
               rows="3"
               maxLength="1000"
@@ -142,14 +167,14 @@ const JobsPage = () => {
             />
             <label htmlFor="referral">Referral</label>
             <input
-              tabIndex="6"
+              tabIndex="7"
               type="text"
               name="referral"
               minLength="2"
               maxLength="300"
               placeholder="Referral link or name to mention"
             />
-            <button type="submit" tabIndex="7">
+            <button type="submit" tabIndex="8">
               Submit
             </button>
           </form>

@@ -3,8 +3,9 @@ import User from "../models/User.js";
 // get ALL Users from db and send to frontend
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().populate("education");
-    // .populate("occupation");
+    const users = await User.find()
+      .populate("education")
+      .populate("occupation");
     if (!users) {
       return res.status(404).json({ message: "Users not found" });
     }

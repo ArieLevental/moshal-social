@@ -46,7 +46,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 90%;
+  /* width: 90%; */
   margin: 1rem;
   border-bottom: 2px solid var(--primary-color);
   background-color: rgba(0, 0, 0, 0.14);
@@ -66,10 +66,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 90%;
-  margin: 0.2rem 1rem;
+  /* width: 90%; */
+  margin: 0.2rem 2rem;
   border-bottom: 2px solid var(--primary-color);
   background-color: rgba(0, 0, 0, 0.14);
+  text-align: left;
+  padding: 0.6rem;
 }
 
 .job-offer-footer-icons {
