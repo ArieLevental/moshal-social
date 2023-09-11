@@ -1,25 +1,48 @@
 import "./Navigation.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faUsers, faClipboard } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHouse,
+  faUsers,
+  faClipboard,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Navigation = (props) => {
-  const changeMode = (modeId) => {
-    props.setMainMode(modeId);
-  };
+  const location = useLocation();
 
   return (
     // Routing to different pages in the app
     <div className="navigation">
-      <Link to="/" className="navigation-item">
+      <Link
+        to="/"
+        className={
+          location.pathname === "/home"
+            ? "navigation-item-active"
+            : "navigation-item"
+        }
+      >
         <FontAwesomeIcon className="navigation-icon" icon={faHouse} />
         <div className="navigation-icon-text">Home</div>
       </Link>
-      <Link to="/users" className="navigation-item">
+      <Link
+        to="/users"
+        className={
+          location.pathname === "/users"
+            ? "navigation-item-active"
+            : "navigation-item"
+        }
+      >
         <FontAwesomeIcon className="navigation-icon" icon={faUsers} />
         <div className="navigation-icon-text">DB</div>
       </Link>
-      <Link to="/jobs" className="navigation-item">
+      <Link
+        to="/jobs"
+        className={
+          location.pathname === "/jobs"
+            ? "navigation-item-active"
+            : "navigation-item"
+        }
+      >
         <FontAwesomeIcon className="navigation-icon" icon={faClipboard} />
         <div className="navigation-icon-text">Jobs</div>
       </Link>

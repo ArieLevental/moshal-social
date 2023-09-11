@@ -21,6 +21,11 @@
 }
 
 .navbar-user-picture {
-  width: 34px;
+  width: 2rem;
   border-radius: 50%;
+  border: 2px solid var(--color-icon-nav);
+}
+
+.navbar-user-picture:hover {
+  border: 2px solid var(--color-icon-nav-hover);
 }

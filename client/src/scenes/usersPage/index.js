@@ -83,7 +83,7 @@ function UsersPage() {
   }, []);
 
   return (
-    <div className="database">
+    <>
       <Searchbar
         usersDbData={usersDbData}
         setPresentedData={setPresentedData}
@@ -91,7 +91,7 @@ function UsersPage() {
         companiesData={companiesData}
       />
       <DataBaseContainer presentedData={presentedData} />
-    </div>
+    </>
   );
 }
 

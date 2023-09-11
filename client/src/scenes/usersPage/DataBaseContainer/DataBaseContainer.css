@@ -6,7 +6,7 @@
   row-gap: 1rem;
   column-gap: 1rem;
   flex-direction: row;
-  margin: 1rem 0;
-  height: 78vh;
+  /* margin: 1rem 0; */
   overflow-y: scroll;
+  flex-grow: 1;
 }
