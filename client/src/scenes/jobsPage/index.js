@@ -105,7 +105,7 @@ const JobsPage = () => {
   };
 
   return (
-    <div className="jobs-page">
+    <>
       <Searchbar
         jobsData={jobsData}
         setPresentedJobsData={setPresentedJobsData}
@@ -194,7 +194,7 @@ const JobsPage = () => {
       {jobsData && (
         <FeedContainer jobsData={presentedJobsData} setJobsData={setJobsData} />
       )}
-    </div>
+    </>
   );
 };
 

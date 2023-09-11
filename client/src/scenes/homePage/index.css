@@ -1,5 +1,19 @@
+.homepage-img-wrap {
+  /* background-color: red; */
+  position: relative;
+  /* display: flex; */
+  overflow-y: scroll;
+  margin: 0;
+  height: inherit;
+}
+
 .homepage-placeholder {
-  margin-top: 20px;
-  width: 80%;
-  height: 80%;
+  display: block;
+  /* top: 50%;
+  left: 50%; */
+  /* min-height: 100%; */
+  /* min-width: 100%; */
+  /* transform: translate(-50%, -50%); */
+  width: 100%;
+  height: inherit;
 }

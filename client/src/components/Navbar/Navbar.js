@@ -12,7 +12,6 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-
       <div className="navbar-logo">
         <img
           className="navbar-logo-img"

@@ -2,7 +2,9 @@
   display: flex;
   justify-content: center;
   padding: 10px 0;
-  background-color: rgba(0, 0, 0, 0.386);
+  background-color: rgba(0, 0, 0, 0.05);
+  flex-basis: 10%;
+  flex-grow: 0;
 }
 
 .search-button {

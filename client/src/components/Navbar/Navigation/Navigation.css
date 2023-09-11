@@ -25,6 +25,18 @@
   color: var(--color-icon-nav-hover);
 }
 
+.navigation-item-active {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  cursor: pointer;
+  width: 6vw;
+  margin: 0.4rem 1rem;
+  border-bottom: 3px solid var(--primary-color);
+  color: var(--color-icon-nav-hover);
+}
+
 .navigation-icon {
   font-size: 2rem;
 }

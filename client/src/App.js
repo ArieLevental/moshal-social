@@ -39,6 +39,7 @@ function App() {
   const handleExpiredToken = () => {
     fetch("http://localhost:3001/auth/logout", { method: "POST" });
     // TODO: Need to check if the response is ok
+    localStorage.removeItem("user_data");
     localStorage.removeItem("token");
     // setEmail("");
     setToken("");
@@ -66,34 +67,36 @@ function App() {
         }}
       >
         <BrowserRouter>
-          <Navbar />
-          <div className="app-main">
-            <div className="app-main-content">
-              <Routes>
-                <Route
-                  path="/"
-                  element={!token ? <LandingPage /> : <Navigate to="/home" />}
-                />
-                <Route
-                  path="/home"
-                  element={token ? <HomePage /> : <Navigate to="/" />}
-                />
-                <Route
-                  path="/users"
-                  element={token ? <UsersPage /> : <Navigate to="/" />}
-                />
-                <Route
-                  path="/user/:userId"
-                  element={token ? <ProfilePage /> : <Navigate to="/" />}
-                />
-                <Route
-                  path="/jobs"
-                  element={token ? <JobsPage /> : <Navigate to="/" />}
-                />
-              </Routes>
-            </div>
+
+          <Navbar className="navbar" />
+
+          <div className="app-content">
+            <Routes>
+              <Route
+                path="/"
+                element={!token ? <LandingPage /> : <Navigate to="/home" />}
+              />
+              <Route
+                path="/home"
+                element={token ? <HomePage /> : <Navigate to="/" />}
+              />
+              <Route
+                path="/users"
+                element={token ? <UsersPage /> : <Navigate to="/" />}
+              />
+              <Route
+                path="/user/:userId"
+                element={token ? <ProfilePage /> : <Navigate to="/" />}
+              />
+              <Route
+                path="/jobs"
+                element={token ? <JobsPage /> : <Navigate to="/" />}
+              />
+            </Routes>
           </div>
-          <Footer />
+
+          <Footer className="footer" />
+
         </BrowserRouter>
       </globalContext.Provider>
     </div>
