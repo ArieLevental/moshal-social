@@ -2,11 +2,6 @@
   display: flex;
 }
 
-.app-main-sidebar {
-  flex-grow: 15;
-  flex-basis: 15%;
-}
-
 .app-main-content {
   /* display: flex; */
   /* justify-content: center; */
@@ -14,5 +9,5 @@
   flex-grow: 85;
   flex-basis: 85%;
   background-color: #f1f3f2;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }

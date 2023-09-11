@@ -15,6 +15,7 @@ const Icons = (props) => {
 
       <a href={`/user/${props.signedUserId}`}>
         <FontAwesomeIcon className="icon" icon={faUser} />
+        <img />
       </a>
 
       <FontAwesomeIcon className="icon" icon={faEnvelope} />

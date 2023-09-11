@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import israelCities from "./israel_cities.json";
+// import israelCities from "./israel_cities.json";
 import "./index.css";
 import EducationContainer from "./educationContainer/educationContainer.js";
 import OccupationContainer from "./occupationContainer/occupationContainer";
@@ -12,15 +12,28 @@ import OccupationContainer from "./occupationContainer/occupationContainer";
 const ProfilePage = () => {
   const { userId } = useParams();
   const [userData, setUserData] = useState(null);
-  const [institutionsData, setInstitutionsData] = useState(null);
-  const [companiesData, setCompaniesData] = useState(null);
+  // const [institutionsData, setInstitutionsData] = useState(
+  //   JSON.parse(localStorage.getItem("institutions_data"))
+  // );
+  // const [companiesData, setCompaniesData] = useState(
+  //   JSON.parse(localStorage.getItem("companies_data"))
+  // );
   const [detailsFormData, setDetailsFormData] = useState(null);
   const [inEditMode, setInEditMode] = useState(false);
   const [inImgMode, setInImgMode] = useState(false);
   const [imgValue, setImgValue] = useState(null);
   const [url, setUrl] = useState(null);
-  const { signedUserId, token, handleExpiredToken } = useContext(globalContext);
-  const [currentWorkplace, setCurrentWorkplace] = useState("")
+  const {
+    signedUserId,
+    token,
+    handleExpiredToken,
+    israelCities,
+    institutionsData,
+    setInstitutionsData,
+    companiesData,
+    setCompaniesData,
+  } = useContext(globalContext);
+  const [currentWorkplace, setCurrentWorkplace] = useState("");
 
   useEffect(() => {
     fetch(`http://localhost:3001/institutions`, {
@@ -28,6 +41,7 @@ const ProfilePage = () => {
     }).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
+        localStorage.setItem("institutions_data", JSON.stringify(resJson));
         setInstitutionsData(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
@@ -45,6 +59,7 @@ const ProfilePage = () => {
     }).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
+        localStorage.setItem("companies_data", JSON.stringify(resJson));
         setCompaniesData(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");

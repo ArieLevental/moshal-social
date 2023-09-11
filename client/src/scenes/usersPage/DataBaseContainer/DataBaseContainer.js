@@ -6,7 +6,10 @@ import "./DataBaseContainer.css";
 function DataBaseContainer(props) {
   return (
     <div className="database-container">
-      {props.presentedData && props.presentedData.map((user) => <UserCard key={user?._id} userData={user} />)}
+      {props.presentedData &&
+        props.presentedData.map((user) => (
+          <UserCard key={user?._id} userData={user} />
+        ))}
     </div>
   );
 }
