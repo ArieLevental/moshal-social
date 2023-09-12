@@ -1,0 +1,15 @@
+.category-title {
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--black-02);
+  line-height: 0.1em;
+  margin: 1rem 0 1.3rem;
+  color: var(--black-04);
+  /* padding: 5px 0; */
+  width: 100%;
+  text-align: start;
+}
+
+.category-title span {
+  background: var(--almost-white);
+  padding: 0 10px;
+}

@@ -4,7 +4,8 @@ import { globalContext } from "../../../App";
 import { useParams } from "react-router-dom";
 
 const OccupationBox = (props) => {
-  const { signedUserData, token, handleExpiredToken } = useContext(globalContext);
+  const { signedUserData, token, handleExpiredToken } =
+    useContext(globalContext);
   const { userId } = useParams();
 
   const handleOccupationDelete = (e) => {
@@ -31,26 +32,37 @@ const OccupationBox = (props) => {
   };
   return (
     <div className="occupation-box">
-      <p className="occupation-box-company-name">
-        {props.occupationItem.companyId.name}{" "}
-      </p>
-      <img
-        className="occupation-box-company-logo"
-        src={props.occupationItem.companyId.logoPath}
-      />
-      <p className="occupation-box-duration">
-        {props.occupationItem.startYear} - {props.occupationItem.endYear}
-      </p>
-      <p className="occupation-box-position"> {props.occupationItem.position} </p>
-      {props.occupationItem.userId === signedUserData._id &&
-        props.occupationEditMode && (
-          <button
-            className="occupation-box-remove-button"
-            onClick={handleOccupationDelete}
-          >
-            Remove
-          </button>
-        )}
+      <div className="occupation-box-left-section">
+        {" "}
+        <p className="occupation-box-company-name">
+          {props.occupationItem.companyId.name}{" "}
+        </p>
+        <img
+          className="occupation-box-company-logo"
+          src={props.occupationItem.companyId.logoPath}
+        />
+      </div>
+      <div className="occupation-box-right-section">
+        {" "}
+        <p className="occupation-box-position">
+          {" "}
+          {props.occupationItem.position}{" "}
+        </p>
+        <p className="occupation-box-duration">
+          {props.occupationItem.startYear} - {props.occupationItem.endYear}
+        </p>
+      </div>
+      {props.occupationItem.userId === signedUserData._id && (
+        <button
+          className="occupation-box-remove-button"
+          onClick={handleOccupationDelete}
+          style={{
+            visibility: props.occupationEditMode ? "visible" : "hidden",
+          }}
+        >
+          X
+        </button>
+      )}
     </div>
   );
 };
