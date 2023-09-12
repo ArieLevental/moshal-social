@@ -1,0 +1,6 @@
+.profile-page-picture-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 5px;
+}

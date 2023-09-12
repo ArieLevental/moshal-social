@@ -4,10 +4,11 @@ import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-// import israelCities from "./israel_cities.json";
 import "./index.css";
 import EducationContainer from "./educationContainer/educationContainer.js";
 import OccupationContainer from "./occupationContainer/occupationContainer";
+import PictureEditForm from "../../components/Widjets/PictureEditForm/PictureEditForm";
+import CategoryTitle from "../../components/Widjets/CategoryTitle/CategoryTitle";
 
 const ProfilePage = () => {
   const {
@@ -149,26 +150,23 @@ const ProfilePage = () => {
   return (
     <>
       {userData && (
-        <div className="profile-page">
-          <div className="profile-page-name-and-status">
-            <div className="profile-page-name">
-              {userData.firstName} {userData.lastName}
-            </div>
-            <div className="profile-page-status">
-              {userData.moshalStatus || "Status"}
-            </div>
-          </div>
-          <p>{userData.bio || "No bio available"}</p>
-          {/* <p>{userData.linkedIn || "No linkedIn available"}</p> */}
-
-          <div className="profile-page-img-container">
+        <>
+          <div className="picture-banner-container">
             <img
-              className="profile-page-img"
+              // TODO: change src to be consistent
+              src={
+                userData.bannerPath ||
+                "https://media.licdn.com/dms/image/D4D3DAQFSf7lIthy8Jw/image-scale_191_1128/0/1686646782350?e=1695114000&v=beta&t=c8LmreyvFmvo4pF1ZH4-jK_BbgalZAM8fKatPshWVNk"
+              }
+              alt={userData.firstName + "'s banner Picture"}
+              className="banner-picture"
+            />
+            <img
+              className="profile-picture"
               src={userData.picturePath || "/assets/genericUser.png"}
               alt={userData.firstName + "'s Profile Picture"}
             />
-            {/* Show picture edit pen when user id is matching */}
-            {signedUserData._id === userId && (
+            {signedUserData._id === userId && ( // Show picture edit pen when user id is matching
               <FontAwesomeIcon
                 className={"icon profile-page-img-edit"}
                 icon={faPen}
@@ -179,185 +177,190 @@ const ProfilePage = () => {
             )}
           </div>
 
-          {/* Edit picture mode is on */}
-          {inImgMode && (
-            <form
-              className="profile-page-picture-form"
-              onSubmit={(e) => handleProfileImgUpload(e)}
-            >
-              <input
-                className="profile-page-picture-form-input"
-                type="file"
-                accept="image/*"
-                name="userImage"
-                id="userImage"
-                onChange={(e) => setImgValue(e.target.files[0])}
-              />
-              <button
-                className="profile-page-picture-form-button"
-                type="submit"
-              >
-                Pic-a-Boo!
-              </button>
-            </form>
-          )}
-          <div className="user-data-container">
-            {/* Show profile edit pen when user id is matching */}
-            {signedUserData._id === userId && (
-              <FontAwesomeIcon
-                className={"icon" + (inEditMode ? " active" : "")}
-                icon={faPen}
-                onClick={() => {
-                  setInEditMode(!inEditMode);
-                }}
-              />
-            )}
-            <a href={userData.linkedIn} target="_blank">
-              <FontAwesomeIcon className="icon" icon={faLinkedin} />
-            </a>
-            <a
-              href={`https://wa.me/+972${userData.phoneNumber.slice(1)}`}
-              target="_blank"
-            >
-              <FontAwesomeIcon className="icon" icon={faWhatsapp} />
-            </a>
-            <a href={`mailto:${userData.email}`}>
-              <FontAwesomeIcon className="icon" icon={faEnvelope} />
-            </a>
-            {!inEditMode && (
-              <div>
-                <p>
-                  <strong>My city:</strong>{" "}
-                  {userData.location || "Not provided"}
-                </p>
-                <p>
-                  <strong>Catch me at:</strong>{" "}
-                  {userData.phoneNumber || "Not provided"}
-                </p>
-                <p>
-                  <strong>Current workplace:</strong>{" "}
-                  {/* {userData.occupation[0] || "No where, currently"} */}
-                  {currentWorkplace || "No where, currently"}
-                </p>
-              </div>
-            )}
-            {inEditMode && (
-              <div>
-                <form
-                  onSubmit={(e) => handleUpdate(e)}
-                  className="user-data-form"
-                >
-                  <div className="form-element">
-                    <label htmlFor="location" className="form-element-label">
-                      Location:
-                    </label>
-                    <select
-                      className="form-element-input"
-                      type="text"
-                      id="location"
-                      name="location"
-                      onChange={(e) => {
-                        setDetailsFormData({
-                          ...detailsFormData,
-                          [e.target.name]: e.target.value,
-                        });
-                      }}
-                      value={detailsFormData.location}
-                    >
-                      {israelCities.city.map((c) => (
-                        <option key={c.city_symbol} value={c.english_name}>
-                          {c.english_name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="form-element">
-                    <label htmlFor="linkedIn" className="form-element-label">
-                      Linkedin:{" "}
-                    </label>
-                    <input
-                      className="form-element-input"
-                      type="text"
-                      id="linkedIn"
-                      name="linkedIn"
-                      onChange={(e) => {
-                        setDetailsFormData({
-                          ...detailsFormData,
-                          [e.target.name]: e.target.value,
-                        });
-                      }}
-                      value={detailsFormData.linkedIn}
-                    />
-                  </div>
-                  <div className="form-element">
-                    <label htmlFor="bio" className="form-element-label">
-                      Bio:{" "}
-                    </label>
-                    <textarea
-                      className="form-element-input"
-                      style={{ resize: "none" }}
-                      id="bio"
-                      name="bio"
-                      onChange={(e) => {
-                        setDetailsFormData({
-                          ...detailsFormData,
-                          [e.target.name]: e.target.value,
-                        });
-                      }}
-                      value={detailsFormData.bio}
-                    />
-                  </div>
-                  <div className="form-element">
-                    <label
-                      htmlFor="moshalStatus"
-                      className="form-element-label"
-                    >
-                      Moshal Status:
-                    </label>
-                    <select
-                      className="form-element-input"
-                      id="moshalStatus"
-                      name="moshalStatus"
-                      defaultValue={userData.moshalStatus}
-                    >
-                      <option value="Scholar">Scholar</option>
-                      <option value="Alumni">Alumni</option>
-                      <option value="Staff">Staff</option>
-                    </select>
-                  </div>
-                  <div className="form-element"></div>
-                  <div className="form-element"></div>
-
-                  <button
-                    type="submit"
-                    className="user-data-form-submit-button"
-                  >
-                    Submit
-                  </button>
-                </form>
-              </div>
-            )}
-          </div>
-          <div className="education-occupation-container">
-            <div className="education">
-              <h4>Education:</h4>
-              <EducationContainer
-                institutionsData={institutionsData}
-                setUserData={setUserData}
-                userData={userData}
-              />
-            </div>
-            <div className="occupation">
-              <h4>Occupation:</h4>
+          <div className="profile-page">
+            <div className="profile-page-left-box">
+              {inImgMode && ( // When edit picture mode is on
+                <PictureEditForm
+                  onInputChange={setImgValue}
+                  onFormSubmit={handleProfileImgUpload}
+                  buttonText="Pic-a-Boo!"
+                />
+              )}
+              <CategoryTitle title="work" />
               <OccupationContainer
                 companiesData={companiesData}
                 setUserData={setUserData}
                 userData={userData}
                 setCurrentWorkplace={setCurrentWorkplace}
               />
+              <CategoryTitle title="skills" />
+            </div>
+            <div className="profile-page-right-box">
+              <div className="profile-page-name-and-status">
+                <div className="profile-page-name">
+                  {userData.firstName} {userData.lastName}
+                </div>
+                <div className="profile-page-status">
+                  {userData.moshalStatus || "Status"}
+                </div>
+              </div>
+              <p>{userData.bio || "No bio available"}</p>
+              <div className="user-data-container">
+                {/* Show profile edit pen when user id is matching */}
+                {signedUserData._id === userId && (
+                  <FontAwesomeIcon
+                    className={"icon" + (inEditMode ? " active" : "")}
+                    icon={faPen}
+                    onClick={() => {
+                      setInEditMode(!inEditMode);
+                    }}
+                  />
+                )}
+                <a href={userData.linkedIn} target="_blank">
+                  <FontAwesomeIcon className="icon" icon={faLinkedin} />
+                </a>
+                <a
+                  href={`https://wa.me/+972${userData.phoneNumber.slice(1)}`}
+                  target="_blank"
+                >
+                  <FontAwesomeIcon className="icon" icon={faWhatsapp} />
+                </a>
+                <a href={`mailto:${userData.email}`}>
+                  <FontAwesomeIcon className="icon" icon={faEnvelope} />
+                </a>
+                {!inEditMode && (
+                  <div>
+                    <p>
+                      <strong>My city:</strong>{" "}
+                      {userData.location || "Not provided"}
+                    </p>
+                    <p>
+                      <strong>Catch me at:</strong>{" "}
+                      {userData.phoneNumber || "Not provided"}
+                    </p>
+                    <p>
+                      <strong>Current workplace:</strong>{" "}
+                      {/* {userData.occupation[0] || "No where, currently"} */}
+                      {currentWorkplace || "No where, currently"}
+                    </p>
+                  </div>
+                )}
+                {inEditMode && (
+                  <div>
+                    <form
+                      onSubmit={(e) => handleUpdate(e)}
+                      className="user-data-form"
+                    >
+                      <div className="form-element">
+                        <label
+                          htmlFor="location"
+                          className="form-element-label"
+                        >
+                          Location:
+                        </label>
+                        <select
+                          className="form-element-input"
+                          type="text"
+                          id="location"
+                          name="location"
+                          onChange={(e) => {
+                            setDetailsFormData({
+                              ...detailsFormData,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          value={detailsFormData.location}
+                        >
+                          {israelCities.city.map((c) => (
+                            <option key={c.city_symbol} value={c.english_name}>
+                              {c.english_name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="form-element">
+                        <label
+                          htmlFor="linkedIn"
+                          className="form-element-label"
+                        >
+                          Linkedin:{" "}
+                        </label>
+                        <input
+                          className="form-element-input"
+                          type="text"
+                          id="linkedIn"
+                          name="linkedIn"
+                          onChange={(e) => {
+                            setDetailsFormData({
+                              ...detailsFormData,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          value={detailsFormData.linkedIn}
+                        />
+                      </div>
+                      <div className="form-element">
+                        <label htmlFor="bio" className="form-element-label">
+                          Bio:{" "}
+                        </label>
+                        <textarea
+                          className="form-element-input"
+                          style={{ resize: "none" }}
+                          id="bio"
+                          name="bio"
+                          onChange={(e) => {
+                            setDetailsFormData({
+                              ...detailsFormData,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          value={detailsFormData.bio}
+                        />
+                      </div>
+                      <div className="form-element">
+                        <label
+                          htmlFor="moshalStatus"
+                          className="form-element-label"
+                        >
+                          Moshal Status:
+                        </label>
+                        <select
+                          className="form-element-input"
+                          id="moshalStatus"
+                          name="moshalStatus"
+                          defaultValue={userData.moshalStatus}
+                        >
+                          <option value="Scholar">Scholar</option>
+                          <option value="Alumni">Alumni</option>
+                          <option value="Staff">Staff</option>
+                        </select>
+                      </div>
+                      <div className="form-element"></div>
+                      <div className="form-element"></div>
+
+                      <button
+                        type="submit"
+                        className="user-data-form-submit-button"
+                      >
+                        Submit
+                      </button>
+                    </form>
+                  </div>
+                )}
+              </div>
+              <div className="education-occupation-container">
+                <div className="education">
+                  <CategoryTitle title="studied" />
+                  <EducationContainer
+                    institutionsData={institutionsData}
+                    setUserData={setUserData}
+                    userData={userData}
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );

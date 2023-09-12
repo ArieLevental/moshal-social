@@ -6,7 +6,10 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 20px;
+  /* padding: 20px; */
+  background-color: rgba(0, 0, 0, 0.111);
+  border-radius: 17%;
+  padding: 1rem 0.5rem;
 }
 
 .education-box-institution-name {
@@ -17,11 +20,11 @@
 }
 
 .education-box-institution-logo {
-  border: 1px solid black;
   height: 60px;
   width: 60px;
-  /* padding: 5px; */
-  margin: 8px;
+  border-radius: 17%;
+  filter: drop-shadow(2px 2px 4px var(--dark-background));
+  margin: 0.5rem 0;
 }
 
 .education-box-duration {

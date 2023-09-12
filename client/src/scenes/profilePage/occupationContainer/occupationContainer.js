@@ -96,7 +96,6 @@ const OccupationContainer = (props) => {
               </option>
             ))}
           </select>
-          <br />
           <label htmlFor="startYear">Start year:</label>
           <input
             type="number"
@@ -106,8 +105,6 @@ const OccupationContainer = (props) => {
             name="startYear"
             id="startYear"
           ></input>
-
-          <br />
           <label htmlFor="endYear">End year:</label>
           <input
             type="number"
@@ -117,20 +114,21 @@ const OccupationContainer = (props) => {
             name="endYear"
             id="endYear"
           ></input>
-          <br />
           <label htmlFor="position">Position:</label>
           <input type="text" name="position" id="position"></input>
-          <br />
-          <button type="submit">
-            <FontAwesomeIcon className="icon" icon={faCheck} />
-          </button>
-          <button
-            onClick={(e) => {
-              setInAddMode(!inAddMode);
-            }}
-          >
-            <FontAwesomeIcon className="icon" icon={faX} />
-          </button>
+          <div className="new-form-buttons-container">
+            <button className="new-form-button" type="submit">
+              <FontAwesomeIcon className="icon" icon={faCheck} />
+            </button>
+            <button
+              className="new-form-button"
+              onClick={(e) => {
+                setInAddMode(!inAddMode);
+              }}
+            >
+              <FontAwesomeIcon className="icon" icon={faX} />
+            </button>
+          </div>
         </form>
       )}
 
