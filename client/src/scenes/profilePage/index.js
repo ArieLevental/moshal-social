@@ -1,5 +1,4 @@
 import { useContext, useState, useEffect, createContext } from "react";
-// import { globalContext } from "../../App";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,7 +10,6 @@ import {
   faBriefcase,
 } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import { globalContext } from "../../App";
 import PictureEditForm from "../../components/Widjets/PictureEditForm/PictureEditForm";
 import CategoryTitle from "../../components/Widjets/CategoryTitle/CategoryTitle";
 import {
@@ -21,10 +19,11 @@ import {
   institutionsDataContext,
 } from "../../state/state.js";
 
-export const userDataContext = createContext();
 import ExperienceContainer from "./experienceContainer/experienceContainer";
 import DataItem from "./components/DataItem/DataItem";
 import "./index.css";
+
+export const userDataContext = createContext();
 
 const ProfilePage = () => {
   // const {
@@ -210,205 +209,204 @@ const ProfilePage = () => {
               )}
             </div>
 
-          <div className="profile-page">
-            <div className="profile-page-left-box">
-              {inImgMode && ( // When edit picture mode is on
-                <PictureEditForm
-                  onInputChange={setImgValue}
-                  onFormSubmit={handleProfileImgUpload}
-                  buttonText="Pic-a-Boo!"
+            <div className="profile-page">
+              <div className="profile-page-left-box">
+                {inImgMode && ( // When edit picture mode is on
+                  <PictureEditForm
+                    onInputChange={setImgValue}
+                    onFormSubmit={handleProfileImgUpload}
+                    buttonText="Pic-a-Boo!"
+                  />
+                )}
+                <CategoryTitle title="work" />
+                <ExperienceContainer
+                  organizationsData={companiesData}
+                  setCurrentOrganization={setCurrentWorkplace}
+                  userData={userData}
+                  setUserData={setUserData}
+                  route="Occupation"
+                  organization="Company"
+                  field="Position"
                 />
-              )}
-              <CategoryTitle title="work" />
-              <ExperienceContainer
-                organizationsData={companiesData}
-                setCurrentOrganization={setCurrentWorkplace}
-                userData={userData}
-                setUserData={setUserData}
-                route="Occupation"
-                organization="Company"
-                field="Position"
-              />
-              <CategoryTitle title="skills" />
-            </div>
-            <div className="profile-page-right-box">
-              <div className="profile-page-name-and-status">
-                <div className="profile-page-name-and-edit">
-                  {userData.firstName} {userData.lastName}
-                  {/* Show profile edit pen when user id is matching */}
-                  {signedUserData._id === userId && (
-                    <button
-                      onClick={() => {
-                        setInEditMode(!inEditMode);
-                      }}
-                    >
-                      {inEditMode ? "Cancel" : "Edit Profile"}
-                    </button>
+                <CategoryTitle title="skills" />
+              </div>
+              <div className="profile-page-right-box">
+                <div className="profile-page-name-and-status">
+                  <div className="profile-page-name-and-edit">
+                    {userData.firstName} {userData.lastName}
+                    {/* Show profile edit pen when user id is matching */}
+                    {signedUserData._id === userId && (
+                      <button
+                        onClick={() => {
+                          setInEditMode(!inEditMode);
+                        }}
+                      >
+                        {inEditMode ? "Cancel" : "Edit Profile"}
+                      </button>
+                    )}
+                  </div>
+                  <div className="profile-page-status">
+                    {userData.moshalStatus || "Status"}
+                  </div>
+                </div>
+                {/* TODO: user bio just sits in a p tag with no styling and control over it */}
+                <p>{userData.bio || "No bio available"}</p>
+                <div className="user-data-container">
+                  <a href={userData.linkedIn} target="_blank">
+                    <FontAwesomeIcon className="icon" icon={faLinkedin} />
+                  </a>
+                  <a
+                    href={`https://wa.me/+972${userData.phoneNumber.slice(1)}`}
+                    target="_blank"
+                  >
+                    <FontAwesomeIcon className="icon" icon={faWhatsapp} />
+                  </a>
+                  <a href={`mailto:${userData.email}`}>
+                    <FontAwesomeIcon className="icon" icon={faEnvelope} />
+                  </a>
+                  {!inEditMode && (
+                    <div className="profile-page-data">
+                      <DataItem
+                        faIconName={faLocationDot}
+                        itemLabel="My city"
+                        itemValue={userData.location}
+                      />
+                      <DataItem
+                        faIconName={faPhoneVolume}
+                        itemLabel="Catch me at"
+                        itemValue={userData.phoneNumber}
+                      />
+                      <DataItem
+                        faIconName={faBriefcase}
+                        itemLabel="Current workplace"
+                        itemValue={currentWorkplace}
+                      />
+                      <DataItem
+                        faIconName={faCakeCandles}
+                        itemLabel="Birthday"
+                        itemValue={userData.birthday}
+                      />
+                    </div>
+                  )}
+                  {inEditMode && (
+                    <div>
+                      <form onSubmit={handleUpdate} className="user-data-form">
+                        <div className="form-element">
+                          <label
+                            htmlFor="location"
+                            className="form-element-label"
+                          >
+                            Location:
+                          </label>
+                          <select
+                            className="form-element-input"
+                            type="text"
+                            id="location"
+                            name="location"
+                            onChange={(e) => {
+                              setDetailsFormData({
+                                ...detailsFormData,
+                                [e.target.name]: e.target.value,
+                              });
+                            }}
+                            value={detailsFormData.location}
+                          >
+                            {israelCities.city.map((c) => (
+                              <option
+                                key={c.city_symbol}
+                                value={c.english_name}
+                              >
+                                {c.english_name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="form-element">
+                          <label
+                            htmlFor="linkedIn"
+                            className="form-element-label"
+                          >
+                            Linkedin:{" "}
+                          </label>
+                          <input
+                            className="form-element-input"
+                            type="text"
+                            id="linkedIn"
+                            name="linkedIn"
+                            onChange={(e) => {
+                              setDetailsFormData({
+                                ...detailsFormData,
+                                [e.target.name]: e.target.value,
+                              });
+                            }}
+                            value={detailsFormData.linkedIn}
+                          />
+                        </div>
+                        <div className="form-element">
+                          <label htmlFor="bio" className="form-element-label">
+                            Bio:{" "}
+                          </label>
+                          <textarea
+                            className="form-element-input"
+                            style={{ resize: "none" }}
+                            id="bio"
+                            name="bio"
+                            onChange={(e) => {
+                              setDetailsFormData({
+                                ...detailsFormData,
+                                [e.target.name]: e.target.value,
+                              });
+                            }}
+                            value={detailsFormData.bio}
+                          />
+                        </div>
+                        <div className="form-element">
+                          <label
+                            htmlFor="moshalStatus"
+                            className="form-element-label"
+                          >
+                            Moshal Status:
+                          </label>
+                          <select
+                            className="form-element-input"
+                            id="moshalStatus"
+                            name="moshalStatus"
+                            defaultValue={userData.moshalStatus}
+                          >
+                            <option value="Scholar">Scholar</option>
+                            <option value="Alumni">Alumni</option>
+                            <option value="Staff">Staff</option>
+                          </select>
+                        </div>
+                        <div className="form-element"></div>
+                        <div className="form-element"></div>
+
+                        <button
+                          type="submit"
+                          className="user-data-form-submit-button"
+                        >
+                          Submit
+                        </button>
+                      </form>
+                    </div>
                   )}
                 </div>
-                <div className="profile-page-status">
-                  {userData.moshalStatus || "Status"}
-                </div>
-              </div>
-              {/* TODO: user bio just sits in a p tag with no styling and control over it */}
-              <p>{userData.bio || "No bio available"}</p>
-              <div className="user-data-container">
-                <a href={userData.linkedIn} target="_blank">
-                  <FontAwesomeIcon className="icon" icon={faLinkedin} />
-                </a>
-                <a
-                  href={`https://wa.me/+972${userData.phoneNumber.slice(1)}`}
-                  target="_blank"
-                >
-                  <FontAwesomeIcon className="icon" icon={faWhatsapp} />
-                </a>
-                <a href={`mailto:${userData.email}`}>
-                  <FontAwesomeIcon className="icon" icon={faEnvelope} />
-                </a>
-                {!inEditMode && (
-                  <div className="profile-page-data">
-                    <DataItem
-                      faIconName={faLocationDot}
-                      itemLabel="My city"
-                      itemValue={userData.location}
-                    />
-                    <DataItem
-                      faIconName={faPhoneVolume}
-                      itemLabel="Catch me at"
-                      itemValue={userData.phoneNumber}
-                    />
-                    <DataItem
-                      faIconName={faBriefcase}
-                      itemLabel="Current workplace"
-                      itemValue={currentWorkplace}
-                    />
-                    <DataItem
-                      faIconName={faCakeCandles}
-                      itemLabel="Birthday"
-                      itemValue={userData.birthday}
-                    />
-                  </div>
-                )}
-                {inEditMode && (
-                  <div>
-                    <form onSubmit={handleUpdate} className="user-data-form">
-                      <div className="form-element">
-                        <label
-                          htmlFor="location"
-                          className="form-element-label"
-                        >
-                          Location:
-                        </label>
-                        <select
-                          className="form-element-input"
-                          type="text"
-                          id="location"
-                          name="location"
-                          onChange={(e) => {
-                            setDetailsFormData({
-                              ...detailsFormData,
-                              [e.target.name]: e.target.value,
-                            });
-                          }}
-                          value={detailsFormData.location}
-                        >
-                          {israelCities.city.map((c) => (
-                            <option key={c.city_symbol} value={c.english_name}>
-                              {c.english_name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="form-element">
-                        <label
-                          htmlFor="linkedIn"
-                          className="form-element-label"
-                        >
-                          Linkedin:{" "}
-                        </label>
-                        <input
-                          className="form-element-input"
-                          type="text"
-                          id="linkedIn"
-                          name="linkedIn"
-                          onChange={(e) => {
-                            setDetailsFormData({
-                              ...detailsFormData,
-                              [e.target.name]: e.target.value,
-                            });
-                          }}
-                          value={detailsFormData.linkedIn}
-                        />
-                      </div>
-                      <div className="form-element">
-                        <label htmlFor="bio" className="form-element-label">
-                          Bio:{" "}
-                        </label>
-                        <textarea
-                          className="form-element-input"
-                          style={{ resize: "none" }}
-                          id="bio"
-                          name="bio"
-                          onChange={(e) => {
-                            setDetailsFormData({
-                              ...detailsFormData,
-                              [e.target.name]: e.target.value,
-                            });
-                          }}
-                          value={detailsFormData.bio}
-                        />
-                      </div>
-                      <div className="form-element">
-                        <label
-                          htmlFor="moshalStatus"
-                          className="form-element-label"
-                        >
-                          Moshal Status:
-                        </label>
-                        <select
-                          className="form-element-input"
-                          id="moshalStatus"
-                          name="moshalStatus"
-                          defaultValue={userData.moshalStatus}
-                        >
-                          <option value="Scholar">Scholar</option>
-                          <option value="Alumni">Alumni</option>
-                          <option value="Staff">Staff</option>
-                        </select>
-                      </div>
-                      <div className="form-element"></div>
-                      <div className="form-element"></div>
 
-                      <button
-                        type="submit"
-                        className="user-data-form-submit-button"
-                      >
-                        Submit
-                      </button>
-                    </form>
-                  </div>
-                )}
+                <CategoryTitle title="studied" />
+                <ExperienceContainer
+                  organizationsData={institutionsData}
+                  setCurrentOrganization={setCurrentInstitution}
+                  userData={userData}
+                  setUserData={setUserData}
+                  route="Education"
+                  organization="Institution"
+                  field="Degree"
+                />
               </div>
-
-              <CategoryTitle title="studied" />
-              {/* <EducationContainer
-                    institutionsData={institutionsData}
-                    setUserData={setUserData}
-                    userData={userData}
-                  /> */}
-              <ExperienceContainer
-                organizationsData={institutionsData}
-                setCurrentOrganization={setCurrentInstitution}
-                userData={userData}
-                setUserData={setUserData}
-                route="Education"
-                organization="Institution"
-                field="Degree"
-              />
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </userDataContext.Provider>
     </>
   );
 };

@@ -1,11 +1,17 @@
 import { useContext } from "react";
-import { globalContext } from "../../../App";
+// import { globalContext } from "../../../App";
 import { useParams } from "react-router-dom";
 import "./experienceBox.css";
+import { globalAuthContext } from "../../../state/state.js";
 
 const ExperienceBox = (props) => {
-  const { signedUserData, token, handleExpiredToken } =
-    useContext(globalContext);
+  const {
+    setSignedUserData,
+    setToken,
+    signedUserData,
+    token,
+    handleExpiredToken,
+  } = useContext(globalAuthContext);
   const { userId } = useParams();
   // const organizationItem = props.organizationItems.slice(0, -1);
   // const organizationId = props.organizationId;
@@ -26,7 +32,7 @@ const ExperienceBox = (props) => {
       if (res.status === 200) {
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken();
+        handleExpiredToken(setSignedUserData, setToken);
       } else {
         alert("Something went wrong, please try again later");
       }
