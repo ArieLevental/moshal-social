@@ -1,19 +1,31 @@
 import { useContext, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
-import { globalContext } from "../../../App";
+// import { globalContext } from "../../../App";
 import { useParams } from "react-router-dom";
 import "./educationContainer.css";
 import EducationBox from "../educationBox/educationBox.js";
+import {
+  globalAuthContext,
+  institutionsDataContext,
+} from "../../../state/state.js";
+import { userDataContext } from "../index.js";
 
 const currentYear = new Date().getFullYear();
 
-const EducationContainer = (props) => {
+const EducationContainer = () => {
   const [inAddMode, setInAddMode] = useState(false);
   const [userEducationData, setUserEducationData] = useState([]);
   const [educationEditMode, setEducationEditMode] = useState(false);
-  const {signedUserData, token, handleExpiredToken} =
-    useContext(globalContext);
+  const {
+    setToken,
+    setSignedUserData,
+    signedUserData,
+    token,
+    handleExpiredToken,
+  } = useContext(globalAuthContext);
+  const { institutionsData } = useContext(institutionsDataContext) || [];
+  const { userData, setUserData } = useContext(userDataContext);
   const { userId } = useParams();
 
   useEffect(() => {
@@ -28,7 +40,7 @@ const EducationContainer = (props) => {
         setUserEducationData(resJson.educationItems);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken();
+        handleExpiredToken(setSignedUserData, setToken);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -54,10 +66,10 @@ const EducationContainer = (props) => {
     }).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
-        props.setUserData({ ...props.userData, ...resJson });
+        setUserData({ ...userData, ...resJson });
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken();
+        handleExpiredToken(setSignedUserData, setToken);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -71,7 +83,7 @@ const EducationContainer = (props) => {
   return (
     <div className="education-container">
       {/* Add button will render only if the user is signed in and the profile is his */}
-      {!inAddMode && signedUserData._id === props.userData._id && (
+      {!inAddMode && signedUserData._id === userData._id && (
         <button
           className="education-container-add-button"
           onClick={() => setInAddMode(!inAddMode)}
@@ -84,7 +96,7 @@ const EducationContainer = (props) => {
         <form className="education-container-new-form" onSubmit={handleAdd}>
           <label htmlFor="institutionId">Institution:</label>
           <select id="institutionId" name="institutionId">
-            {props?.institutionsData.map((institution) => (
+            {institutionsData.map((institution) => (
               <option key={institution._id} value={institution._id}>
                 {institution.name}
               </option>
@@ -129,7 +141,7 @@ const EducationContainer = (props) => {
       )}
 
       <div className="education-section">
-        {signedUserData._id === props.userData._id && (
+        {signedUserData._id === userData._id && (
           <button
             className="education-section-remove-controller"
             onClick={handleRemoveItems}

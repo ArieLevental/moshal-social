@@ -1,13 +1,16 @@
+import { useContext } from "react";
 import JobOffer from "../JobOffer/JobOffer";
 import "./FeedContainer.css";
 import NewJobForm from "./NewJobForm/NewJobForm";
+import { jobsDataContext } from "../index.js";
 
-const FeedContainer = (props) => {
+const FeedContainer = () => {
+  const { setJobsData, presentedJobsData } = useContext(jobsDataContext);
 
   return (
     <div className="feed-container">
       <NewJobForm />
-      {props.jobsData?.map((job) => (
+      {presentedJobsData.map((job) => (
         <div className="job-offer-container" key={job._id}>
           <JobOffer job={job} />
         </div>
