@@ -1,8 +1,9 @@
 import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { globalContext } from "../../../App";
+// import { globalContext } from "../../../App";
 import ExperienceBox from "../experienceBox/experienceBox.js";
 import "./experienceContainer.css";
+import { globalAuthContext } from "../../../state/state.js";
 
 const currentYear = new Date().getFullYear();
 
@@ -10,8 +11,13 @@ const ExperienceContainer = (props) => {
   const [inAddMode, setInAddMode] = useState(false);
   const [userExperienceData, setUserExperienceData] = useState([]);
   const [experienceEditMode, setExperienceEditMode] = useState(false);
-  const { signedUserData, token, handleExpiredToken } =
-    useContext(globalContext);
+  const {
+    setSignedUserData,
+    setToken,
+    signedUserData,
+    token,
+    handleExpiredToken,
+  } = useContext(globalAuthContext);
   const { userId } = useParams();
   const routeToLower = props.route.toLowerCase();
   const organizationId = props.organization.toLowerCase() + "Id"; // TODO TEMP!!!
@@ -37,7 +43,7 @@ const ExperienceContainer = (props) => {
         setUserExperienceData(resJson[experienceItems]);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken();
+        handleExpiredToken(setsignedUserData, setToken);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -66,7 +72,7 @@ const ExperienceContainer = (props) => {
         props.setUserData({ ...props.userData, ...resJson });
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken();
+        handleExpiredToken(setsignedUserData, setToken);
       } else {
         alert("Something went wrong, please try again later");
       }
