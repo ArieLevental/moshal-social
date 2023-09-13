@@ -1,23 +1,27 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./Searchbar.css";
+import { usersDbDataContext } from "../index.js";
 
-const Searchbar = (props) => {
+const Searchbar = ({ institutionsData, companiesData }) => {
   // Local state
   const [companyFilter, setCompanyFilter] = useState("");
   const [universityFilter, setUniversityFilter] = useState("");
   const [query, setQuery] = useState("");
+  const { usersDbData, setPresentedData } = useContext(usersDbDataContext);
 
   // Functions
   const activateFilter = (query, companyFilter, universityFilter) => {
-    props.setPresentedData(
-      props.usersDbData.filter((user) => {
+    setPresentedData(
+      usersDbData.filter((user) => {
         return (
           (query
             ? user.firstName.toLowerCase().includes(query) ||
               user.lastName.toLowerCase().includes(query)
             : true) &&
           (companyFilter
-            ? user.occupation.some((occupation) => occupation.companyId === companyFilter)
+            ? user.occupation.some(
+                (occupation) => occupation.companyId === companyFilter
+              )
             : true) &&
           (universityFilter
             ? user.education.some(
@@ -48,8 +52,8 @@ const Searchbar = (props) => {
     activateFilter(query, companyFilter, event.target.value.toLowerCase());
   };
 
-  // props.setPresentedData(
-  //   props.usersData.filter((user) => {
+  // setPresentedData(
+  //   usersData.filter((user) => {
   //     return (
   //       user.firstName.toLowerCase().includes(value) ||
   //       user.lastName.toLowerCase().includes(value)
@@ -59,8 +63,8 @@ const Searchbar = (props) => {
   // };
 
   const randomMoshalnikHandler = (event) => {
-    props.setPresentedData(
-      Array(props.usersDbData[Math.floor(Math.random() * props.usersDbData.length)])
+    setPresentedData(
+      Array(usersDbData[Math.floor(Math.random() * usersDbData.length)])
     );
   };
 
@@ -91,7 +95,7 @@ const Searchbar = (props) => {
           defaultValue="none"
         >
           <option value=""></option>
-          {props.companiesData?.map((company) => (
+          {companiesData?.map((company) => (
             <option key={company._id} value={company._id}>
               {company.name}
             </option>
@@ -108,7 +112,7 @@ const Searchbar = (props) => {
           defaultValue="none"
         >
           <option value=""></option>
-          {props.institutionsData?.map((institution) => (
+          {institutionsData?.map((institution) => (
             <option key={institution._id} value={institution._id}>
               {institution.name}
             </option>

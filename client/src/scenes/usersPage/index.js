@@ -1,23 +1,45 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, createContext } from "react";
 
 import DataBaseContainer from "./DataBaseContainer/DataBaseContainer";
 import Searchbar from "./Searchbar/Searchbar";
-import { globalContext } from "../../App";
+// import { globalContext } from "../../App";
+import {
+  companiesDataContext,
+  globalAuthContext,
+  institutionsDataContext,
+} from "../../state/state.js";
+
+export const usersDbDataContext = createContext();
 
 function UsersPage() {
+  // const {
+  //   token,
+  //   handleExpiredToken,
+  //   usersDbData,
+  //   setUsersDbData,
+  //   institutionsData,
+  //   setInstitutionsData,
+  //   companiesData,
+  //   setCompaniesData,
+  // } = useContext(globalContext);
   const {
+    signedUserData,
+    setSignedUserData,
     token,
+    setToken,
     handleExpiredToken,
-    usersDbData,
-    setUsersDbData,
-    institutionsData,
-    setInstitutionsData,
-    companiesData,
-    setCompaniesData,
-  } = useContext(globalContext);
+  } = useContext(globalAuthContext);
+  const [usersDbData, setUsersDbData] = useState(
+    JSON.parse(localStorage.getItem("users_db_data"))
+  );
+  const { institutionsData, setInstitutionsData } = useContext(
+    institutionsDataContext
+  );
+  const { companiesData, setCompaniesData } = useContext(companiesDataContext);
+  const [presentedData, setPresentedData] = useState(usersDbData);
+
   // console.log(usersDbData);
   // const [presentedData, setPresentedData] = useState(usersDbData);
-  const [presentedData, setPresentedData] = useState(usersDbData);
   // const [usersData, setUsersData] = useState(null);
   // const [institutionsData, setInstitutionsData] = useState(
   //   JSON.parse(localStorage.getItem("institutions_data"))
@@ -38,7 +60,7 @@ function UsersPage() {
         console.log(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken();
+        handleExpiredToken(setSignedUserData, setToken);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -55,7 +77,7 @@ function UsersPage() {
         setInstitutionsData(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken();
+        handleExpiredToken(setSignedUserData, setToken);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -73,7 +95,7 @@ function UsersPage() {
         setCompaniesData(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken();
+        handleExpiredToken(setSignedUserData, setToken);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -83,13 +105,15 @@ function UsersPage() {
 
   return (
     <>
-      <Searchbar
-        usersDbData={usersDbData}
-        setPresentedData={setPresentedData}
-        institutionsData={institutionsData}
-        companiesData={companiesData}
-      />
-      <DataBaseContainer presentedData={presentedData} />
+      <usersDbDataContext.Provider
+        value={{ usersDbData, setUsersDbData, presentedData, setPresentedData }}
+      >
+        <Searchbar
+          institutionsData={institutionsData}
+          companiesData={companiesData}
+        />
+        <DataBaseContainer />
+      </usersDbDataContext.Provider>
     </>
   );
 }

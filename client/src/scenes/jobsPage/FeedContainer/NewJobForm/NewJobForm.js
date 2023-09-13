@@ -1,17 +1,33 @@
 import { useState, useContext } from "react";
-import { globalContext } from "../../../../App";
+// import { globalContext } from "../../../../App";
 import "./NewJobForm.css";
+import {
+  generalDataContext,
+  globalAuthContext,
+  companiesDataContext,
+} from "../../../../state/state.js";
+import { jobsDataContext } from "../../index.js";
 
 const NewJobForm = () => {
+  // const {
+  //   signedUserData,
+  //   token,
+  //   handleExpiredToken,
+  //   israelCities,
+  //   jobsData,
+  //   setJobsData,
+  //   companiesData,
+  // } = useContext(globalContext);
+  const { israelCities } = useContext(generalDataContext);
   const {
+    setToken,
+    setSignedUserData,
     signedUserData,
     token,
     handleExpiredToken,
-    israelCities,
-    jobsData,
-    setJobsData,
-    companiesData,
-  } = useContext(globalContext);
+  } = useContext(globalAuthContext);
+  const { companiesData } = useContext(companiesDataContext);
+  const { jobsData, setJobsData } = useContext(jobsDataContext);
 
   const [newJobOfferForm, setNewJobOfferForm] = useState(false);
 
@@ -51,7 +67,7 @@ const NewJobForm = () => {
           revealNewJobOfferForm();
         } else if (res.status === 401) {
           alert("You are not authorized to view this page");
-          handleExpiredToken();
+          handleExpiredToken(setSignedUserData, setToken);
         } else {
           alert("Something went wrong, please try again later");
         }

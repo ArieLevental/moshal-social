@@ -87,46 +87,17 @@
 
 .form-element {
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  column-gap: 1%;
+  height: 80%;
+  object-fit: cover;
 }
 
-.form-element-label {
-  flex-basis: 30%;
-  flex-grow: 0;
-  text-align: left;
-}
-
-.form-element-input {
-  flex-basis: 50%;
-  flex-grow: 1;
-  text-align: center;
-}
-
-.form-element-input:focus {
-  /* border: 2px solid var(--primary-color-brighter); */
-  border-bottom: 4px solid var(--primary-color-brighter);
-  /* border-right: 3px solid var(--primary-color-brighter); */
-  padding-bottom: 0px;
-  outline: none;
-}
-
-.user-data-form {
-  display: flex;
-  flex-direction: column;
-  row-gap: 5px;
-}
-
-.user-data-form-submit-button {
-  width: 33%;
-  align-self: center;
-}
-
-.education-occupation-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  column-gap: 25px;
+.profile-picture {
+  position: absolute; /* Position the profile picture relative to the container */
+  top: 1rem; /* Adjust the top position to place the profile picture where you want */
+  left: 5rem; /* Adjust the left position to place the profile picture where you want */
+  width: 8rem; /* Set the profile picture's width */
+  height: 8rem; /* Set the profile picture's height */
+  border: 0.2rem solid var(--almost-white); /* Add a border for the profile picture */
+  border-radius: 50%; /* Make the profile picture round */
+  object-fit: cover;
 }
