@@ -1,4 +1,5 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, createContext } from "react";
+// import { globalContext } from "../../App";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,21 +14,42 @@ import { faWhatsapp, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { globalContext } from "../../App";
 import PictureEditForm from "../../components/Widjets/PictureEditForm/PictureEditForm";
 import CategoryTitle from "../../components/Widjets/CategoryTitle/CategoryTitle";
+import {
+  companiesDataContext,
+  generalDataContext,
+  globalAuthContext,
+  institutionsDataContext,
+} from "../../state/state.js";
+
+export const userDataContext = createContext();
 import ExperienceContainer from "./experienceContainer/experienceContainer";
 import DataItem from "./components/DataItem/DataItem";
 import "./index.css";
 
 const ProfilePage = () => {
+  // const {
+  //   signedUserData,
+  //   token,
+  //   handleExpiredToken,
+  //   israelCities,
+  //   institutionsData,
+  //   setInstitutionsData,
+  //   companiesData,
+  //   setCompaniesData,
+  // } = useContext(globalContext);
+  const { israelCities } = useContext(generalDataContext);
   const {
     signedUserData,
+    setSignedUserData,
     token,
+    setToken,
     handleExpiredToken,
-    israelCities,
-    institutionsData,
-    setInstitutionsData,
-    companiesData,
-    setCompaniesData,
-  } = useContext(globalContext);
+  } = useContext(globalAuthContext);
+  const { institutionsData, setInstitutionsData } = useContext(
+    institutionsDataContext
+  );
+  const { companiesData, setCompaniesData } = useContext(companiesDataContext);
+
   const { userId } = useParams();
   const [userData, setUserData] = useState(null);
   // const [institutionsData, setInstitutionsData] = useState(
@@ -54,7 +76,7 @@ const ProfilePage = () => {
         setInstitutionsData(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken();
+        handleExpiredToken(setSignedUserData, setToken);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -72,7 +94,7 @@ const ProfilePage = () => {
         setCompaniesData(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken();
+        handleExpiredToken(setSignedUserData, setToken);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -94,7 +116,7 @@ const ProfilePage = () => {
         });
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken();
+        handleExpiredToken(setSignedUserData, setToken);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -124,7 +146,7 @@ const ProfilePage = () => {
         setUserData({ ...userData, ...resJson });
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken();
+        handleExpiredToken(setSignedUserData, setToken);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -148,7 +170,7 @@ const ProfilePage = () => {
       if (res.status === 200) {
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken();
+        handleExpiredToken(setSignedUserData, setToken);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -157,33 +179,36 @@ const ProfilePage = () => {
 
   return (
     <>
-      {userData && (
-        <>
-          <div className="picture-banner-container">
-            <img
-              // TODO: change src to be consistent
-              src={
-                userData.bannerPath ||
-                "https://media.licdn.com/dms/image/D4D3DAQFSf7lIthy8Jw/image-scale_191_1128/0/1686646782350?e=1695114000&v=beta&t=c8LmreyvFmvo4pF1ZH4-jK_BbgalZAM8fKatPshWVNk"
-              }
-              alt={userData.firstName + "'s banner Picture"}
-              className="banner-picture"
-            />
-            <img
-              className="profile-picture"
-              src={userData.picturePath || "/assets/genericUser.png"}
-              alt={userData.firstName + "'s Profile Picture"}
-            />
-            {signedUserData._id === userId && ( // Show picture edit pen when user id is matching
-              <FontAwesomeIcon
-                className={"icon profile-page-img-edit"}
-                icon={faPen}
-                onClick={() => {
-                  setInImgMode(!inImgMode);
-                }}
+      <userDataContext.Provider
+        value={{ setUserData, userData, setCurrentWorkplace }}
+      >
+        {userData && (
+          <>
+            <div className="picture-banner-container">
+              <img
+                // TODO: change src to be consistent
+                src={
+                  userData.bannerPath ||
+                  "https://media.licdn.com/dms/image/D4D3DAQFSf7lIthy8Jw/image-scale_191_1128/0/1686646782350?e=1695114000&v=beta&t=c8LmreyvFmvo4pF1ZH4-jK_BbgalZAM8fKatPshWVNk"
+                }
+                alt={userData.firstName + "'s banner Picture"}
+                className="banner-picture"
               />
-            )}
-          </div>
+              <img
+                className="profile-picture"
+                src={userData.picturePath || "/assets/genericUser.png"}
+                alt={userData.firstName + "'s Profile Picture"}
+              />
+              {signedUserData._id === userId && ( // Show picture edit pen when user id is matching
+                <FontAwesomeIcon
+                  className={"icon profile-page-img-edit"}
+                  icon={faPen}
+                  onClick={() => {
+                    setInImgMode(!inImgMode);
+                  }}
+                />
+              )}
+            </div>
 
           <div className="profile-page">
             <div className="profile-page-left-box">
