@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { authContext } from "..";
-import { globalContext } from "../../../App";
+import { globalAuthContext } from "../../../state/state.js";
 import "./formsContainer.css";
 
 {
@@ -10,7 +10,7 @@ import "./formsContainer.css";
 export const Login = () => {
   const { INITIAL_FORMDATA, setActiveForm, formData, setFormData } =
     useContext(authContext);
-  const { setSignedUserData, setToken } = useContext(globalContext);
+  const { setSignedUserData, setToken } = useContext(globalAuthContext);
 
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
