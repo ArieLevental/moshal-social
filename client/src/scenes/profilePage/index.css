@@ -25,8 +25,8 @@
 
 .profile-page-img-edit {
   position: absolute;
-  bottom: 1rem;
-  left: 11.5rem;
+  bottom: 1.5rem;
+  left: 11rem;
 }
 
 .profile-page {
@@ -57,7 +57,9 @@
   height: 100%;
 }
 
-.profile-page-name {
+.profile-page-name-and-edit {
+  display: flex;
+  justify-content: space-between;
   padding-right: 5px;
   font-size: 30px;
   font-weight: bold;
@@ -81,9 +83,6 @@
   border-radius: 50%;
 }
 
-.active {
-  color: green;
-}
 
 .form-element {
   width: 100%;
@@ -129,4 +128,12 @@
   flex-direction: row;
   justify-content: space-between;
   column-gap: 25px;
+}
+
+.profile-page-data {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  width: 50%;
+  margin: 1.3rem 0;
 }

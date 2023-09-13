@@ -1,17 +1,18 @@
-.occupation-box {
-  width: 100%;
+.experience-box {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   text-align: center;
+  width: 100%;
   padding: 1rem 0.5rem;
   column-gap: 0.5rem;
-  border: 2px solid var(--black-02);
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 1rem;
 }
 
-.occupation-box-left-section,
-.occupation-box-right-section {
+.experience-box-left-section,
+.experience-box-right-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,35 +20,33 @@
   row-gap: 0.2rem;
 }
 
-.occupation-box-left-section {
+.experience-box-left-section {
   flex-basis: 15%;
   flex-grow: 0;
   flex-shrink: 0;
 }
 
-.occupation-box-right-section {
+.experience-box-right-section {
   align-items: flex-start;
-  /* justify-content: flex-start; */
   flex-grow: 1;
-  /* flex-wrap: wrap; */
   text-align: start;
 }
 
-.occupation-box-company-name {
+.experience-box-company-name {
   font-size: 0.8rem;
   font-weight: 400;
   margin: 0;
   padding: 0;
 }
 
-.occupation-box-company-logo {
+.experience-box-company-logo {
   height: 40px;
   width: 40px;
   border-radius: 17%;
   filter: drop-shadow(2px 2px 4px var(--dark-background));
 }
 
-.occupation-box-duration {
+.experience-box-duration {
   font-size: 1rem;
   font-weight: 400;
   margin: 0;
@@ -55,13 +54,23 @@
   color: var(--black-03);
 }
 
-.occupation-box-position {
+.experience-box-position {
   font-size: 1rem;
   font-weight: 400;
   margin: 0;
   padding: 0;
 }
 
-.occupation-box-remove-button {
+.experience-box-remove-button {
+  display: flex;
   align-self: flex-start;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--red-warning-08);
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.experience-box-remove-button:hover {
+  background-color: var(--red-warning);
 }

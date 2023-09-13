@@ -12,6 +12,10 @@
   --black-04: rgba(0, 0, 0, 0.4);
   --black-03: rgba(0, 0, 0, 0.3);
   --black-02: rgba(0, 0, 0, 0.2);
+  --red-warning: rgba(183, 30, 30, 1);
+  --red-warning-09: rgba(183, 30, 30, 0.9);
+  --red-warning-08: rgba(183, 30, 30, 0.8);
+  --red-warning-06: rgba(183, 30, 30, 0.6);
   --dark-background: #191b1c;
   --slightly-darker-background: #191b1c;
   --almost-white: #f4f2ee;
