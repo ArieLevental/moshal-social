@@ -1,14 +1,21 @@
 import { useContext, useState, useEffect } from "react";
-import { globalContext } from "../../App";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPen,
+  faEnvelope,
+  faCakeCandles,
+  faLocationDot,
+  faPhoneVolume,
+  faBriefcase,
+} from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import "./index.css";
-import EducationContainer from "./educationContainer/educationContainer.js";
-import OccupationContainer from "./occupationContainer/occupationContainer";
+import { globalContext } from "../../App";
 import PictureEditForm from "../../components/Widjets/PictureEditForm/PictureEditForm";
 import CategoryTitle from "../../components/Widjets/CategoryTitle/CategoryTitle";
+import ExperienceContainer from "./experienceContainer/experienceContainer";
+import DataItem from "./components/DataItem/DataItem";
+import "./index.css";
 
 const ProfilePage = () => {
   const {
@@ -35,6 +42,7 @@ const ProfilePage = () => {
   const [imgValue, setImgValue] = useState(null);
   const [url, setUrl] = useState(null);
   const [currentWorkplace, setCurrentWorkplace] = useState("");
+  const [currentInstitution, setCurrentInstitution] = useState("");
 
   useEffect(() => {
     fetch(`http://localhost:3001/institutions`, {
@@ -187,35 +195,39 @@ const ProfilePage = () => {
                 />
               )}
               <CategoryTitle title="work" />
-              <OccupationContainer
-                companiesData={companiesData}
-                setUserData={setUserData}
+              <ExperienceContainer
+                organizationsData={companiesData}
+                setCurrentOrganization={setCurrentWorkplace}
                 userData={userData}
-                setCurrentWorkplace={setCurrentWorkplace}
+                setUserData={setUserData}
+                route="Occupation"
+                organization="Company"
+                field="Position"
               />
               <CategoryTitle title="skills" />
             </div>
             <div className="profile-page-right-box">
               <div className="profile-page-name-and-status">
-                <div className="profile-page-name">
+                <div className="profile-page-name-and-edit">
                   {userData.firstName} {userData.lastName}
+                  {/* Show profile edit pen when user id is matching */}
+                  {signedUserData._id === userId && (
+                    <button
+                      onClick={() => {
+                        setInEditMode(!inEditMode);
+                      }}
+                    >
+                      {inEditMode ? "Cancel" : "Edit Profile"}
+                    </button>
+                  )}
                 </div>
                 <div className="profile-page-status">
                   {userData.moshalStatus || "Status"}
                 </div>
               </div>
+              {/* TODO: user bio just sits in a p tag with no styling and control over it */}
               <p>{userData.bio || "No bio available"}</p>
               <div className="user-data-container">
-                {/* Show profile edit pen when user id is matching */}
-                {signedUserData._id === userId && (
-                  <FontAwesomeIcon
-                    className={"icon" + (inEditMode ? " active" : "")}
-                    icon={faPen}
-                    onClick={() => {
-                      setInEditMode(!inEditMode);
-                    }}
-                  />
-                )}
                 <a href={userData.linkedIn} target="_blank">
                   <FontAwesomeIcon className="icon" icon={faLinkedin} />
                 </a>
@@ -229,28 +241,32 @@ const ProfilePage = () => {
                   <FontAwesomeIcon className="icon" icon={faEnvelope} />
                 </a>
                 {!inEditMode && (
-                  <div>
-                    <p>
-                      <strong>My city:</strong>{" "}
-                      {userData.location || "Not provided"}
-                    </p>
-                    <p>
-                      <strong>Catch me at:</strong>{" "}
-                      {userData.phoneNumber || "Not provided"}
-                    </p>
-                    <p>
-                      <strong>Current workplace:</strong>{" "}
-                      {/* {userData.occupation[0] || "No where, currently"} */}
-                      {currentWorkplace || "No where, currently"}
-                    </p>
+                  <div className="profile-page-data">
+                    <DataItem
+                      faIconName={faLocationDot}
+                      itemLabel="My city"
+                      itemValue={userData.location}
+                    />
+                    <DataItem
+                      faIconName={faPhoneVolume}
+                      itemLabel="Catch me at"
+                      itemValue={userData.phoneNumber}
+                    />
+                    <DataItem
+                      faIconName={faBriefcase}
+                      itemLabel="Current workplace"
+                      itemValue={currentWorkplace}
+                    />
+                    <DataItem
+                      faIconName={faCakeCandles}
+                      itemLabel="Birthday"
+                      itemValue={userData.birthday}
+                    />
                   </div>
                 )}
                 {inEditMode && (
                   <div>
-                    <form
-                      onSubmit={(e) => handleUpdate(e)}
-                      className="user-data-form"
-                    >
+                    <form onSubmit={handleUpdate} className="user-data-form">
                       <div className="form-element">
                         <label
                           htmlFor="location"
@@ -348,16 +364,22 @@ const ProfilePage = () => {
                   </div>
                 )}
               </div>
-              <div className="education-occupation-container">
-                <div className="education">
-                  <CategoryTitle title="studied" />
-                  <EducationContainer
+
+              <CategoryTitle title="studied" />
+              {/* <EducationContainer
                     institutionsData={institutionsData}
                     setUserData={setUserData}
                     userData={userData}
-                  />
-                </div>
-              </div>
+                  /> */}
+              <ExperienceContainer
+                organizationsData={institutionsData}
+                setCurrentOrganization={setCurrentInstitution}
+                userData={userData}
+                setUserData={setUserData}
+                route="Education"
+                organization="Institution"
+                field="Degree"
+              />
             </div>
           </div>
         </>
