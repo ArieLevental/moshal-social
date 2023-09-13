@@ -1,13 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import UserCard from "../UserCard/UserCard";
 import "./DataBaseContainer.css";
+import { usersDbDataContext } from "../index.js";
 
-function DataBaseContainer(props) {
+function DataBaseContainer() {
+  const { presentedData } = useContext(usersDbDataContext);
   return (
     <div className="database-container">
-      {props.presentedData &&
-        props.presentedData.map((user) => (
+      {presentedData &&
+        presentedData.map((user) => (
           <UserCard key={user?._id} userData={user} />
         ))}
     </div>

@@ -1,19 +1,32 @@
 import { useContext, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
-import { globalContext } from "../../../App";
+// import { globalContext } from "../../../App";
 import { useParams } from "react-router-dom";
 import "./occupationContainer.css";
 import OccupationBox from "../occupationBox/occupationBox.js";
+import {
+  companiesDataContext,
+  globalAuthContext,
+} from "../../../state/state.js";
+import { userDataContext } from "../index.js";
 
 const currentYear = new Date().getFullYear();
 
-const OccupationContainer = (props) => {
+const OccupationContainer = () => {
   const [inAddMode, setInAddMode] = useState(false);
   const [userOccupationData, setUserOccupationData] = useState([]);
   const [occupationEditMode, setOccupationEditMode] = useState(false);
-  const { signedUserData, token, handleExpiredToken } =
-    useContext(globalContext);
+  const {
+    setToken,
+    setSignedUserData,
+    signedUserData,
+    token,
+    handleExpiredToken,
+  } = useContext(globalAuthContext);
+  const { companiesData } = useContext(companiesDataContext) || [];
+  const { userData, setUserData, setCurrentWorkplace } =
+    useContext(userDataContext);
   const { userId } = useParams();
 
   useEffect(() => {
@@ -27,14 +40,14 @@ const OccupationContainer = (props) => {
         console.log(resJson.occupationItems);
         //TODO: currently just takes the last item's, but it's not necessarily the case
         if (resJson.occupationItems.length > 0) {
-          props.setCurrentWorkplace(
+          setCurrentWorkplace(
             resJson.occupationItems.slice(-1)[0].companyId.name
           );
         }
         setUserOccupationData(resJson.occupationItems);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken();
+        handleExpiredToken(setSignedUserData, setToken);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -60,10 +73,10 @@ const OccupationContainer = (props) => {
     }).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
-        props.setUserData({ ...props.userData, ...resJson });
+        setUserData({ ...userData, ...resJson });
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken();
+        handleExpiredToken(setSignedUserData, setToken);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -77,7 +90,7 @@ const OccupationContainer = (props) => {
   return (
     <div className="occupation-container">
       {/* Add button will render only if the user is signed in and the profile is his */}
-      {!inAddMode && signedUserData._id === props.userData._id && (
+      {!inAddMode && signedUserData._id === userData._id && (
         <button
           className="occupation-container-add-button"
           onClick={() => setInAddMode(!inAddMode)}
@@ -90,7 +103,7 @@ const OccupationContainer = (props) => {
         <form className="occupation-container-new-form" onSubmit={handleAdd}>
           <label htmlFor="companyId">Company:</label>
           <select id="companyId" name="companyId">
-            {props?.companiesData.map((company) => (
+            {companiesData.map((company) => (
               <option key={company._id} value={company._id}>
                 {company.name}
               </option>
@@ -133,7 +146,7 @@ const OccupationContainer = (props) => {
       )}
 
       <div className="occupation-section">
-        {signedUserData._id === props.userData._id && (
+        {signedUserData._id === userData._id && (
           <button
             className="occupation-section-remove-controller"
             onClick={handleRemoveItems}

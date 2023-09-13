@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { jobsDataContext } from "../index.js";
+import { companiesDataContext } from "../../../state/state.js";
 
-
-function Searchbar(props) {
+function Searchbar() {
+  const { companiesData } = useContext(companiesDataContext);
+  const { jobsData, setPresentedJobsData } = useContext(jobsDataContext);
   const [companyFilter, setCompanyFilter] = useState("");
   const [query, setQuery] = useState("");
 
   const activateFilter = (query, companyFilter) => {
-    props.setPresentedJobsData(
-      props.jobsData.filter((job) => {
+    setPresentedJobsData(
+      jobsData.filter((job) => {
         return (
           (query
             ? job.offerTitle.toLowerCase().includes(query) ||
@@ -21,33 +24,15 @@ function Searchbar(props) {
       })
     );
   };
-  
+
   const searchUpdateHandler = (event) => {
-    // const value = event.target.value.toLowerCase();
     setQuery(event.target.value.toLowerCase());
     activateFilter(event.target.value.toLowerCase(), companyFilter);
-    // props.setPresentedJobsData(
-    //   props.jobsData.filter((job) => {
-    //     return (
-    //       (job.offerTitle.toLowerCase().includes(value) ||
-    //         job.content.toLowerCase().includes(value)) &&
-    //       (companyFilter
-    //         ? job.companyId.name.toLowerCase().includes(companyFilter)
-    //         : true)
-    //     );
-    //   })
-    // );
   };
 
   const searchCompanyHandler = (event) => {
-    // const value = event.target.value.toLowerCase();
     setCompanyFilter(event.target.value.toLowerCase());
     activateFilter(query, event.target.value.toLowerCase());
-    // props.setPresentedJobsData(
-    //   props.jobsData.filter((job) => {
-    //     return job.companyId.name.toLowerCase().includes(value);
-    //   })
-    // );
   };
 
   return (
@@ -70,7 +55,7 @@ function Searchbar(props) {
           onChange={searchCompanyHandler}
         >
           <option value="" />
-          {props.companiesData?.map((company) => (
+          {companiesData?.map((company) => (
             <option key={company._id} value={company.name}>
               {company.name}
             </option>

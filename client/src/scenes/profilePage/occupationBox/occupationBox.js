@@ -1,11 +1,17 @@
 import "./occupationBox.css";
 import { useContext, useState, useEffect } from "react";
-import { globalContext } from "../../../App";
+// import { globalContext } from "../../../App";
 import { useParams } from "react-router-dom";
+import { globalAuthContext } from "../../../state/state.js";
 
 const OccupationBox = (props) => {
-  const { signedUserData, token, handleExpiredToken } =
-    useContext(globalContext);
+  const {
+    setToken,
+    setSignedUserData,
+    signedUserData,
+    token,
+    handleExpiredToken,
+  } = useContext(globalAuthContext);
   const { userId } = useParams();
 
   const handleOccupationDelete = (e) => {
@@ -24,7 +30,7 @@ const OccupationBox = (props) => {
       if (res.status === 200) {
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken();
+        handleExpiredToken(setSignedUserData, setToken);
       } else {
         alert("Something went wrong, please try again later");
       }
