@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { globalContext } from "../../App";
+import { globalAuthContext } from "../../state/state.js";
 import "./Navbar.css";
 import Icons from "./Icons/Icons";
 import Navigation from "./Navigation/Navigation";
 
 const Navbar = () => {
   const { signedUserData, token, handleExpiredToken } =
-    useContext(globalContext);
+    useContext(globalAuthContext);
   const handleLogout = () => {
     handleExpiredToken();
   };
