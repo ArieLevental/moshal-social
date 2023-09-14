@@ -45,6 +45,10 @@ const userSchema = new mongoose.Schema(
       max: 200,
       default: "",
     },
+    dateOfBirth: {
+      type: Date,
+      trim: true,
+    },
     phoneNumber: {
       type: String,
       min: 7,

@@ -26,16 +26,6 @@ import "./index.css";
 export const userDataContext = createContext();
 
 const ProfilePage = () => {
-  // const {
-  //   signedUserData,
-  //   token,
-  //   handleExpiredToken,
-  //   israelCities,
-  //   institutionsData,
-  //   setInstitutionsData,
-  //   companiesData,
-  //   setCompaniesData,
-  // } = useContext(globalContext);
   const { israelCities } = useContext(generalDataContext);
   const {
     signedUserData,
@@ -51,12 +41,6 @@ const ProfilePage = () => {
 
   const { userId } = useParams();
   const [userData, setUserData] = useState(null);
-  // const [institutionsData, setInstitutionsData] = useState(
-  //   JSON.parse(localStorage.getItem("institutions_data"))
-  // );
-  // const [companiesData, setCompaniesData] = useState(
-  //   JSON.parse(localStorage.getItem("companies_data"))
-  // );
   const [detailsFormData, setDetailsFormData] = useState(null);
   const [inEditMode, setInEditMode] = useState(false);
   const [inImgMode, setInImgMode] = useState(false);
@@ -112,6 +96,7 @@ const ProfilePage = () => {
           location: resJson.location,
           linkedIn: resJson.linkedIn,
           bio: resJson.bio,
+          dateOfBirth: resJson.dateOfBirth,
         });
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
@@ -130,6 +115,7 @@ const ProfilePage = () => {
       bio: e.target.bio.value,
       moshalStatus: e.target.moshalStatus.value,
       linkedIn: e.target.linkedIn.value,
+      dateOfBirth: e.target.dateOfBirth.value,
     };
     fetch(`http://localhost:3001/user/${userId}`, {
       method: "PATCH",
@@ -234,7 +220,7 @@ const ProfilePage = () => {
                 <div className="profile-page-name-and-status">
                   <div className="profile-page-name-and-edit">
                     {userData.firstName} {userData.lastName}
-                    {/* Show profile edit pen when user id is matching */}
+                    {/* Show profile edit button when user id is matching */}
                     {signedUserData._id === userId && (
                       <button
                         onClick={() => {
@@ -281,114 +267,137 @@ const ProfilePage = () => {
                         itemLabel="Current workplace"
                         itemValue={currentWorkplace}
                       />
-                      <DataItem
-                        faIconName={faCakeCandles}
-                        itemLabel="Birthday"
-                        itemValue={userData.birthday}
-                      />
+                      {userData.dateOfBirth && (
+                        <DataItem
+                          faIconName={faCakeCandles}
+                          itemLabel="Birthday"
+                          itemValue={new Date(
+                            userData.dateOfBirth
+                          ).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit",
+                          })}
+                        />
+                      )}
                     </div>
                   )}
                   {inEditMode && (
-                    <div>
-                      <form onSubmit={handleUpdate} className="user-data-form">
-                        <div className="form-element">
-                          <label
-                            htmlFor="location"
-                            className="form-element-label"
-                          >
-                            Location:
-                          </label>
-                          <select
-                            className="form-element-input"
-                            type="text"
-                            id="location"
-                            name="location"
-                            onChange={(e) => {
-                              setDetailsFormData({
-                                ...detailsFormData,
-                                [e.target.name]: e.target.value,
-                              });
-                            }}
-                            value={detailsFormData.location}
-                          >
-                            {israelCities.city.map((c) => (
-                              <option
-                                key={c.city_symbol}
-                                value={c.english_name}
-                              >
-                                {c.english_name}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="form-element">
-                          <label
-                            htmlFor="linkedIn"
-                            className="form-element-label"
-                          >
-                            Linkedin:{" "}
-                          </label>
-                          <input
-                            className="form-element-input"
-                            type="text"
-                            id="linkedIn"
-                            name="linkedIn"
-                            onChange={(e) => {
-                              setDetailsFormData({
-                                ...detailsFormData,
-                                [e.target.name]: e.target.value,
-                              });
-                            }}
-                            value={detailsFormData.linkedIn}
-                          />
-                        </div>
-                        <div className="form-element">
-                          <label htmlFor="bio" className="form-element-label">
-                            Bio:{" "}
-                          </label>
-                          <textarea
-                            className="form-element-input"
-                            style={{ resize: "none" }}
-                            id="bio"
-                            name="bio"
-                            onChange={(e) => {
-                              setDetailsFormData({
-                                ...detailsFormData,
-                                [e.target.name]: e.target.value,
-                              });
-                            }}
-                            value={detailsFormData.bio}
-                          />
-                        </div>
-                        <div className="form-element">
-                          <label
-                            htmlFor="moshalStatus"
-                            className="form-element-label"
-                          >
-                            Moshal Status:
-                          </label>
-                          <select
-                            className="form-element-input"
-                            id="moshalStatus"
-                            name="moshalStatus"
-                            defaultValue={userData.moshalStatus}
-                          >
-                            <option value="Scholar">Scholar</option>
-                            <option value="Alumni">Alumni</option>
-                            <option value="Staff">Staff</option>
-                          </select>
-                        </div>
-                        <div className="form-element"></div>
-                        <div className="form-element"></div>
-
-                        <button
-                          type="submit"
-                          className="user-data-form-submit-button"
+                    <form onSubmit={handleUpdate} className="user-data-form">
+                      <div className="form-element">
+                        <label
+                          htmlFor="location"
+                          className="form-element-label"
                         >
-                          Submit
-                        </button>
-                      </form>
-                    </div>
+                          Location:
+                        </label>
+                        <select
+                          className="form-element-input"
+                          type="text"
+                          id="location"
+                          name="location"
+                          onChange={(e) => {
+                            setDetailsFormData({
+                              ...detailsFormData,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          value={detailsFormData.location}
+                        >
+                          {israelCities.city.map((c) => (
+                            <option key={c.city_symbol} value={c.english_name}>
+                              {c.english_name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="form-element">
+                        <label
+                          htmlFor="linkedIn"
+                          className="form-element-label"
+                        >
+                          Linkedin:{" "}
+                        </label>
+                        <input
+                          className="form-element-input"
+                          type="text"
+                          id="linkedIn"
+                          name="linkedIn"
+                          onChange={(e) => {
+                            setDetailsFormData({
+                              ...detailsFormData,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          value={detailsFormData.linkedIn}
+                        />
+                      </div>
+                      <div className="form-element">
+                        <label htmlFor="bio" className="form-element-label">
+                          Bio:{" "}
+                        </label>
+                        <textarea
+                          className="form-element-input"
+                          style={{ resize: "none" }}
+                          id="bio"
+                          name="bio"
+                          onChange={(e) => {
+                            setDetailsFormData({
+                              ...detailsFormData,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          value={detailsFormData.bio}
+                        />
+                      </div>
+                      <div className="form-element">
+                        <label
+                          htmlFor="moshalStatus"
+                          className="form-element-label"
+                        >
+                          Moshal Status:
+                        </label>
+                        <select
+                          className="form-element-input"
+                          id="moshalStatus"
+                          name="moshalStatus"
+                          defaultValue={userData.moshalStatus}
+                        >
+                          <option value="Scholar">Scholar</option>
+                          <option value="Alumni">Alumni</option>
+                          <option value="Staff">Staff</option>
+                        </select>
+                      </div>
+                      <div className="form-element">
+                        <label
+                          htmlFor="dateOfBirth"
+                          className="form-element-label"
+                        >
+                          Birthday:
+                        </label>
+                        <input
+                          className="form-element-input"
+                          type="date"
+                          id="dateOfBirth"
+                          name="dateOfBirth"
+                          onChange={(e) => {
+                            setDetailsFormData({
+                              ...detailsFormData,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          defaultValue={userData.dateOfBirth} // TODO: not working
+                          value={detailsFormData.dateOfBirth}
+                        />
+                      </div>
+
+                      <button
+                        type="submit"
+                        className="user-data-form-submit-button"
+                      >
+                        Submit
+                      </button>
+                    </form>
                   )}
                 </div>
 
