@@ -7,6 +7,63 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.footer-item {
+#footer-credit-link {
+  color: var(--primary-color);
+  display: inline-block;
+  position: relative;
+}
+
+/* #footer-credit-link:hover {
+  color: var(--light-blue);
+} */
+
+#footer-credit-link:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--primary-color-06);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+#footer-credit-link:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* TODO: fix z-index ? */
+.tooltip-container {
+  position: relative;
   cursor: pointer;
+}
+
+.tooltip-container::before {
+  content: attr(
+    data-tooltip
+  ); /* Retrieve content from the data-tooltip attribute */
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  width: 40rem;
+  max-width: 400px;
+  word-wrap: break-word;
+  white-space: normal;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 1000;
+}
+
+.tooltip-container:hover::before {
+  opacity: 1;
+  visibility: visible;
 }
