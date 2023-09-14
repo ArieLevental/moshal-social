@@ -276,7 +276,7 @@ const ProfilePage = () => {
       bio: e.target.bio.value,
       moshalStatus: e.target.moshalStatus.value,
       linkedIn: e.target.linkedIn.value,
-      dateOfBirth: e.target.dateOfBirth.value,
+      dateOfBirth: formatDate(e.target.dateOfBirth.value),
     };
     fetch(`http://localhost:3001/user/${userId}`, {
       method: "PATCH",
@@ -328,6 +328,28 @@ const ProfilePage = () => {
         alert("Something went wrong, please try again later");
       }
     });
+  };
+
+  // Helper function to format the date as "yyyy-MM-dd"
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  // Helper function to capitalize first letter of each word
+  const capitalizeFirstLetters = (string) => {
+    // convert to string
+    string = string + "";
+    // If string is empty or not a string, return an empty string
+    if (!string) return "";
+
+    return string
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
   };
 
   return (
@@ -442,7 +464,7 @@ const ProfilePage = () => {
                           itemLabel="Birthday"
                           itemValue={new Date(
                             userData.dateOfBirth
-                          ).toLocaleDateString("en-US", {
+                          ).toLocaleDateString("en-GB", {
                             year: "numeric",
                             month: "2-digit",
                             day: "2-digit",
@@ -474,8 +496,11 @@ const ProfilePage = () => {
                           value={detailsFormData.location}
                         >
                           {israelCities.city.map((c) => (
-                            <option key={c.city_symbol} value={c.english_name}>
-                              {c.english_name}
+                            <option
+                              key={c.city_symbol}
+                              value={capitalizeFirstLetters(c.english_name)}
+                            >
+                              {capitalizeFirstLetters(c.english_name)}
                             </option>
                           ))}
                         </select>
@@ -555,8 +580,8 @@ const ProfilePage = () => {
                               [e.target.name]: e.target.value,
                             });
                           }}
-                          defaultValue={userData.dateOfBirth} // TODO: not working
-                          value={detailsFormData.dateOfBirth}
+                          // defaultValue={userData.dateOfBirth} // TODO: not working
+                          value={formatDate(detailsFormData.dateOfBirth)}
                         />
                       </div>
 
