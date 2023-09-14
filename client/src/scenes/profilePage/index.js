@@ -360,16 +360,13 @@ const ProfilePage = () => {
             <div className="picture-banner-container">
               <img
                 // TODO: change src to be consistent
-                src={
-                  userData.bannerPath ||
-                  "https://media.licdn.com/dms/image/D4D3DAQFSf7lIthy8Jw/image-scale_191_1128/0/1686646782350?e=1695114000&v=beta&t=c8LmreyvFmvo4pF1ZH4-jK_BbgalZAM8fKatPshWVNk"
-                }
+                src={userData.bannerPath || "/assets/general/genericBanner.png"}
                 alt={userData.firstName + "'s banner Picture"}
                 className="banner-picture"
               />
               <img
                 className="profile-picture"
-                src={userData.picturePath || "/assets/genericUser.png"}
+                src={userData.picturePath || "/assets/general/genericUser.png"}
                 alt={userData.firstName + "'s Profile Picture"}
               />
               {signedUserData._id === userId && ( // Show picture edit pen when user id is matching
@@ -510,7 +507,7 @@ const ProfilePage = () => {
                           htmlFor="linkedIn"
                           className="form-element-label"
                         >
-                          Linkedin:{" "}
+                          Linkedin:
                         </label>
                         <input
                           className="form-element-input"
@@ -528,7 +525,7 @@ const ProfilePage = () => {
                       </div>
                       <div className="form-element">
                         <label htmlFor="bio" className="form-element-label">
-                          Bio:{" "}
+                          Bio:
                         </label>
                         <textarea
                           className="form-element-input"
@@ -580,7 +577,6 @@ const ProfilePage = () => {
                               [e.target.name]: e.target.value,
                             });
                           }}
-                          // defaultValue={userData.dateOfBirth} // TODO: not working
                           value={formatDate(detailsFormData.dateOfBirth)}
                         />
                       </div>

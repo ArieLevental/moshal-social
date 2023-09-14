@@ -295,10 +295,13 @@ export const PasswordRecovery = (props) => {
     <div>
       <h1>Password Recovery</h1>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <label htmlFor="email">Email:</label>
-        <input type="email" id="email" name="email" />
+        <label htmlFor="email">Email: </label>
+        <input className="recovery-form-input" type="email" id="email" name="email" />
         <br />
-        <input type="submit" value="Recover" />
+        <button className="recovery-form-submit-button" type="submit">
+          {" "}
+          Recover{" "}
+        </button>
       </form>
       <p
         className="landing-page-action-link"

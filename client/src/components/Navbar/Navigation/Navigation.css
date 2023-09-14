@@ -15,14 +15,14 @@
 
 .navigation-item:link,
 .navigation-item:visited {
-  border-bottom: 3px solid var(--primary-color-brightest);
-  color: var(--color-icon-nav);
+  border-bottom: 3px solid var(--primary-color-06);
+  color: var(--black-06);
 }
 
 .navigation-item:hover,
 .navigation-item:active {
   border-bottom: 3px solid var(--primary-color);
-  color: var(--color-icon-nav-hover);
+  color: var(--black-09);
 }
 
 .navigation-item-active {
@@ -34,7 +34,7 @@
   width: 6vw;
   margin: 0.4rem 1rem;
   border-bottom: 3px solid var(--primary-color);
-  color: var(--color-icon-nav-hover);
+  color: var(--black-09);
 }
 
 .navigation-icon {

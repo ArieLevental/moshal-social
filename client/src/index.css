@@ -1,9 +1,7 @@
 :root {
   --primary-color: rgb(29, 82, 151, 1);
-  --primary-color-brighter: rgb(29, 82, 151, 0.9);
-  --primary-color-brightest: rgb(29, 82, 151, 0.6);
-  --color-icon-nav-hover: rgba(0, 0, 0, 0.9);
-  --color-icon-nav: rgba(0, 0, 0, 0.6);
+  --primary-color-09: rgb(29, 82, 151, 0.9);
+  --primary-color-06: rgb(29, 82, 151, 0.6);
   --black: rgba(0, 0, 0, 1);
   --black-09: rgba(0, 0, 0, 0.9);
   --black-08: rgba(0, 0, 0, 0.8);
@@ -17,7 +15,6 @@
   --red-warning-08: rgba(183, 30, 30, 0.8);
   --red-warning-06: rgba(183, 30, 30, 0.6);
   --dark-background: #191b1c;
-  --slightly-darker-background: #191b1c;
   --almost-white: #f4f2ee;
   --light-blue: #6bade8;
   --accent-color: #ffc51b;
@@ -27,16 +24,16 @@
 /* Custom fonts */
 @font-face {
   font-family: "FenomenSans-Book";
-  src: url("../public/assets/FenomenSans-Book.woff2") format("woff2"),
-    url("../public/assets/FenomenSans-Book.woff") format("woff");
+  src: url("../public/assets/fonts/FenomenSans-Book.woff2") format("woff2"),
+    url("../public/assets/fonts/FenomenSans-Book.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "NarkissBlock-Regular";
-  src: url("../public/assets/NarkissBlock-Regular.woff2") format("woff2"),
-    url("../public/assets/NarkissBlock-Regular.woff") format("woff");
+  src: url("../public/assets/fonts/NarkissBlock-Regular.woff2") format("woff2"),
+    url("../public/assets/fonts/NarkissBlock-Regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -61,7 +58,7 @@ a:active {
 }
 
 button {
-  background-color: var(--primary-color-brighter);
+  background-color: var(--primary-color-09);
   color: var(--almost-white);
   text-align: center;
   text-decoration: none;
@@ -88,7 +85,7 @@ input:focus,
 textarea:focus {
   border: 1px solid var(--primary-color);
   outline: none;
-  border-bottom: 4px solid var(--primary-color-brighter);
+  border-bottom: 4px solid var(--primary-color-09);
   padding-bottom: 0px;
 }
 
@@ -105,8 +102,7 @@ select:focus {
 }
 
 select option {
-  /* background-color: var(--almost-white); */
-  font-family: monospace;
+  /* font-family: monospace; */
 }
 
 .accent-text {
