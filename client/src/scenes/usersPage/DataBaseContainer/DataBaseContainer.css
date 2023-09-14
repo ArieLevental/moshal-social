@@ -2,11 +2,10 @@
 .database-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   row-gap: 1rem;
-  column-gap: 1rem;
   flex-direction: row;
-  /* margin: 1rem 0; */
   overflow-y: scroll;
-  flex-grow: 1;
+  padding: 1rem 5%;
+
 }
