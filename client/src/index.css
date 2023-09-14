@@ -108,3 +108,7 @@ select option {
   /* background-color: var(--almost-white); */
   font-family: monospace;
 }
+
+.accent-text {
+  color: var(--primary-color);
+}

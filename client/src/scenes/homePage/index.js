@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCakeCandles, faGift } from "@fortawesome/free-solid-svg-icons";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { globalAuthContext } from "../../state/state.js";
 import "./index.css";
 
@@ -26,18 +26,38 @@ const HomePage = () => {
   }, []);
 
   return (
-    <>
-      <div className="homepage-img-wrap">
-        <img
-          className="homepage-placeholder"
-          src="./assets/homepage-events.jpg"
-          alt="events"
-        />
+    <div className="homepage-container">
+      <Carousel
+        className="homepage-carousel"
+        autoPlay
+        interval={3000}
+        infiniteLoop={true}
+        showThumbs={false}
+        showIndicators={false}
+        showStatus={false}
+        stopOnHover={false}
+      >
+        <img src="./assets/homepage/image1.jpg" alt="Image 1" />
+        <img src="./assets/homepage/image2.jpg" alt="Image 2" />
+        <img src="./assets/homepage/image3.jpg" alt="Image 3" />
+      </Carousel>
+      <div className="homepage-paragraph">
+        Welcome to <span className="accent-text">Moshal Social,</span>
+        <br />
+        the heart of our vibrant Moshal scholarship
+        community. Here, scholars, mentors, and partners come together to
+        connect, collaborate, and make a lasting impact. Our enterprise social
+        network is your gateway to a world of opportunities, knowledge sharing,
+        and support. Whether you're seeking guidance on your academic journey,
+        eager to explore career prospects, or simply looking to engage with
+        fellow Moshal scholars, this platform is your digital home. Join us in
+        shaping a brighter future, one connection at a time. Together, we are
+        Moshal Social - empowering dreams, fostering success.
       </div>
       <div className="born-today-widget">
         <div className="born-today-title">
-          <FontAwesomeIcon icon={faCakeCandles} /> Born today{" "}
-          <FontAwesomeIcon icon={faGift} />
+          Born today:
+          
         </div>
         <div className="born-today-container">
           {usersDbData &&
@@ -64,7 +84,7 @@ const HomePage = () => {
             })}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
