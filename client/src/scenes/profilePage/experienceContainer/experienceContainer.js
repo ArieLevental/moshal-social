@@ -11,7 +11,6 @@ const currentYear = new Date().getFullYear();
 const ExperienceContainer = ({
   organizationsData,
   experienceItems,
-  setExperienceItems,
   deleteExperienceItem,
   addExperienceItem,
   organizationType,
