@@ -14,7 +14,7 @@
 
 .profile-picture {
   position: absolute; /* Position the profile picture relative to the container */
-  top: 2rem; /* Adjust the top position to place the profile picture where you want */
+  top: 2.5rem; /* Adjust the top position to place the profile picture where you want */
   left: 5rem; /* Adjust the left position to place the profile picture where you want */
   width: 8rem; /* Set the profile picture's width */
   height: 8rem; /* Set the profile picture's height */
@@ -25,7 +25,7 @@
 
 .profile-page-img-edit {
   position: absolute;
-  bottom: 1.5rem;
+  bottom: 1rem;
   left: 11rem;
 }
 
@@ -83,28 +83,38 @@
   border-radius: 50%;
 }
 
-
-.form-element {
-  width: 100%;
-  height: 80%;
-  object-fit: cover;
-}
-
-.profile-picture {
-  position: absolute; /* Position the profile picture relative to the container */
-  top: 1rem; /* Adjust the top position to place the profile picture where you want */
-  left: 5rem; /* Adjust the left position to place the profile picture where you want */
-  width: 8rem; /* Set the profile picture's width */
-  height: 8rem; /* Set the profile picture's height */
-  border: 0.2rem solid var(--almost-white); /* Add a border for the profile picture */
-  border-radius: 50%; /* Make the profile picture round */
-  object-fit: cover;
-}
-
 .profile-page-data {
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
   width: 50%;
   margin: 1.3rem 0;
+}
+
+.user-data-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 0.4rem;
+  width: 70%;
+}
+
+.form-element {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-element-label {
+  color: var(--primary-color);
+}
+
+.form-element-input {
+  width: 60%;
+  border: none;
+  color: var(--primary-color);
+}
+
+.user-data-form-submit-button {
+  margin-top: 0.5rem;
 }

@@ -1,4 +1,3 @@
-import "./Navigation.css";
 import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,8 +5,9 @@ import {
   faUsers,
   faClipboard,
 } from "@fortawesome/free-solid-svg-icons";
+import "./Navigation.css";
 
-const Navigation = (props) => {
+const Navigation = () => {
   const location = useLocation();
 
   return (

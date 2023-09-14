@@ -2,26 +2,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  padding-right: 10px;
+  column-gap: 0.4rem;
+  padding-right: 1rem;
 }
 
 .icon {
   flex-basis: auto;
-  height: 25px;
-  padding: 5px;
-  margin: 3px;
+  height: 1.5rem;
+  padding: 0.6rem;
   cursor: pointer;
   color: var(--color-icon-nav);
 }
 
 .icon:hover {
   color: var(--color-icon-nav-hover);
-  /* border-bottom: 2px solid var(--color-icon-nav-hover); */
 }
 
 .navbar-user-picture {
-  width: 2rem;
+  width: 2.2rem;
+  margin: 0.4rem;
   border-radius: 50%;
   border: 2px solid var(--color-icon-nav);
 }
