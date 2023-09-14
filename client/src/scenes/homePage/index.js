@@ -57,7 +57,7 @@ const HomePage = () => {
       </div>
       <div className="born-today-widget">
         <div className="born-today-title">
-          Born today:
+          Born today
           
         </div>
         <div className="born-today-container">
