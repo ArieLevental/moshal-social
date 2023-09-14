@@ -60,7 +60,7 @@ function UsersPage() {
         console.log(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken(setSignedUserData, setToken);
+        handleExpiredToken(setToken,setSignedUserData);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -77,7 +77,7 @@ function UsersPage() {
         setInstitutionsData(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken(setSignedUserData, setToken);
+        handleExpiredToken(setToken,setSignedUserData);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -95,7 +95,7 @@ function UsersPage() {
         setCompaniesData(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken(setSignedUserData, setToken);
+        handleExpiredToken(setToken,setSignedUserData);
       } else {
         alert("Something went wrong, please try again later");
       }

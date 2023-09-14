@@ -35,7 +35,7 @@ export const uploadProfileImg = async (req, res) => {
     }
 
     console.log("File uploaded successfully");
-    res.status(200).json({ pathReference: url });
+    res.status(200).json({ picturePath: url });
   } catch (err) {
     // Handle any errors that occurred during the upload
     console.error(err.message);
