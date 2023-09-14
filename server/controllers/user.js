@@ -30,9 +30,10 @@ export const updateUser = async (req, res) => {
       return res.status(404).json({ message: "updateUser: User not found" });
     }
 
-    res
-      .status(200)
-      .json({ message: "updateUser: Profile updated successfully", user: updatedUser });
+    res.status(200).json({
+      message: "updateUser: Profile updated successfully",
+      user: updatedUser,
+    });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -67,7 +68,9 @@ export const addEducationItem = async (req, res) => {
     );
 
     if (!updatedUser) {
-      return res.status(404).json({ message: "addEducationItem: User not found" });
+      return res
+        .status(404)
+        .json({ message: "addEducationItem: User not found" });
     }
 
     // Update user data
@@ -81,12 +84,16 @@ export const addEducationItem = async (req, res) => {
     );
 
     if (!updatedInstitution) {
-      return res.status(404).json({ message: "addEducationItem: Institution not found" });
+      return res
+        .status(404)
+        .json({ message: "addEducationItem: Institution not found" });
     }
-
-    res
-      .status(200)
-      .json({ message: "addEducationItem: Profile updated successfully", user: updatedUser });
+    await savedEducation.populate("institutionId");
+    res.status(200).json({
+      message: "addEducationItem: Profile updated successfully",
+      user: updatedUser,
+      newItem: savedEducation,
+    });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -161,9 +168,10 @@ export const deleteEducationItem = async (req, res) => {
       }
     }
 
-    res
-      .status(200)
-      .json({ message: "deleteEducationItem: Profile updated successfully", user: updatedUser });
+    res.status(200).json({
+      message: "deleteEducationItem: Profile updated successfully",
+      user: updatedUser,
+    });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -219,9 +227,12 @@ export const addOccupationItem = async (req, res) => {
         .json({ message: "addOccupationItem: Company not found" });
     }
 
-    res
-      .status(200)
-      .json({ message: "addOccupationItem: Profile updated successfully", user: updatedUser });
+    await savedOccupation.populate("companyId");
+    res.status(200).json({
+      message: "addOccupationItem: Profile updated successfully",
+      user: updatedUser,
+      newItem: savedOccupation,
+    });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -259,7 +270,9 @@ export const deleteOccupationItem = async (req, res) => {
     );
 
     if (!updatedUser) {
-      return res.status(404).json({ message: "deleteOccupationItem: User not found" });
+      return res
+        .status(404)
+        .json({ message: "deleteOccupationItem: User not found" });
     }
 
     // TODO - double request to the DB, can be optimized
@@ -287,13 +300,16 @@ export const deleteOccupationItem = async (req, res) => {
       );
 
       if (!updatedCompany) {
-        return res.status(404).json({ message: "deleteOccupationItem: Company not found" });
+        return res
+          .status(404)
+          .json({ message: "deleteOccupationItem: Company not found" });
       }
     }
 
-    res
-      .status(200)
-      .json({ message: "deleteOccupationItem: Profile updated successfully", user: updatedUser });
+    res.status(200).json({
+      message: "deleteOccupationItem: Profile updated successfully",
+      user: updatedUser,
+    });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

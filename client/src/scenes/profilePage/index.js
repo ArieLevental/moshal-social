@@ -172,6 +172,11 @@ const ProfilePage = () => {
     }).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
+        setEducationItems(
+          educationItems.filter(
+            (educationItem) => educationItem._id !== educationId
+          )
+        );
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
@@ -200,6 +205,7 @@ const ProfilePage = () => {
       const resJson = await res.json();
       if (res.status === 200) {
         setUserData({ ...userData, ...resJson });
+        setEducationItems([...educationItems, resJson.newItem]);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
@@ -220,6 +226,11 @@ const ProfilePage = () => {
     }).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
+        setOccupationItems(
+          occupationItems.filter(
+            (occupationItem) => occupationItem._id !== occupationId
+          )
+        );
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
@@ -248,6 +259,7 @@ const ProfilePage = () => {
       const resJson = await res.json();
       if (res.status === 200) {
         setUserData({ ...userData, ...resJson });
+        setOccupationItems([...occupationItems, resJson.newItem]);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
