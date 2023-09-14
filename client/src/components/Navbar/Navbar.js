@@ -6,10 +6,15 @@ import Icons from "./Icons/Icons";
 import Navigation from "./Navigation/Navigation";
 
 const Navbar = () => {
-  const { signedUserData, token, handleExpiredToken } =
-    useContext(globalAuthContext);
+  const {
+    setToken,
+    setSignedUserData,
+    signedUserData,
+    token,
+    handleExpiredToken,
+  } = useContext(globalAuthContext);
   const handleLogout = () => {
-    handleExpiredToken();
+    handleExpiredToken(setToken, setSignedUserData);
   };
 
   return (
