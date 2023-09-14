@@ -45,9 +45,11 @@ const ProfilePage = () => {
   const [inEditMode, setInEditMode] = useState(false);
   const [inImgMode, setInImgMode] = useState(false);
   const [imgValue, setImgValue] = useState(null);
-  const [url, setUrl] = useState(null);
+  // const [url, setUrl] = useState(null);
   const [currentWorkplace, setCurrentWorkplace] = useState("");
-  const [currentInstitution, setCurrentInstitution] = useState("");
+  // const [currentInstitution, setCurrentInstitution] = useState("");
+  const [educationItems, setEducationItems] = useState([]);
+  const [occupationItems, setOccupationItems] = useState([]);
 
   useEffect(() => {
     fetch(`http://localhost:3001/institutions`, {
@@ -86,6 +88,56 @@ const ProfilePage = () => {
   }, []);
 
   useEffect(() => {
+    fetch(`http://localhost:3001/user/getEducationItems/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(async (res) => {
+      const resJson = await res.json();
+      if (res.status === 200) {
+        // console.log(experienceItems, resJson[experienceItems]);
+        //TODO: currently just takes the last item's, but it's not necessarily the case
+        // if (resJson.educationItems.length > 0) {
+        //   props.setCurrentOrganization(
+        //     resJson[experienceItems].slice(-1)[0][organizationId].name // TODO: company to general case
+        //   );
+        // }
+        setEducationItems(resJson.educationItems);
+      } else if (res.status === 401) {
+        alert("You are not authorized to view this page");
+        handleExpiredToken(setSignedUserData, setToken);
+      } else {
+        alert("Something went wrong, please try again later");
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/user/getOccupationItems/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(async (res) => {
+      const resJson = await res.json();
+      if (res.status === 200) {
+        // console.log(experienceItems, resJson[experienceItems]);
+        //TODO: currently just takes the last item's, but it's not necessarily the case
+        // if (resJson.educationItems.length > 0) {
+        //   props.setCurrentOrganization(
+        //     resJson[experienceItems].slice(-1)[0][organizationId].name // TODO: company to general case
+        //   );
+        // }
+        setOccupationItems(resJson.occupationItems);
+      } else if (res.status === 401) {
+        alert("You are not authorized to view this page");
+        handleExpiredToken(setSignedUserData, setToken);
+      } else {
+        alert("Something went wrong, please try again later");
+      }
+    });
+  }, []);
+
+  useEffect(() => {
     fetch(`http://localhost:3001/user/${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then(async (res) => {
@@ -107,6 +159,115 @@ const ProfilePage = () => {
     });
     // TODO: this solution results api call for every "pen" click
   }, [inEditMode, inImgMode]);
+
+  const deleteEducationItem = (educationId, institutionId) => {
+    console.log(educationId, institutionId);
+    fetch(`http://localhost:3001/user/deleteEducationItem/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ educationId, institutionId }),
+    }).then(async (res) => {
+      const resJson = await res.json();
+      if (res.status === 200) {
+        setEducationItems(
+          educationItems.filter(
+            (educationItem) => educationItem._id !== educationId
+          )
+        );
+      } else if (res.status === 401) {
+        alert("You are not authorized to view this page");
+        handleExpiredToken(setToken, setSignedUserData);
+      } else {
+        alert("Something went wrong, please try again later");
+      }
+    });
+  };
+
+  const addEducationItem = (experienceItemData) => {
+    // setInAddMode(false);
+    // const experienceItemData = {
+    //   organizationId: e.target.organizationId.value,
+    //   startYear: e.target.startYear.value,
+    //   endYear: e.target.endYear.value,
+    //   [fieldName]: e.target[fieldName].value,
+    // };
+    fetch(`http://localhost:3001/user/addEducationItem/${userId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(experienceItemData),
+    }).then(async (res) => {
+      const resJson = await res.json();
+      if (res.status === 200) {
+        setUserData({ ...userData, ...resJson });
+        setEducationItems([...educationItems, resJson.newItem]);
+      } else if (res.status === 401) {
+        alert("You are not authorized to view this page");
+        handleExpiredToken(setToken, setSignedUserData);
+      } else {
+        alert("Something went wrong, please try again later");
+      }
+    });
+  };
+
+  const deleteOccupationItem = (occupationId, companyId) => {
+    fetch(`http://localhost:3001/user/deleteOccupationItem/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ occupationId, companyId }),
+    }).then(async (res) => {
+      const resJson = await res.json();
+      if (res.status === 200) {
+        setOccupationItems(
+          occupationItems.filter(
+            (occupationItem) => occupationItem._id !== occupationId
+          )
+        );
+      } else if (res.status === 401) {
+        alert("You are not authorized to view this page");
+        handleExpiredToken(setToken, setSignedUserData);
+      } else {
+        alert("Something went wrong, please try again later");
+      }
+    });
+  };
+
+  const addOccupationItem = (experienceItemData) => {
+    // setInAddMode(false);
+    // const experienceItemData = {
+    //   organizationId: e.target.organizationId.value,
+    //   startYear: e.target.startYear.value,
+    //   endYear: e.target.endYear.value,
+    //   [fieldName]: e.target[fieldName].value,
+    // };
+    fetch(`http://localhost:3001/user/addOccupationItem/${userId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(experienceItemData),
+    }).then(async (res) => {
+      const resJson = await res.json();
+      if (res.status === 200) {
+        setUserData({ ...userData, ...resJson });
+        setOccupationItems([...occupationItems, resJson.newItem]);
+      } else if (res.status === 401) {
+        alert("You are not authorized to view this page");
+        handleExpiredToken(setToken, setSignedUserData);
+      } else {
+        alert("Something went wrong, please try again later");
+      }
+    });
+  };
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -131,7 +292,7 @@ const ProfilePage = () => {
         setUserData({ ...userData, ...resJson });
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken(setSignedUserData, setToken);
+        handleExpiredToken(setToken, setSignedUserData);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -151,11 +312,18 @@ const ProfilePage = () => {
       },
       body: formData,
     }).then(async (res) => {
+      const resJson = await res.json();
       setInImgMode(false);
       if (res.status === 200) {
+        const updatedSignedUser = {
+          ...signedUserData,
+          picturePath: resJson.picturePath,
+        };
+        setSignedUserData(updatedSignedUser);
+        localStorage.setItem("user_data", JSON.stringify(updatedSignedUser));
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken(setSignedUserData, setToken);
+        handleExpiredToken(setToken, setSignedUserData);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -164,9 +332,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      <userDataContext.Provider
-        value={{ setUserData, userData, setCurrentWorkplace }}
-      >
+      <userDataContext.Provider value={{ userData, setUserData }}>
         {userData && (
           <>
             <div className="picture-banner-container">
@@ -207,12 +373,15 @@ const ProfilePage = () => {
                 <CategoryTitle title="work" />
                 <ExperienceContainer
                   organizationsData={companiesData}
-                  setCurrentOrganization={setCurrentWorkplace}
-                  userData={userData}
-                  setUserData={setUserData}
-                  route="Occupation"
-                  organization="Company"
-                  field="Position"
+                  experienceItems={occupationItems}
+                  setExperienceItems={setOccupationItems}
+                  deleteExperienceItem={deleteOccupationItem}
+                  addExperienceItem={addOccupationItem}
+                  // setCurrentOrganization={setCurrentWorkplace}
+                  // route="Occupation"
+                  // organization="Company"
+                  organizationType="Company"
+                  field="position"
                 />
                 <CategoryTitle title="skills" />
               </div>
@@ -404,11 +573,13 @@ const ProfilePage = () => {
                 <CategoryTitle title="studied" />
                 <ExperienceContainer
                   organizationsData={institutionsData}
-                  setCurrentOrganization={setCurrentInstitution}
-                  userData={userData}
-                  setUserData={setUserData}
-                  route="Education"
-                  organization="Institution"
+                  experienceItems={educationItems}
+                  setExperienceItems={setEducationItems}
+                  deleteExperienceItem={deleteEducationItem}
+                  addExperienceItem={addEducationItem}
+                  // setCurrentOrganization={setCurrentInstitution}
+                  // route="Education"
+                  organizationType="Institution"
                   field="Degree"
                 />
               </div>

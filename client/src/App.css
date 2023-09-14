@@ -5,11 +5,10 @@
 .app-content {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
-  /* align-items: center; */
   row-gap: 1rem;
   height: 84vh;
   background-color: var(--almost-white);
+  align-items: center;
 }
 
 .footer {

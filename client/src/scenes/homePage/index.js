@@ -5,7 +5,8 @@ import { globalAuthContext } from "../../state/state.js";
 import "./index.css";
 
 const HomePage = () => {
-  const { token, handleExpiredToken } = useContext(globalAuthContext);
+  const { setSignedUserData, setToken, token, handleExpiredToken } =
+    useContext(globalAuthContext);
   const [usersDbData, setUsersDbData] = useState(
     JSON.parse(localStorage.getItem("users_db_data"))
   );
@@ -20,7 +21,7 @@ const HomePage = () => {
         setUsersDbData(resJson);
         console.log(resJson);
       } else if (res.status === 401) {
-        handleExpiredToken();
+        handleExpiredToken(setToken,setSignedUserData);
       }
     });
   }, []);
@@ -70,14 +71,16 @@ const HomePage = () => {
               ) {
                 return (
                   <div className="born-today-user" key={user.id}>
-                    <img
-                      className="born-today-user-img"
-                      src={user.picturePath || "./assets/genericUser.png"}
-                      alt="user"
-                    />
-                    <div className="born-today-user-name">
-                      {user.firstName} {user.lastName}
-                    </div>
+                    <a href={`/user/${user._id}`}>
+                      <img
+                        className="born-today-user-img"
+                        src={user.picturePath || "./assets/genericUser.png"}
+                        alt="user"
+                      />
+                      <div className="born-today-user-name">
+                        {user.firstName} {user.lastName}
+                      </div>
+                    </a>
                   </div>
                 );
               }
