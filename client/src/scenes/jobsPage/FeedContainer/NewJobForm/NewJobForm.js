@@ -1,23 +1,14 @@
 import { useState, useContext } from "react";
-// import { globalContext } from "../../../../App";
 import "./NewJobForm.css";
 import {
   generalDataContext,
   globalAuthContext,
   companiesDataContext,
 } from "../../../../state/state.js";
+import { capitalizeFirstLetters } from "../../../../utils/formattingUtils";
 import { jobsDataContext } from "../../index.js";
 
 const NewJobForm = () => {
-  // const {
-  //   signedUserData,
-  //   token,
-  //   handleExpiredToken,
-  //   israelCities,
-  //   jobsData,
-  //   setJobsData,
-  //   companiesData,
-  // } = useContext(globalContext);
   const { israelCities } = useContext(generalDataContext);
   const {
     setToken,
@@ -113,21 +104,13 @@ const NewJobForm = () => {
           <label htmlFor="location" required>
             Location:
           </label>
-          <select
-            // type="text"
-            id="location"
-            name="location"
-            // onChange={(e) => {
-            //   setDetailsFormData({
-            //     ...detailsFormData,
-            //     [e.target.name]: e.target.value,
-            //   });
-            // }}
-            // value={detailsFormData.location}
-          >
+          <select id="location" name="location">
             {israelCities.city.map((c) => (
-              <option key={c.city_symbol} value={c.english_name}>
-                {c.english_name}
+              <option
+                key={c.city_symbol}
+                value={capitalizeFirstLetters(c.english_name)}
+              >
+                {capitalizeFirstLetters(c.english_name)}
               </option>
             ))}
           </select>

@@ -5,7 +5,7 @@ import NewJobForm from "./NewJobForm/NewJobForm";
 import { jobsDataContext } from "../index.js";
 
 const FeedContainer = () => {
-  const { setJobsData, presentedJobsData } = useContext(jobsDataContext);
+  const { presentedJobsData } = useContext(jobsDataContext);
 
   return (
     <div className="feed-container">
