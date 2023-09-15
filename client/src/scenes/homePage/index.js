@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { globalAuthContext } from "../../state/state.js";
-import { homepageMainText } from "../../data/texts.js";
+import { HomepageMainText } from "../../data/texts.js";
 import "./index.css";
 
 const HomePage = () => {
@@ -44,9 +44,7 @@ const HomePage = () => {
         <img src="./assets/homepage-carousel/image3.jpg" alt="Image 3" />
       </Carousel>
       <div className="homepage-paragraph">
-        Welcome to <span className="accent-text">Moshal Social</span>,
-        <br />
-        {homepageMainText}
+        <HomepageMainText />
       </div>
       <div className="born-today-widget">
         <div className="born-today-title">Born today</div>
