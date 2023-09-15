@@ -87,10 +87,12 @@
   left: 50%;
   transform: translateX(-50%);
   pointer-events: none;
-  transition: opacity 0.3s, visibility 0.3s;
+  transition: opacity 0.35s, visibility 0.15s;
   font-size: 0.9rem;
+  opacity: 0;
 }
 
 .tooltip-container:hover .tooltip-text {
   visibility: visible;
+  opacity: 1;
 }
