@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { globalAuthContext } from "../../state/state.js";
+import { homepageMainText } from "../../data/texts.js";
 import "./index.css";
 
 const HomePage = () => {
@@ -45,15 +46,7 @@ const HomePage = () => {
       <div className="homepage-paragraph">
         Welcome to <span className="accent-text">Moshal Social</span>,
         <br />
-        the heart of our vibrant Moshal scholarship community. Here, scholars,
-        mentors, and partners come together to connect, collaborate, and make a
-        lasting impact. Our enterprise social network is your gateway to a world
-        of opportunities, knowledge sharing, and support. Whether you're seeking
-        guidance on your academic journey, eager to explore career prospects, or
-        simply looking to engage with fellow Moshal scholars, this platform is
-        your digital home. Join us in shaping a brighter future, one connection
-        at a time. Together, we are Moshal Social - empowering dreams, fostering
-        success.
+        {homepageMainText}
       </div>
       <div className="born-today-widget">
         <div className="born-today-title">Born today</div>
@@ -71,7 +64,9 @@ const HomePage = () => {
                     <a href={`/user/${user._id}`}>
                       <img
                         className="born-today-user-img"
-                        src={user.picturePath || "./assets/general/genericUser.png"}
+                        src={
+                          user.picturePath || "./assets/general/genericUser.png"
+                        }
                         alt="user"
                       />
                       <div className="born-today-user-name">

@@ -13,3 +13,13 @@ MongoDB with Mongoose
 Firebase
 Vanilla JavaScript and CSS
 Don't hesitate to get in touch, whether you're simply curious or eager to expand your knowledge!`;
+
+export const homepageMainText = `the heart of our vibrant Moshal scholarship community. Here, scholars,
+mentors, and partners come together to connect, collaborate, and make a
+lasting impact. Our enterprise social network is your gateway to a world
+of opportunities, knowledge sharing, and support. Whether you're seeking
+guidance on your academic journey, eager to explore career prospects, or
+simply looking to engage with fellow Moshal scholars, this platform is
+your digital home. Join us in shaping a brighter future, one connection
+at a time. Together, we are Moshal Social - empowering dreams, fostering
+success.`;
