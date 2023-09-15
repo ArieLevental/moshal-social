@@ -52,15 +52,6 @@ const Searchbar = ({ institutionsData, companiesData }) => {
     activateFilter(query, companyFilter, event.target.value.toLowerCase());
   };
 
-  // setPresentedData(
-  //   usersData.filter((user) => {
-  //     return (
-  //       user.firstName.toLowerCase().includes(value) ||
-  //       user.lastName.toLowerCase().includes(value)
-  //     );
-  //   })
-  // );
-  // };
 
   const randomMoshalnikHandler = (event) => {
     setPresentedData(

@@ -2,7 +2,7 @@ import { useState, useEffect, useContext, createContext } from "react";
 
 import DataBaseContainer from "./DataBaseContainer/DataBaseContainer";
 import Searchbar from "./Searchbar/Searchbar";
-// import { globalContext } from "../../App";
+
 import {
   companiesDataContext,
   globalAuthContext,
@@ -12,16 +12,6 @@ import {
 export const usersDbDataContext = createContext();
 
 function UsersPage() {
-  // const {
-  //   token,
-  //   handleExpiredToken,
-  //   usersDbData,
-  //   setUsersDbData,
-  //   institutionsData,
-  //   setInstitutionsData,
-  //   companiesData,
-  //   setCompaniesData,
-  // } = useContext(globalContext);
   const {
     signedUserData,
     setSignedUserData,
@@ -38,16 +28,6 @@ function UsersPage() {
   const { companiesData, setCompaniesData } = useContext(companiesDataContext);
   const [presentedData, setPresentedData] = useState(usersDbData);
 
-  // console.log(usersDbData);
-  // const [presentedData, setPresentedData] = useState(usersDbData);
-  // const [usersData, setUsersData] = useState(null);
-  // const [institutionsData, setInstitutionsData] = useState(
-  //   JSON.parse(localStorage.getItem("institutions_data"))
-  // );
-  // const [companiesData, setCompaniesData] = useState(
-  //   JSON.parse(localStorage.getItem("companies_data"))
-  // );
-
   useEffect(() => {
     fetch(`http://localhost:3001/users`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -60,7 +40,7 @@ function UsersPage() {
         console.log(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken(setToken,setSignedUserData);
+        handleExpiredToken(setToken, setSignedUserData);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -77,7 +57,7 @@ function UsersPage() {
         setInstitutionsData(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken(setToken,setSignedUserData);
+        handleExpiredToken(setToken, setSignedUserData);
       } else {
         alert("Something went wrong, please try again later");
       }
@@ -95,7 +75,7 @@ function UsersPage() {
         setCompaniesData(resJson);
       } else if (res.status === 401) {
         alert("You are not authorized to view this page");
-        handleExpiredToken(setToken,setSignedUserData);
+        handleExpiredToken(setToken, setSignedUserData);
       } else {
         alert("Something went wrong, please try again later");
       }

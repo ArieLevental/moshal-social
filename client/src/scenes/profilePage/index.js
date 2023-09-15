@@ -18,6 +18,8 @@ import {
   globalAuthContext,
   institutionsDataContext,
 } from "../../state/state.js";
+import { capitalizeFirstLetters, formatDate } from "../../utils/formattingUtils";
+
 
 import ExperienceContainer from "./experienceContainer/experienceContainer";
 import DataItem from "./components/DataItem/DataItem";
@@ -330,27 +332,6 @@ const ProfilePage = () => {
     });
   };
 
-  // Helper function to format the date as "yyyy-MM-dd"
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
-
-  // Helper function to capitalize first letter of each word
-  const capitalizeFirstLetters = (string) => {
-    // convert to string
-    string = string + "";
-    // If string is empty or not a string, return an empty string
-    if (!string) return "";
-
-    return string
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  };
 
   return (
     <>
@@ -396,9 +377,6 @@ const ProfilePage = () => {
                   setExperienceItems={setOccupationItems}
                   deleteExperienceItem={deleteOccupationItem}
                   addExperienceItem={addOccupationItem}
-                  // setCurrentOrganization={setCurrentWorkplace}
-                  // route="Occupation"
-                  // organization="Company"
                   organizationType="Company"
                   field="position"
                 />
@@ -598,8 +576,6 @@ const ProfilePage = () => {
                   setExperienceItems={setEducationItems}
                   deleteExperienceItem={deleteEducationItem}
                   addExperienceItem={addEducationItem}
-                  // setCurrentOrganization={setCurrentInstitution}
-                  // route="Education"
                   organizationType="Institution"
                   field="Degree"
                 />

@@ -23,33 +23,16 @@ import {
 import handleExpiredToken from "./utils/authUtils.js";
 
 function App() {
-  // Global state for the app
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [signedUserData, setSignedUserData] = useState(
     JSON.parse(localStorage.getItem("user_data"))
   );
-  // const [usersDbData, setUsersDbData] = useState(
-  //   JSON.parse(localStorage.getItem("users_db_data"))
-  // );
   const [institutionsData, setInstitutionsData] = useState(
     JSON.parse(localStorage.getItem("institutions_data"))
   );
   const [companiesData, setCompaniesData] = useState(
     JSON.parse(localStorage.getItem("companies_data"))
   );
-  // const [jobsData, setJobsData] = useState(
-  //   JSON.parse(localStorage.getItem("jobs_data"))
-  // );
-
-  // const handleExpiredToken = () => {
-  //   fetch("http://localhost:3001/auth/logout", { method: "POST" });
-  //   // TODO: Need to check if the response is ok
-  //   localStorage.removeItem("user_data");
-  //   localStorage.removeItem("token");
-  //   // setEmail("");
-  //   setToken("");
-  //   setSignedUserData(null);
-  // };
 
   return (
     <div className="app">

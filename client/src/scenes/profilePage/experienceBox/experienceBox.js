@@ -1,6 +1,4 @@
 import { useContext } from "react";
-// import { globalContext } from "../../../App";
-import { useParams } from "react-router-dom";
 import "./experienceBox.css";
 import { globalAuthContext } from "../../../state/state.js";
 
@@ -11,21 +9,12 @@ const ExperienceBox = ({
   organization,
   field,
 }) => {
-  const {
-    setSignedUserData,
-    setToken,
-    signedUserData,
-    token,
-    handleExpiredToken,
-  } = useContext(globalAuthContext);
-  // const { userId } = useParams();
-  // const organizationItem = props.organizationItems.slice(0, -1);
-  // const organizationId = props.organizationId;
+  const { signedUserData } = useContext(globalAuthContext);
 
   const handleExperienceDelete = (e) => {
     e.preventDefault();
     deleteExperienceItem(experienceItem._id, organization._id);
-    console.log(experienceItem._id, organization._id)
+    console.log(experienceItem._id, organization._id);
   };
 
   return (

@@ -3,7 +3,6 @@ const handleExpiredToken = (setToken, setSignedUserData) => {
   // TODO: Need to check if the response is ok
   localStorage.removeItem("user_data");
   localStorage.removeItem("token");
-  // setEmail("");
   setToken("");
   setSignedUserData(null);
 };
