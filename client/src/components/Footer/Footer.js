@@ -1,8 +1,7 @@
-import { footerContributeText } from "../../data/texts";
+import { FooterContributeText } from "../../data/texts";
 import "./Footer.css";
 
 const Footer = () => {
-  
   return (
     <div className="footer">
       <div className="footer-item">Terms of Service</div>
@@ -32,7 +31,7 @@ const Footer = () => {
         // data-tooltip={footerContributeText}
       >
         <div className="tooltip-text">
-        {footerContributeText}
+          <FooterContributeText />
         </div>
         Contribute!
       </div>
