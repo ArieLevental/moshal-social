@@ -5,6 +5,7 @@ import {
   faUsers,
   faClipboard,
   faHandshake,
+  faRectangleList,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Navigation.css";
 
@@ -57,6 +58,17 @@ const Navigation = () => {
       >
         <FontAwesomeIcon className="navigation-icon" icon={faHandshake} />
         <div className="navigation-icon-text">Community</div>
+      </Link>
+      <Link
+        to="/forum"
+        className={
+          location.pathname === "/forum"
+            ? "navigation-item-active"
+            : "navigation-item"
+        }
+      >
+        <FontAwesomeIcon className="navigation-icon" icon={faRectangleList} />
+        <div className="navigation-icon-text">Forum</div>
       </Link>
     </div>
   );

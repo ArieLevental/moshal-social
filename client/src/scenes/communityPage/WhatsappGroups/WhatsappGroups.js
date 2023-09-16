@@ -1,48 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { globalAuthContext } from "../../../state/state.js";
 import "./WhatsappGroups.css";
 
-const mockGroups = [
-  {
-    name: "מושל העברית💛",
-    link: "https://chat.whatsapp.com/abcdef123456",
-    tags: ["צוות", "טכניון"],
-  },
-  {
-    name: "פרוצאפ תוכנה+מדמח",
-    link: "https://chat.whatsapp.com/ghijkl789012",
-    tags: ["בוגרים", "משרות", "טכנולוגיה"],
-  },
-  {
-    name: "מטיילים בירושלים",
-    link: "https://chat.whatsapp.com/ijklmnop7890",
-    tags: ["טיולים", "ירושלים"],
-  },
-  {
-    name: "אמנות ותרבות",
-    link: "https://chat.whatsapp.com/xyz1234567",
-    tags: ["אמנות", "תרבות"],
-  },
-  {
-    name: "חדשות ספורט",
-    link: "https://chat.whatsapp.com/qrstuv5678",
-    tags: ["ספורט", "חדשות"],
-  },
-  {
-    name: "למידת עברית",
-    link: "https://chat.whatsapp.com/wxyz7890123",
-    tags: ["שפה", "למידה"],
-  },
-];
-
 const WhatsappGroups = () => {
+  const { token } = useContext(globalAuthContext);
   const [searchQuery, setSearchQuery] = useState("");
+  const [mockGroups, setMockGroups] = useState([]);
+
+  useEffect(() => {
+    const getGroups = async () => {
+      const response = await fetch(`http://localhost:3001/whatsapp`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await response.json();
+      setMockGroups(data);
+    };
+    console.log(mockGroups);
+    getGroups();
+  }, []);
+
   const filteredGroups = mockGroups.filter((group) =>
     group.tags.some((tag) =>
       tag.toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
+
   return (
     <div className="whatsapp-groups community-page-column">
       <h1>WhatsApp Groups</h1>

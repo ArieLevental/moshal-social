@@ -17,15 +17,17 @@ import institutionsRouter from "./routes/institutions.js";
 import jobsRouter from "./routes/jobs.js";
 import companyRouter from "./routes/company.js";
 import companiesRouter from "./routes/companies.js";
+import whatsappGroupRouter from "./routes/whatsappGroup.js";
 
 /* USED FOR ONE-TIME DATA LOAD */
-// import User from "./models/User.js";
-// import Institution from "./models/Institution.js";
-// import Company from "./models/Company.js";
-// import Occupation from "./models/Occupation.js";
-// import Education from "./models/Education.js";
-// import JobOffer from "./models/JobOffer.js";
-// import { users, companies, institutions, occupations, educations, jobs } from "./data/index.js";
+import User from "./models/User.js";
+import Institution from "./models/Institution.js";
+import Company from "./models/Company.js";
+import Occupation from "./models/Occupation.js";
+import Education from "./models/Education.js";
+import JobOffer from "./models/JobOffer.js";
+import WhatsappGroup from "./models/WhatsappGroup.js";
+import { users, companies, institutions, occupations, educations, jobs, whatsappGroups } from "./data/index.js";
 
 dotenv.config();
 
@@ -54,6 +56,7 @@ app.use("/institutions", institutionsRouter);
 app.use("/jobs", jobsRouter);
 app.use("/company", companyRouter);
 app.use("/companies", companiesRouter);
+app.use("/whatsapp", whatsappGroupRouter);
 
 // MONGOOSE SETUP
 const PORT = process.env.PORT || 6001;
@@ -72,5 +75,6 @@ mongoose
     // Occupation.insertMany(occupations);
     // Education.insertMany(educations);
     // JobOffer.insertMany(jobs);
+    // WhatsappGroup.insertMany(whatsappGroups);
   })
   .catch((error) => console.log(`${error} did not connect`));

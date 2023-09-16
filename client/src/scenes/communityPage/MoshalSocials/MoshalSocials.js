@@ -57,17 +57,17 @@ const MoshalSocials = () => {
           width="100%"
           src="https://www.youtube.com/embed/smMMcPrdm0o?si=u15fkwiuS1IWz9cV"
           title="YouTube video player"
-          frameborder="1"
+          frameBorder="1"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
+          allowFullScreen
         />
         <iframe
           width="100%"
           src="https://www.youtube.com/embed/srs9ilATl98?si=dbOi1NrkayACYA8h"
           title="YouTube video player"
-          frameborder="0"
+          frameBorder="1"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
+          allowFullScreen
         />
       </div>
     </div>

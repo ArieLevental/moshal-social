@@ -740,3 +740,90 @@ export const jobs = [
     __v: 0,
   },
 ];
+
+// const whatsappGroupSchema = mongoose.Schema(
+//   {
+//       created_by: {
+//           type: mongoose.Schema.Types.ObjectId,
+//           ref: "User",
+//       },
+//       link: {
+//           type: String,
+//           required: true,
+//           min: 2,
+//           max: 100,
+//       },
+//       name: {
+//           type: String,
+//           required: true,
+//           min: 2,
+//           max: 50,
+//       },
+//       tags: [
+//           {
+//               type: String,
+//               min: 2,
+//               max: 20,
+//           }
+//       ],
+//   }
+// );
+
+export const whatsappGroups = [
+  {
+    _id: new mongoose.Types.ObjectId(),
+    created_by: userIds[0],
+    link: "https://chat.whatsapp.com/invite/6KQd8h4z2QlK7z1eY0j3qa",
+    name: "Moshal HUJI 2023",
+    tags: ["Hebrew Uni", "2023", "Scholars"],
+  },
+  {
+    _id: new mongoose.Types.ObjectId(),
+    created_by: userIds[1],
+    link: "https://chat.whatsapp.com/invite/6KQd8h4z2QlK7z1eY0j3qb",
+    name: "Prof. Moshal's Group",
+    tags: ["Jobs", "Alumni", "Scholars"],
+  },
+  {
+    _id: new mongoose.Types.ObjectId(),
+    created_by: userIds[2],
+    link: "https://chat.whatsapp.com/invite/6KQd8h4z2QlK7z1eY0j3qc",
+    name: "Moshal Staff 2021",
+    tags: ["Staff", "2021"],
+  },
+  {
+    _id: new mongoose.Types.ObjectId(),
+    created_by: userIds[3],
+    link: "https://chat.whatsapp.com/invite/6KQd8h4z2QlK7z1eY0j3qd",
+    name: "Hackathon Medical blabla",
+    tags: ["Hackathon", "Med", "2024", "Private"],
+  },
+  {
+    _id: new mongoose.Types.ObjectId(),
+    created_by: userIds[4],
+    link: "https://chat.whatsapp.com/invite/6KQd8h4z2QlK7z1eY0j3qe",
+    name: "Induction 2021-2022 staff",
+    tags: ["Induction", "2021", "2022", "Staff"],
+  },
+  {
+    _id: new mongoose.Types.ObjectId(),
+    created_by: userIds[5],
+    link: "https://chat.whatsapp.com/invite/6KQd8h4z2QlK7z1eY0j3qf",
+    name: "Moshal computer-science 2023 Technion",
+    tags: ["moshal", "moshalim", "moshalnikim"],
+  },
+  {
+    _id: new mongoose.Types.ObjectId(),
+    created_by: userIds[6],
+    link: "https://chat.whatsapp.com/invite/6KQd8h4z2QlK7z1eY0j3qg",
+    name: "Zina's circle",
+    tags: ["moshal", "moshalim", "moshalnikim"],
+  },
+  {
+    _id: new mongoose.Types.ObjectId(),
+    created_by: userIds[7],
+    link: "https://chat.whatsapp.com/invite/6KQd8h4z2QlK7z1eY0j3qh",
+    name: "Prosapp hightech",
+    tags: ["moshal", "moshalim", "moshalnikim"],
+  },
+];
