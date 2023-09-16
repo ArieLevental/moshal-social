@@ -26,10 +26,10 @@ const JobsPage = () => {
         setJobsData(resJson);
         setPresentedJobsData(resJson);
       } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
+        console.log("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
       } else {
-        alert("Something went wrong, please try again later");
+        console.log("Something went wrong, please try again later");
       }
     });
     // TODO: merge with second useEffect
@@ -43,10 +43,10 @@ const JobsPage = () => {
       if (res.status === 200) {
         setCompaniesData(resJson);
       } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
+        console.log("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
       } else {
-        alert("Something went wrong, please try again later");
+        console.log("Something went wrong, please try again later");
       }
     });
   }, []);

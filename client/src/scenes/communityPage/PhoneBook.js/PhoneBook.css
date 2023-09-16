@@ -1,0 +1,39 @@
+.phone-book {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.phone-book input {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  width: 80%;
+  padding-right: 5px;
+  max-height: 59vh;
+  overflow-y: auto;
+}
+
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+
+.contact-name {
+  font-weight: bold;
+}
+
+.contact-phone {
+  color: #555;
+}

@@ -1,0 +1,73 @@
+.whatsapp-groups {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.whatsapp-groups input {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.group-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  width: 90%;
+  padding-right: 5px;
+  max-height: 59vh;
+  overflow-y: auto;
+}
+
+.group-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+
+.group-name {
+  font-weight: bold;
+}
+
+.group-tags {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+  width: 100%;
+}
+
+.group-tags .tag {
+  font-size: 0.7rem;
+  padding: 5px;
+  background-color: rgb(0, 0, 0, 0.03);
+  border: 1px solid #ccc;
+  border-radius: 20%;
+}
+
+.group-tags .tag:last-child {
+  margin-right: 0;
+}
+
+.group-item a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.5rem;
+  border: 1px solid #25d366;
+  width: fit-content;
+  background-color: rgb(37, 211, 102, 0.1);
+  padding: 10px 15px;
+  border-radius: 3px;
+}
+
+.group-item a:hover {
+  background-color: rgb(37, 211, 102, 0.2);
+}

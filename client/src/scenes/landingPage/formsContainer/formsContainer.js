@@ -124,7 +124,7 @@ export const Register = () => {
     if (
       event.target.password.value != event.target.passwordConfirmation.value
     ) {
-      alert("Passwords are different!");
+      console.log("Passwords are different!");
     }
     await fetch("http://localhost:3001/auth/register", {
       method: "POST",
@@ -288,7 +288,7 @@ export const PasswordRecovery = (props) => {
   const { INITIAL_FORMDATA, setActiveForm, formData, setFormData } =
     useContext(authContext);
   const handleSubmit = (event) => {
-    alert("RECOVERY submitted: " + event.target.email.value);
+    console.log("RECOVERY submitted: " + event.target.email.value);
     event.preventDefault();
   };
   return (
@@ -296,7 +296,12 @@ export const PasswordRecovery = (props) => {
       <h1>Password Recovery</h1>
       <form onSubmit={(e) => handleSubmit(e)}>
         <label htmlFor="email">Email: </label>
-        <input className="recovery-form-input" type="email" id="email" name="email" />
+        <input
+          className="recovery-form-input"
+          type="email"
+          id="email"
+          name="email"
+        />
         <br />
         <button className="recovery-form-submit-button" type="submit">
           {" "}

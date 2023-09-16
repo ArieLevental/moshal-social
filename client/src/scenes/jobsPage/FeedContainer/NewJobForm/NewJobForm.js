@@ -57,10 +57,10 @@ const NewJobForm = () => {
           setJobsData([...jobsData, resJson]);
           revealNewJobOfferForm();
         } else if (res.status === 401) {
-          alert("You are not authorized to view this page");
+          console.log("You are not authorized to view this page");
           handleExpiredToken(setSignedUserData, setToken);
         } else {
-          alert("Something went wrong, please try again later");
+          console.log("Something went wrong, please try again later");
         }
       })
       .catch((err) => console.log(err));

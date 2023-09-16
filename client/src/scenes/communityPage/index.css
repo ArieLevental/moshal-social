@@ -1,0 +1,10 @@
+.community-page {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.community-page-column {
+  width: 25%;
+}

@@ -11,21 +11,56 @@ const HomePage = () => {
   const [usersDbData, setUsersDbData] = useState(
     JSON.parse(localStorage.getItem("users_db_data"))
   );
+  let birthdayMode = false;
 
   useEffect(() => {
-    fetch(`http://localhost:3001/users`, {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then(async (res) => {
-      const resJson = await res.json();
-      if (res.status === 200) {
-        localStorage.setItem("users_db_data", JSON.stringify(resJson));
-        setUsersDbData(resJson);
-        console.log(resJson);
-      } else if (res.status === 401) {
-        handleExpiredToken(setToken, setSignedUserData);
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`http://localhost:3001/users`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.ok) {
+          const resJson = await res.json();
+          localStorage.setItem("users_db_data", JSON.stringify(resJson));
+          setUsersDbData(resJson);
+        } else if (res.status === 401) {
+          handleExpiredToken(setToken, setSignedUserData);
+        } else {
+          throw new Error("Failed to fetch user data");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
       }
-    });
+    };
+
+    fetchData();
   }, []);
+
+  const bornTodayUsers = usersDbData?.map((user) => {
+    const userDateOfBirth = new Date(user.dateOfBirth);
+    const today = new Date();
+    if (
+      userDateOfBirth.getDate() === today.getDate() &&
+      userDateOfBirth.getMonth() === today.getMonth()
+    ) {
+      birthdayMode = true;
+      return (
+        <div className="born-today-user" key={user._id || user.id}>
+          <a href={`/user/${user._id}`}>
+            <img
+              className="born-today-user-img"
+              src={user.picturePath || "./assets/general/genericUser.png"}
+              alt="user"
+            />
+            <div className="born-today-user-name">
+              {user.firstName} {user.lastName}
+            </div>
+          </a>
+        </div>
+      );
+    }
+    return null;
+  });
 
   return (
     <div className="homepage-container">
@@ -49,32 +84,13 @@ const HomePage = () => {
       <div className="born-today-widget">
         <div className="born-today-title">Born today</div>
         <div className="born-today-container">
-          {usersDbData &&
-            usersDbData.map((user) => {
-              const userDateOfBirth = new Date(user.dateOfBirth);
-              const today = new Date();
-              if (
-                userDateOfBirth.getDate() === today.getDate() &&
-                userDateOfBirth.getMonth() === today.getMonth()
-              ) {
-                return (
-                  <div className="born-today-user" key={user.id}>
-                    <a href={`/user/${user._id}`}>
-                      <img
-                        className="born-today-user-img"
-                        src={
-                          user.picturePath || "./assets/general/genericUser.png"
-                        }
-                        alt="user"
-                      />
-                      <div className="born-today-user-name">
-                        {user.firstName} {user.lastName}
-                      </div>
-                    </a>
-                  </div>
-                );
-              }
-            })}
+          {birthdayMode ? (
+            bornTodayUsers
+          ) : (
+            <div className="no-users-born-today-message">
+              No users are born today.
+            </div>
+          )}
         </div>
       </div>
     </div>
