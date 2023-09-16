@@ -39,10 +39,10 @@ function UsersPage() {
         setPresentedData(resJson);
         console.log(resJson);
       } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
+        console.log("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
       } else {
-        alert("Something went wrong, please try again later");
+        console.log("Something went wrong, please try again later");
       }
     });
   }, []);
@@ -56,10 +56,10 @@ function UsersPage() {
         localStorage.setItem("institutions_data", JSON.stringify(resJson));
         setInstitutionsData(resJson);
       } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
+        console.log("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
       } else {
-        alert("Something went wrong, please try again later");
+        console.log("Something went wrong, please try again later");
       }
     });
     // TODO: merge with second useEffect
@@ -74,10 +74,10 @@ function UsersPage() {
         localStorage.setItem("companies_data", JSON.stringify(resJson));
         setCompaniesData(resJson);
       } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
+        console.log("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
       } else {
-        alert("Something went wrong, please try again later");
+        console.log("Something went wrong, please try again later");
       }
     });
     // TODO: merge with second useEffect

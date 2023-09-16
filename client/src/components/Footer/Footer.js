@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="footer-item">Terms of Service</div>
       <div className="footer-item">Privacy Policy</div>
       <div className="footer-item">
-        © Made by {/* Redirect to LinkedIn */}
+        © Made by{" "}
         <a
           id="footer-credit-link"
           href="https://www.linkedin.com/in/adir-barak-4ab698257/"

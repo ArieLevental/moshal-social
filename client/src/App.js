@@ -12,6 +12,7 @@ import UsersPage from "./scenes/usersPage/index";
 import ProfilePage from "./scenes/profilePage/index";
 import LandingPage from "./scenes/landingPage";
 import JobsPage from "./scenes/jobsPage/index";
+import CommunityPage from "./scenes/communityPage";
 
 import {
   generalDataContext,
@@ -21,6 +22,7 @@ import {
 } from "./state/state.js";
 
 import handleExpiredToken from "./utils/authUtils.js";
+
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -83,6 +85,10 @@ function App() {
                     <Route
                       path="/jobs"
                       element={token ? <JobsPage /> : <Navigate to="/" />}
+                    />
+                    <Route
+                      path="/community"
+                      element={token ? <CommunityPage /> : <Navigate to="/" />}
                     />
                   </Routes>
                 </div>

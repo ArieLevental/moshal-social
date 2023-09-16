@@ -18,8 +18,10 @@ import {
   globalAuthContext,
   institutionsDataContext,
 } from "../../state/state.js";
-import { capitalizeFirstLetters, formatDate } from "../../utils/formattingUtils";
-
+import {
+  capitalizeFirstLetters,
+  formatDate,
+} from "../../utils/formattingUtils";
 
 import ExperienceContainer from "./experienceContainer/experienceContainer";
 import DataItem from "./components/DataItem/DataItem";
@@ -62,10 +64,10 @@ const ProfilePage = () => {
         localStorage.setItem("institutions_data", JSON.stringify(resJson));
         setInstitutionsData(resJson);
       } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
+        console.log("You are not authorized to view this page");
         handleExpiredToken(setSignedUserData, setToken);
       } else {
-        alert("Something went wrong, please try again later");
+        console.log("Something went wrong, please try again later");
       }
     });
     // TODO: merge with second useEffect
@@ -80,10 +82,10 @@ const ProfilePage = () => {
         localStorage.setItem("companies_data", JSON.stringify(resJson));
         setCompaniesData(resJson);
       } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
+        console.log("You are not authorized to view this page");
         handleExpiredToken(setSignedUserData, setToken);
       } else {
-        alert("Something went wrong, please try again later");
+        console.log("Something went wrong, please try again later");
       }
     });
     // TODO: merge with second useEffect
@@ -106,10 +108,10 @@ const ProfilePage = () => {
         // }
         setEducationItems(resJson.educationItems);
       } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
+        console.log("You are not authorized to view this page");
         handleExpiredToken(setSignedUserData, setToken);
       } else {
-        alert("Something went wrong, please try again later");
+        console.log("Something went wrong, please try again later");
       }
     });
   }, []);
@@ -131,10 +133,10 @@ const ProfilePage = () => {
         // }
         setOccupationItems(resJson.occupationItems);
       } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
+        console.log("You are not authorized to view this page");
         handleExpiredToken(setSignedUserData, setToken);
       } else {
-        alert("Something went wrong, please try again later");
+        console.log("Something went wrong, please try again later");
       }
     });
   }, []);
@@ -153,10 +155,10 @@ const ProfilePage = () => {
           dateOfBirth: resJson.dateOfBirth,
         });
       } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
+        console.log("You are not authorized to view this page");
         handleExpiredToken(setSignedUserData, setToken);
       } else {
-        alert("Something went wrong, please try again later");
+        console.log("Something went wrong, please try again later");
       }
     });
     // TODO: this solution results api call for every "pen" click
@@ -180,10 +182,10 @@ const ProfilePage = () => {
           )
         );
       } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
+        console.log("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
       } else {
-        alert("Something went wrong, please try again later");
+        console.log("Something went wrong, please try again later");
       }
     });
   };
@@ -209,10 +211,10 @@ const ProfilePage = () => {
         setUserData({ ...userData, ...resJson });
         setEducationItems([...educationItems, resJson.newItem]);
       } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
+        console.log("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
       } else {
-        alert("Something went wrong, please try again later");
+        console.log("Something went wrong, please try again later");
       }
     });
   };
@@ -234,10 +236,10 @@ const ProfilePage = () => {
           )
         );
       } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
+        console.log("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
       } else {
-        alert("Something went wrong, please try again later");
+        console.log("Something went wrong, please try again later");
       }
     });
   };
@@ -263,10 +265,10 @@ const ProfilePage = () => {
         setUserData({ ...userData, ...resJson });
         setOccupationItems([...occupationItems, resJson.newItem]);
       } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
+        console.log("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
       } else {
-        alert("Something went wrong, please try again later");
+        console.log("Something went wrong, please try again later");
       }
     });
   };
@@ -293,10 +295,10 @@ const ProfilePage = () => {
         setInEditMode(false);
         setUserData({ ...userData, ...resJson });
       } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
+        console.log("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
       } else {
-        alert("Something went wrong, please try again later");
+        console.log("Something went wrong, please try again later");
       }
     });
   };
@@ -324,14 +326,13 @@ const ProfilePage = () => {
         setSignedUserData(updatedSignedUser);
         localStorage.setItem("user_data", JSON.stringify(updatedSignedUser));
       } else if (res.status === 401) {
-        alert("You are not authorized to view this page");
+        console.log("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
       } else {
-        alert("Something went wrong, please try again later");
+        console.log("Something went wrong, please try again later");
       }
     });
   };
-
 
   return (
     <>
