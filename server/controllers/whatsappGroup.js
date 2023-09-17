@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import WhatsappGroup from "../models/WhatsappGroup.js";
 
 // get all WhatsappGroups from db and send to frontend
