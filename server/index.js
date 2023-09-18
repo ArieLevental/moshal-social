@@ -5,8 +5,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
-import path from "path";
-import { fileURLToPath } from "url";
+// import path from "path";
+// import { fileURLToPath } from "url";
 
 import userRouter from "./routes/user.js";
 import usersRouter from "./routes/users.js";
@@ -19,15 +19,7 @@ import companyRouter from "./routes/company.js";
 import companiesRouter from "./routes/companies.js";
 import whatsappGroupRouter from "./routes/whatsappGroup.js";
 
-/* USED FOR ONE-TIME DATA LOAD */
-import User from "./models/User.js";
-import Institution from "./models/Institution.js";
-import Company from "./models/Company.js";
-import Occupation from "./models/Occupation.js";
-import Education from "./models/Education.js";
-import JobOffer from "./models/JobOffer.js";
-import WhatsappGroup from "./models/WhatsappGroup.js";
-import { users, companies, institutions, occupations, educations, jobs, whatsappGroups } from "./data/index.js";
+// import loadData from "./utils/testDataLoad.js";
 
 dotenv.config();
 
@@ -42,9 +34,9 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 // ASSETS SETUP
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-app.use("/assets", express.static(path.join(__dirname, "public/assets")));
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+// app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 // ROUTES SETUP
 app.use("/auth", authRouter);
@@ -67,14 +59,6 @@ mongoose
   })
   .then(() => {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
-
-    /* ADD DATA ONE TIME */
-    // User.insertMany(users);
-    // Institution.insertMany(institutions);
-    // Company.insertMany(companies);
-    // Occupation.insertMany(occupations);
-    // Education.insertMany(educations);
-    // JobOffer.insertMany(jobs);
-    // WhatsappGroup.insertMany(whatsappGroups);
+    // loadData();
   })
   .catch((error) => console.log(`${error} did not connect`));
