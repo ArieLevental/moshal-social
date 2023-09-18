@@ -47,8 +47,8 @@ const educationSchema = mongoose.Schema(
     },
     degree: {
       type: String,
-      min: [4, "Degree must be at least 4 characters."],
-      max: [30, "Degree cannot exceed 30 characters."],
+      minlength: [4, "Degree must be at least 4 characters."],
+      maxlength: [30, "Degree cannot exceed 30 characters."],
       required: [true, "Degree is required."],
     },
   },
