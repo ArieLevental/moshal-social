@@ -6,8 +6,8 @@ const institutionSchema = mongoose.Schema(
     name: {
       type: String,
       required: [true, "Institution name is required."],
-      min: [2, "Institution name must be at least 2 characters."],
-      max: [50, "Institution name cannot exceed 50 characters."],
+      minlength: [2, "Institution name must be at least 2 characters."],
+      maxlength: [50, "Institution name cannot exceed 50 characters."],
       index: true, // Add index to 'name' field
       trim: true, // Use 'trim' option to remove leading and trailing spaces
     },

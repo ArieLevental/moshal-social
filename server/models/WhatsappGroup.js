@@ -14,8 +14,8 @@ const whatsappGroupSchema = mongoose.Schema({
   link: {
     type: String,
     required: true,
-    min: 2,
-    max: 100,
+    minlength: 2,
+    maxlength: 100,
     validate: {
       validator: validateLink,
       message: "Invalid link value",
@@ -24,15 +24,15 @@ const whatsappGroupSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
-    min: 2,
-    max: 50,
+    minlength: 2,
+    maxlength: 50,
     index: true,
   },
   tags: [
     {
       type: String,
-      min: 2,
-      max: 20,
+      minlength: 2,
+      maxlength: 20,
     },
   ],
   });

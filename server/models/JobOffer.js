@@ -24,20 +24,20 @@ const jobOfferSchema = mongoose.Schema(
     content: {
       type: String,
       required: [true, "Content is required."],
-      min: [10, "Content must be at least 10 characters."],
-      max: [2000, "Content cannot exceed 2000 characters."],
+      minlength: [10, "Content must be at least 10 characters."],
+      maxlength: [2000, "Content cannot exceed 2000 characters."],
     },
     offerTitle: {
       type: String,
       required: [true, "Offer title is required."],
-      min: [2, "Offer title must be at least 2 characters."],
-      max: [100, "Offer title cannot exceed 100 characters."],
+      minlength: [2, "Offer title must be at least 2 characters."],
+      maxlength: [100, "Offer title cannot exceed 100 characters."],
     },
     location: {
       type: String,
       required: [true, "Location is required."],
-      min: [2, "Location must be at least 2 characters."],
-      max: [50, "Location cannot exceed 50 characters."],
+      minlength: [2, "Location must be at least 2 characters."],
+      maxlength: [50, "Location cannot exceed 50 characters."],
     },
     offerLink: {
       type: String,
