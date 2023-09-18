@@ -5,7 +5,6 @@ import { verifyToken } from "../middleware/auth.js";
 // Handle all routes that start with /jobs
 const jobsRouter = express.Router();
 
-jobsRouter.route("/").get(verifyToken, getJobOffers);
-jobsRouter.route("/").post(verifyToken, newJobOffer);
+jobsRouter.route("/").get(verifyToken, getJobOffers).post(verifyToken, newJobOffer);
 
 export default jobsRouter;

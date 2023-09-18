@@ -1,4 +1,4 @@
-import { FooterContributeText } from "../../data/texts";
+import { FooterContributeText } from "../../utils/texts.js";
 import "./Footer.css";
 
 const Footer = () => {

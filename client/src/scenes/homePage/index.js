@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { globalAuthContext } from "../../state/state.js";
-import { HomepageMainText } from "../../data/texts.js";
+import { HomepageMainText } from "../../utils/texts.js";
 import "./index.css";
 
 const HomePage = () => {

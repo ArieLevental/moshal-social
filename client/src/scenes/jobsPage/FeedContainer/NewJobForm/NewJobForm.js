@@ -18,7 +18,8 @@ const NewJobForm = () => {
     handleExpiredToken,
   } = useContext(globalAuthContext);
   const { companiesData } = useContext(companiesDataContext);
-  const { jobsData, setJobsData } = useContext(jobsDataContext);
+  const { jobsData, setJobsData, setPresentedJobsData } =
+    useContext(jobsDataContext);
 
   const [newJobOfferForm, setNewJobOfferForm] = useState(false);
 
@@ -49,12 +50,11 @@ const NewJobForm = () => {
       .then(async (res) => {
         const resJson = await res.json();
         if (res.status === 201) {
-          console.log(resJson);
-          localStorage.setItem(
-            "jobs_data",
-            JSON.stringify([...jobsData, resJson])
-          );
-          setJobsData([...jobsData, resJson]);
+          // console.log(resJson);
+          const newJobsData = [...jobsData, resJson];
+          localStorage.setItem("jobs_data", JSON.stringify(newJobsData));
+          setJobsData(newJobsData);
+          setPresentedJobsData(newJobsData);
           revealNewJobOfferForm();
         } else if (res.status === 401) {
           console.log("You are not authorized to view this page");

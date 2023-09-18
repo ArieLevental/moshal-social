@@ -39,6 +39,7 @@ export const newJobOffer = async (req, res) => {
       referral,
     });
     const savedJobOffer = await newJobOffer.save();
+    await savedJobOffer.populate("companyId");
     res.status(201).json(savedJobOffer);
   } catch (err) {
     res.status(500).json({ error: err.message });
