@@ -10,8 +10,8 @@ import {
   faBriefcase,
 } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import PictureEditForm from "../../components/Widjets/PictureEditForm/PictureEditForm";
-import CategoryTitle from "../../components/Widjets/CategoryTitle/CategoryTitle";
+import PictureEditForm from "../../components/Widgets/PictureEditForm/PictureEditForm";
+import CategoryTitle from "../../components/Widgets/CategoryTitle/CategoryTitle";
 import {
   companiesDataContext,
   generalDataContext,

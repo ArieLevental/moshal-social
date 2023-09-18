@@ -20,9 +20,11 @@
 
 .navbar-user-picture {
   width: 2.2rem;
+  height: 2.2rem;
   margin: 0.4rem;
   border-radius: 50%;
   border: 2px solid var(--black-06);
+  object-fit: cover;
 }
 
 .navbar-user-picture:hover {
