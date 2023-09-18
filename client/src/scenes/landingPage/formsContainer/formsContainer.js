@@ -117,6 +117,7 @@ export const Login = () => {
 export const Register = () => {
   const { INITIAL_FORMDATA, setActiveForm, formData, setFormData } =
     useContext(authContext);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 

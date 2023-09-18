@@ -1,7 +1,7 @@
 export const urlRegex = /^(https?:\/\/[^\s]+|\S+\.\S+)$/;
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const linkedInUrlRegex =
-  /^(https:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]*\/?$/;
+  /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]*\/?$/;
 
 export const validateUser = async (userName) => {
   try {
@@ -13,6 +13,7 @@ export const validateUser = async (userName) => {
 };
 
 export const validateLink = (url) => {
+  if (!url) return true; // Allow empty string
   return urlRegex.test(url);
 };
 
@@ -21,12 +22,15 @@ export const validateEmail = (email) => {
 };
 
 export const validateLinkedInUrl = (url) => {
+  if (!url) return true; // Allow empty string
   return linkedInUrlRegex.test(url);
 };
 
 export const validateInstitution = async (institutionName) => {
   try {
-    const institution = await mongoose.model("Institution").findById(institutionName);
+    const institution = await mongoose
+      .model("Institution")
+      .findById(institutionName);
     return institution !== null;
   } catch (error) {
     throw new Error("Error validating institutionId: " + error.message);
