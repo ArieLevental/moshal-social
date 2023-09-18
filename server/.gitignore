@@ -12,6 +12,7 @@
 /build
 /.github
 /.firebase
+/public/assets
 
 # misc
 .DS_Store

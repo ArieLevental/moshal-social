@@ -29,7 +29,8 @@ function UsersPage() {
   const [presentedData, setPresentedData] = useState(usersDbData);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/users`, {
+    // TODO: example of local server use
+    fetch(`${process.env.REACT_APP_LOCAL_URL}/users`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then(async (res) => {
       const resJson = await res.json();
@@ -37,7 +38,7 @@ function UsersPage() {
         localStorage.setItem("users_db_data", JSON.stringify(resJson));
         setUsersDbData(resJson);
         setPresentedData(resJson);
-        console.log(resJson);
+        // console.log(resJson);
       } else if (res.status === 401) {
         console.log("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
@@ -48,7 +49,9 @@ function UsersPage() {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/institutions`, {
+    // TODO: example of external server use
+    // fetch(`${process.env.REACT_APP_BASE_URL}/institutions`, {
+    fetch(`${process.env.REACT_APP_LOCAL_URL}/institutions`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then(async (res) => {
       const resJson = await res.json();
