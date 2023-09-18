@@ -1,6 +1,6 @@
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import User from "../models/User.js";
-import { storage } from "../firebase.js";
+import { storage } from "../utils/firebase.js";
 
 export const uploadProfileImg = async (req, res) => {
   try {

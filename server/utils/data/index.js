@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import { ref, getDownloadURL } from "firebase/storage";
-import { storage } from "../firebase.js";
+import { storage } from "../utils/firebase.js";
 
 const userIds = [
   new mongoose.Types.ObjectId(), // 1
@@ -571,41 +571,6 @@ export const educations = [
   },
 ];
 
-// userId: {
-//   type: mongoose.Schema.Types.ObjectId,
-//   ref: "User",
-//   required: true,
-// },
-// companyId: {
-//   type: mongoose.Schema.Types.ObjectId,
-//   ref: "Company",
-//   required: true,
-// },
-// content: {
-//   type: String,
-//   required: true,
-//   min: 10,
-//   max: 2000,
-// },
-// offerTitle: {
-//   type: String,
-//   required: true,
-//   min: 2,
-//   max: 100,
-// },
-// offerLink: {
-//   type: String,
-//   default: "",
-// },
-// expReq: {
-//   type: String,
-//   default: "",
-// },
-// referral: {
-//   type: String,
-//   default: "",
-// },
-
 export const jobs = [
   {
     _id: jobsIds[0],
@@ -740,34 +705,6 @@ export const jobs = [
     __v: 0,
   },
 ];
-
-// const whatsappGroupSchema = mongoose.Schema(
-//   {
-//       created_by: {
-//           type: mongoose.Schema.Types.ObjectId,
-//           ref: "User",
-//       },
-//       link: {
-//           type: String,
-//           required: true,
-//           min: 2,
-//           max: 100,
-//       },
-//       name: {
-//           type: String,
-//           required: true,
-//           min: 2,
-//           max: 50,
-//       },
-//       tags: [
-//           {
-//               type: String,
-//               min: 2,
-//               max: 20,
-//           }
-//       ],
-//   }
-// );
 
 export const whatsappGroups = [
   {

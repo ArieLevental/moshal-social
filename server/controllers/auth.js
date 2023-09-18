@@ -17,7 +17,7 @@ export const login = async (req, res) => {
     // extract email and password from the JSON in req.body sent from frontend
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email });
 
     if (!user) return res.status(400).json({ msg: "User does not exist. " });
 
