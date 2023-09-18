@@ -39,11 +39,13 @@ const WhatsappGroups = () => {
     getGroups();
   }, [token]);
 
-  const filteredGroups = groups.filter((group) =>
-    group.tags.some((tag) =>
-      tag.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  );
+  const filteredGroups = groups.filter((group) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      group.tags.some((tag) => tag.toLowerCase().includes(query)) ||
+      group.name.toLowerCase().includes(query)
+    );
+  });
 
   const handleNewGroup = async (e) => {
     e.preventDefault();
@@ -147,12 +149,23 @@ const WhatsappGroups = () => {
         </button>
         {addGroupMode && (
           <form className="add-group-form" onSubmit={handleNewGroup}>
-            <input type="text" placeholder="Group name" name="groupName" />
-            <input type="text" placeholder="Group link" name="groupLink" />
+            <input
+              type="text"
+              placeholder="Group name"
+              name="groupName"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Group link"
+              name="groupLink"
+              required
+            />
             <input
               type="text"
               placeholder="Group tags, split with commas"
               name="groupTags"
+              required
             />
             <button type="submit">Add</button>
           </form>
