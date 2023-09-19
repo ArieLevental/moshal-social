@@ -12,14 +12,12 @@ const userSchema = new mongoose.Schema(
       required: [true, "First name is required."],
       minlength: [2, "First name must be at least 2 characters."],
       maxlength: [50, "First name cannot exceed 50 characters."],
-      set: (value) => value.toLowerCase(),
     },
     lastName: {
       type: String,
       required: [true, "Last name is required."],
       minlength: [2, "Last name must be at least 2 characters."],
       maxlength: [50, "Last name cannot exceed 50 characters."],
-      set: (value) => value.toLowerCase(),
     },
     email: {
       type: String,
@@ -32,13 +30,15 @@ const userSchema = new mongoose.Schema(
         validator: validateEmail,
         message: "Invalid email address.",
       },
-      set: (value) => value.toLowerCase(),
+      lowercase: true,
     },
     password: {
       type: String,
       required: [true, "Password is required."],
-      minlength: [5, "Password must be at least 6 characters."],
+      // TODO: handle password validation before the schema, hashing and salting
+      // minlength: [5, "Password must be at least 6 characters."],
       // maxlength: [50, "Password cannot exceed 50 characters."],
+      // select: false,
     },
     picturePath: {
       type: String,
