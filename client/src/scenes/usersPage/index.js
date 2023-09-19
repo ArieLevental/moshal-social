@@ -38,7 +38,7 @@ function UsersPage() {
         localStorage.setItem("users_db_data", JSON.stringify(resJson));
         setUsersDbData(resJson);
         setPresentedData(resJson);
-        // console.log(resJson);
+        console.log(resJson);
       } else if (res.status === 401) {
         console.log("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);

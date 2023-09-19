@@ -2,6 +2,10 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import User from "../models/User.js";
 import { storage } from "../utils/firebase.js";
 
+const uploadFile = async (storageRef, buffer) => {
+  await uploadBytes(storageRef, buffer);
+};
+
 export const uploadProfileImg = async (req, res) => {
   try {
     // Check if the request contains a file to upload
@@ -13,9 +17,7 @@ export const uploadProfileImg = async (req, res) => {
     const storageRef = ref(storage, `profile/${req.params.id}.jpeg`);
 
     // Upload the file
-    await uploadBytes(storageRef, req.file.buffer).then((snapshot) => {
-      console.log("Uploaded a blob or file! ", snapshot);
-    });
+    await uploadFile(storageRef, req.file.buffer);
 
     // Get the download URL of the uploaded file
     const url = await getDownloadURL(storageRef);
@@ -34,7 +36,6 @@ export const uploadProfileImg = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    console.log("File uploaded successfully");
     res.status(200).json({ picturePath: url });
   } catch (err) {
     // Handle any errors that occurred during the upload
@@ -51,6 +52,7 @@ export const getProfileImg = async (req, res) => {
     res.status(200).json({ url: url });
   } catch (error) {
     // Handle any errors that occurred during the upload
-    res.status(500).json({ message: err.message });
+    console.error(error.message);
+    res.status(500).json({ message: error.message });
   }
 };

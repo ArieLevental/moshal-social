@@ -25,6 +25,7 @@ export const Login = () => {
     })
       .then(async (res) => {
         const resJson = await res.json();
+        console.log(resJson);
         const handleSuccess = () => {
           const userData = {
             _id: resJson.user._id,

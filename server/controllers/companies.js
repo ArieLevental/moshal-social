@@ -1,6 +1,6 @@
 import Company from "../models/Company.js";
 
-// get ALL Users from db and send to frontend
+// get all companies from DB
 export const getAllCompanies = async (req, res) => {
   try {
     const companies = await Company.find();

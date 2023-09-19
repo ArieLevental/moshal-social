@@ -5,8 +5,7 @@ export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find()
       .select("-password")
-      .populate("education")
-      .populate("occupation");
+      .populate(["education", "occupation"]);
     if (!users) {
       return res.status(404).json({ message: "Users not found" });
     }
