@@ -136,7 +136,7 @@ export const Register = () => {
       body: JSON.stringify(formData),
     })
       .then((res) => {
-        setFormData(INITIAL_FORMDATA);
+        // setFormData(INITIAL_FORMDATA);
         return res.status === 201 ? setActiveForm("login") : res.json();
       })
       .then((resJson) => console.log(resJson));

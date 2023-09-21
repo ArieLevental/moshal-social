@@ -13,11 +13,13 @@ import "./WhatsappGroups.css";
 const WhatsappGroups = () => {
   const { token, signedUserData } = useContext(globalAuthContext);
   const [searchQuery, setSearchQuery] = useState("");
-  // TODO: reverse the order of the groups so that the newest groups are at the top
+  // TODO: reverse the order of the groups so that the newest groups are at the top. OR actually alphabetically
   const [groups, setGroups] = useState([]);
   const [addGroupMode, setAddGroupMode] = useState(false);
-  // TODO: currently edit mode will apply to all groups, not just the one that is being edited
-  const [editGroupMode, setEditGroupMode] = useState(false);
+  const [editGroupModeSettings, setEditGroupModeSettings] = useState({
+    is_active: false,
+    edited_group_id: null,
+  });
 
   useEffect(() => {
     const getGroups = async () => {
@@ -53,7 +55,7 @@ const WhatsappGroups = () => {
       name: e.target.groupName.value,
       link: e.target.groupLink.value,
       tags: e.target.groupTags.value.split(","),
-      created_by: signedUserData._id,
+      userId: signedUserData._id,
     };
     try {
       const response = await fetch("http://localhost:3001/whatsapp", {
@@ -68,7 +70,7 @@ const WhatsappGroups = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("New group added:", data);
-        console.log(data.created_by, signedUserData._id);
+        console.log(data.userId, signedUserData._id);
         setGroups([...groups, data]); // TODO: Maybe update useEffect to fetch groups again?
         setAddGroupMode(false);
       } else {
@@ -90,7 +92,10 @@ const WhatsappGroups = () => {
       if (response.ok) {
         console.log("Group deleted successfully");
         setGroups(groups.filter((group) => group._id !== id));
-        setEditGroupMode(false);
+        setEditGroupModeSettings({
+          ...editGroupModeSettings,
+          is_active: false,
+        });
       } else {
         console.error("Failed to delete group");
       }
@@ -120,7 +125,10 @@ const WhatsappGroups = () => {
         setGroups(
           groups.map((group) => (group._id === id ? updatedGroup : group))
         );
-        setEditGroupMode(false);
+        setEditGroupModeSettings({
+          ...editGroupModeSettings,
+          is_active: false,
+        });
       } else {
         console.error("Failed to update group");
       }
@@ -177,36 +185,49 @@ const WhatsappGroups = () => {
           <div key={group._id} className="group-item">
             <div className="group-item-header">
               <div className="group-name">{group.name}</div>
-              {group.created_by === signedUserData._id && !editGroupMode && (
-                <button
-                  className="group-edit-button"
-                  onClick={() => setEditGroupMode(!editGroupMode)}
-                >
-                  <FontAwesomeIcon icon={faPen} />
-                </button>
-              )}
-              {group.created_by === signedUserData._id && editGroupMode && (
-                <div className="group-edit-buttons">
+              {group.userId === signedUserData._id &&
+                !editGroupModeSettings.is_active && (
                   <button
-                    className="group-delete-button"
-                    onClick={() => handleDeleteGroup(group._id)}
+                    className="group-edit-button"
+                    onClick={() =>
+                      setEditGroupModeSettings({
+                        is_active: !editGroupModeSettings.is_active,
+                        edited_group_id: group._id,
+                      })
+                    }
                   >
-                    <FontAwesomeIcon icon={faTrash} />
+                    <FontAwesomeIcon icon={faPen} />
                   </button>
-                  <button
-                    className="group-confirm-edit-button"
-                    onClick={() => handleEditGroup(group._id)}
-                  >
-                    <FontAwesomeIcon icon={faCheck} />
-                  </button>
-                  <button
-                    className="group-cancel-edit-button"
-                    onClick={() => setEditGroupMode(!editGroupMode)}
-                  >
-                    <FontAwesomeIcon icon={faCancel} />
-                  </button>
-                </div>
-              )}
+                )}
+              {group.userId === signedUserData._id &&
+                editGroupModeSettings.is_active &&
+                editGroupModeSettings.edited_group_id === group._id && (
+                  <div className="group-edit-buttons">
+                    <button
+                      className="group-delete-button"
+                      onClick={() => handleDeleteGroup(group._id)}
+                    >
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                    <button
+                      className="group-confirm-edit-button"
+                      onClick={() => handleEditGroup(group._id)}
+                    >
+                      <FontAwesomeIcon icon={faCheck} />
+                    </button>
+                    <button
+                      className="group-cancel-edit-button"
+                      onClick={() =>
+                        setEditGroupModeSettings({
+                          ...editGroupModeSettings,
+                          is_active: !editGroupModeSettings.is_active,
+                        })
+                      }
+                    >
+                      <FontAwesomeIcon icon={faCancel} />
+                    </button>
+                  </div>
+                )}
             </div>
             <a href={group.link} target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faWhatsapp} color="#25d366" size="2x" />{" "}

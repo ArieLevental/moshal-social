@@ -1,11 +1,13 @@
+import mongoose from "mongoose";
+
 export const urlRegex = /^(https?:\/\/[^\s]+|\S+\.\S+)$/;
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const linkedInUrlRegex =
   /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]*\/?$/;
 
-export const validateUser = async (userName) => {
+export const validateUser = async (userId) => {
   try {
-    const user = await mongoose.model("User").findById(userName);
+    const user = await mongoose.model("User").findById(userId);
     return user !== null;
   } catch (error) {
     throw new Error("Error validating userId: " + error.message);
