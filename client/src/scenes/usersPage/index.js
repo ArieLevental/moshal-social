@@ -31,7 +31,7 @@ function UsersPage() {
   useEffect(() => {
     // TODO: example of local server use
 
-    fetch(`${process.env.REACT_APP_LOCAL_URL}/users`, {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/users`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then(async (res) => {
       const resJson = await res.json();
@@ -51,8 +51,8 @@ function UsersPage() {
 
   useEffect(() => {
     // TODO: example of external server use
-    fetch(`${process.env.REACT_APP_BASE_URL}/institutions`, {
-      // fetch(`${process.env.REACT_APP_LOCAL_URL}/institutions`, {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/institutions`, {
+      // fetch(`${process.env.REACT_APP_API_BASE_URL}/institutions`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then(async (res) => {
       const resJson = await res.json();
@@ -70,7 +70,7 @@ function UsersPage() {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/companies`, {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/companies`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then(async (res) => {
       const resJson = await res.json();

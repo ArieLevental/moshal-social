@@ -56,7 +56,7 @@ const ProfilePage = () => {
   const [occupationItems, setOccupationItems] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/institutions`, {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/institutions`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then(async (res) => {
       const resJson = await res.json();
@@ -74,7 +74,7 @@ const ProfilePage = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/companies`, {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/companies`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then(async (res) => {
       const resJson = await res.json();
@@ -92,11 +92,14 @@ const ProfilePage = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/user/getEducationItems/${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then(async (res) => {
+    fetch(
+      `${process.env.REACT_APP_API_BASE_URL}/user/getEducationItems/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    ).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
         // console.log(experienceItems, resJson[experienceItems]);
@@ -117,11 +120,14 @@ const ProfilePage = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/user/getOccupationItems/${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then(async (res) => {
+    fetch(
+      `${process.env.REACT_APP_API_BASE_URL}/user/getOccupationItems/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    ).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
         // console.log(experienceItems, resJson[experienceItems]);
@@ -142,7 +148,7 @@ const ProfilePage = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/user/${userId}`, {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/user/${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then(async (res) => {
       const resJson = await res.json();
@@ -166,14 +172,17 @@ const ProfilePage = () => {
 
   const deleteEducationItem = (educationId, institutionId) => {
     console.log(educationId, institutionId);
-    fetch(`http://localhost:3001/user/deleteEducationItem/${userId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ educationId, institutionId }),
-    }).then(async (res) => {
+    fetch(
+      `${process.env.REACT_APP_API_BASE_URL}/user/deleteEducationItem/${userId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ educationId, institutionId }),
+      }
+    ).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
         setEducationItems(
@@ -198,14 +207,17 @@ const ProfilePage = () => {
     //   endYear: e.target.endYear.value,
     //   [fieldName]: e.target[fieldName].value,
     // };
-    fetch(`http://localhost:3001/user/addEducationItem/${userId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(experienceItemData),
-    }).then(async (res) => {
+    fetch(
+      `${process.env.REACT_APP_API_BASE_URL}/user/addEducationItem/${userId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(experienceItemData),
+      }
+    ).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
         setUserData({ ...userData, ...resJson });
@@ -220,14 +232,17 @@ const ProfilePage = () => {
   };
 
   const deleteOccupationItem = (occupationId, companyId) => {
-    fetch(`http://localhost:3001/user/deleteOccupationItem/${userId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ occupationId, companyId }),
-    }).then(async (res) => {
+    fetch(
+      `${process.env.REACT_APP_API_BASE_URL}/user/deleteOccupationItem/${userId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ occupationId, companyId }),
+      }
+    ).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
         setOccupationItems(
@@ -252,14 +267,17 @@ const ProfilePage = () => {
     //   endYear: e.target.endYear.value,
     //   [fieldName]: e.target[fieldName].value,
     // };
-    fetch(`http://localhost:3001/user/addOccupationItem/${userId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(experienceItemData),
-    }).then(async (res) => {
+    fetch(
+      `${process.env.REACT_APP_API_BASE_URL}/user/addOccupationItem/${userId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(experienceItemData),
+      }
+    ).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
         setUserData({ ...userData, ...resJson });
@@ -282,7 +300,7 @@ const ProfilePage = () => {
       linkedIn: e.target.linkedIn.value,
       dateOfBirth: formatDate(e.target.dateOfBirth.value),
     };
-    fetch(`http://localhost:3001/user/${userId}`, {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/user/${userId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -309,7 +327,7 @@ const ProfilePage = () => {
     const formData = new FormData();
     formData.append("userImage", imgValue);
 
-    fetch(`http://localhost:3001/storage/profile/${userId}`, {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/storage/profile/${userId}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -348,7 +366,10 @@ const ProfilePage = () => {
               />
               <img
                 className="profile-picture"
-                src={userData.picturePath || "/assets/general/genericUser.png"}
+                src={
+                  userData.picturePath ||
+                  process.env.REACT_APP_GENERIC_PICTURE_PATH
+                }
                 alt={userData.firstName + "'s Profile Picture"}
               />
               {signedUserData._id === userId && ( // Show picture edit pen when user id is matching

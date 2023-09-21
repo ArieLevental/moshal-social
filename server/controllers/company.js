@@ -1,15 +1,15 @@
 import Company from "../models/Company.js";
 
-// CURRENTLY NOT IN USE, FIX WHEN IMPLEMENTED IN FRONTEND
-export const getCompany = async (req, res) => {
+export const getCompany = async (req, res, next) => {
   try {
     const companyId = req.params.id;
     const company = await Company.findById(companyId);
     if (!company) {
-      return res.status(404).json({ message: "Company not found" });
+      throw { message: "Company not found", statusCode: 404 };
     }
+
     res.status(200).json(company);
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    next(err);
   }
 };

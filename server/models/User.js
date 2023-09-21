@@ -109,10 +109,21 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Define the virtual fullName property
 userSchema.virtual("fullName").get(function () {
   return `${this.firstName} ${this.lastName}`;
 });
 
+userSchema.pre("save", function (next) {
+  // Calculate the virtual fullName by combining firstName and lastName
+  this.fullName = `${this.firstName} ${this.lastName}`;
+  next();
+});
+
+// Index the fullName field for sorting
+userSchema.index({ fullName: 1 });
+
+// Create the User model
 const User = mongoose.model("User", userSchema);
 
 export default User;

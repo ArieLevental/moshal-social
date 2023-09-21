@@ -9,8 +9,7 @@ const companySchema = mongoose.Schema(
       minlength: [2, "Name must be at least 2 characters long."],
       maxlength: [50, "Name cannot exceed 50 characters."],
       unique: [true, "Name must be unique."],
-      // lowercase: true,
-      index: true, // Used for faster indexing.
+      index: true,
     },
     employees: [
       {

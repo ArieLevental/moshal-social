@@ -16,7 +16,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`http://localhost:3001/users`, {
+        const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/users`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (res.ok) {
