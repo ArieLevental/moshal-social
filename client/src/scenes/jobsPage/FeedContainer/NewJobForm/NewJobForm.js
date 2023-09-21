@@ -39,7 +39,7 @@ const NewJobForm = () => {
       expReq: e.target.expReq.value,
       referral: e.target.referral.value,
     };
-    fetch(`http://localhost:3001/jobs`, {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/jobs`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

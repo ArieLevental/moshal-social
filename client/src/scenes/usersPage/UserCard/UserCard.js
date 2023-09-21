@@ -14,7 +14,7 @@ function UserCard(props) {
 
         <img
           className="user-card-img"
-          src={props.userData?.picturePath || "/assets/general/genericUser.png"}
+          src={props.userData?.picturePath || process.env.REACT_APP_GENERIC_PICTURE_PATH}
           alt={`${props.userData?.firstName} ${props.userData?.lastName} Profile Picture`}
         />
       </a>

@@ -4,17 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
-
-import userRouter from "./routes/user.js";
-import usersRouter from "./routes/users.js";
-import authRouter from "./routes/auth.js";
-import storageRouter from "./routes/storage.js";
-import institutionRouter from "./routes/institution.js";
-import institutionsRouter from "./routes/institutions.js";
-import jobsRouter from "./routes/jobs.js";
-import companyRouter from "./routes/company.js";
-import companiesRouter from "./routes/companies.js";
-import whatsappGroupRouter from "./routes/whatsappGroup.js";
+import apiRouter from "./routes/index.js";
 // import loadData from "./utils/testDataLoad.js"; // load test data
 
 dotenv.config();
@@ -30,18 +20,9 @@ app.use(express.urlencoded({ limit: process.env.DATA_LIMIT, extended: true }));
 app.use(cors());
 
 // ROUTES SETUP
-app.use("/auth", authRouter);
-app.use("/user", userRouter);
-app.use("/users", usersRouter);
-app.use("/storage", storageRouter);
-app.use("/institution", institutionRouter);
-app.use("/institutions", institutionsRouter);
-app.use("/jobs", jobsRouter);
-app.use("/company", companyRouter);
-app.use("/companies", companiesRouter);
-app.use("/whatsapp", whatsappGroupRouter);
+app.use("/api", apiRouter);
 
-// MONGOOSE SETUP
+// SERVER & MONGOOSE SETUP
 const PORT = process.env.PORT || 6001;
 
 const connectToDatabase = async () => {

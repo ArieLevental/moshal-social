@@ -4,42 +4,42 @@ import Education from "../models/Education.js";
 import Company from "../models/Company.js";
 import Occupation from "../models/Occupation.js";
 
-// Currently, this function is not used in the app
-export const getUser = async (req, res) => {
+export const getUser = async (req, res, next) => {
   try {
     const userId = req.params.id;
     const user = await User.findById(userId).select("-password");
-    res.status(200).json(user);
+
+    res.status(200).json({ message: "Got user", user });
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    next(err);
   }
 };
 
-export const updateUser = async (req, res) => {
+export const updateUser = async (req, res, next) => {
   try {
     const userId = req.params.id;
-    const updatedData = req.body; // Assuming the request body contains the updated data
+    const updatedData = req.body;
 
-    // Update user data
     const updatedUser = await User.findByIdAndUpdate(userId, updatedData, {
-      new: true, // This option returns the updated document
-      runValidators: true, // This option runs the validation on the updated data
+      new: true,
+      runValidators: true,
     });
 
     if (!updatedUser) {
-      return res.status(404).json({ message: "updateUser: User not found" });
+      throw { message: "Failed to update user", statusCode: 404 };
     }
 
+    // TODO: check no password is returned
     res.status(200).json({
-      message: "updateUser: Profile updated successfully",
+      message: "User updated successfully",
       user: updatedUser,
     });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    next(err);
   }
 };
 
-export const addEducationItem = async (req, res) => {
+export const addEducationItem = async (req, res, next) => {
   try {
     const userId = req.params.id;
     const {
@@ -62,15 +62,13 @@ export const addEducationItem = async (req, res) => {
       userId,
       { $push: { education: savedEducation._id } },
       {
-        new: true, // This option returns the updated document
+        new: true,
         runValidators: true, // This option runs the validation on the updated data
       }
     );
 
     if (!updatedUser) {
-      return res
-        .status(404)
-        .json({ message: "addEducationItem: User not found" });
+      throw { message: "Failed to update user", statusCode: 404 };
     }
 
     // Update user data
@@ -84,22 +82,21 @@ export const addEducationItem = async (req, res) => {
     );
 
     if (!updatedInstitution) {
-      return res
-        .status(404)
-        .json({ message: "addEducationItem: Institution not found" });
+      throw { message: "Failed to update institution", statusCode: 404 };
     }
     await savedEducation.populate("institutionId");
+
     res.status(200).json({
-      message: "addEducationItem: Profile updated successfully",
+      message: "Profile updated successfully",
       user: updatedUser,
       newItem: savedEducation,
     });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    next(err);
   }
 };
 
-export const getEducationItems = async (req, res) => {
+export const getEducationItems = async (req, res, next) => {
   try {
     const userId = req.params.id;
     const user = await User.findById(userId);
@@ -111,11 +108,11 @@ export const getEducationItems = async (req, res) => {
       .status(200)
       .json({ message: "Profile updated successfully", educationItems });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    next(err);
   }
 };
 
-export const deleteEducationItem = async (req, res) => {
+export const deleteEducationItem = async (req, res, next) => {
   try {
     const userId = req.params.id;
     const { educationId, institutionId } = req.body; // Assuming the request body contains the updated data
@@ -132,9 +129,7 @@ export const deleteEducationItem = async (req, res) => {
     );
 
     if (!updatedUser) {
-      return res
-        .status(404)
-        .json({ message: "deleteEducationItem: User not found" });
+      throw { message: "Find and update user failed", statusCode: 404 };
     }
 
     // TODO - double request to the DB, can be optimized
@@ -162,22 +157,23 @@ export const deleteEducationItem = async (req, res) => {
       );
 
       if (!updatedInstitution) {
-        return res
-          .status(404)
-          .json({ message: "deleteEducationItem:  Institution not found" });
+        throw {
+          message: "Find and update institution failed",
+          statusCode: 404,
+        };
       }
     }
 
     res.status(200).json({
-      message: "deleteEducationItem: Profile updated successfully",
+      message: "Profile updated successfully",
       user: updatedUser,
     });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    next(err);
   }
 };
 
-export const addOccupationItem = async (req, res) => {
+export const addOccupationItem = async (req, res, next) => {
   try {
     const userId = req.params.id;
     const {
@@ -206,9 +202,7 @@ export const addOccupationItem = async (req, res) => {
     );
 
     if (!updatedUser) {
-      return res
-        .status(404)
-        .json({ message: "addOccupationItem: User not found" });
+      throw { message: "Find and update user failed", statusCode: 404 };
     }
 
     // Update user data
@@ -222,23 +216,21 @@ export const addOccupationItem = async (req, res) => {
     );
 
     if (!updatedCompany) {
-      return res
-        .status(404)
-        .json({ message: "addOccupationItem: Company not found" });
+      throw { message: "Find and update company failed", statusCode: 404 };
     }
 
     await savedOccupation.populate("companyId");
     res.status(200).json({
-      message: "addOccupationItem: Profile updated successfully",
+      message: "Profile updated successfully",
       user: updatedUser,
       newItem: savedOccupation,
     });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    next(err);
   }
 };
 
-export const getOccupationItems = async (req, res) => {
+export const getOccupationItems = async (req, res, next) => {
   try {
     const userId = req.params.id;
     const user = await User.findById(userId);
@@ -250,11 +242,11 @@ export const getOccupationItems = async (req, res) => {
       .status(200)
       .json({ message: "Profile updated successfully", occupationItems });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    next(err);
   }
 };
 
-export const deleteOccupationItem = async (req, res) => {
+export const deleteOccupationItem = async (req, res, next) => {
   try {
     const userId = req.params.id;
     const { occupationId, companyId } = req.body; // Assuming the request body contains the updated data
@@ -270,9 +262,7 @@ export const deleteOccupationItem = async (req, res) => {
     );
 
     if (!updatedUser) {
-      return res
-        .status(404)
-        .json({ message: "deleteOccupationItem: User not found" });
+      throw { message: "Find and update user failed", statusCode: 404 };
     }
 
     // TODO - double request to the DB, can be optimized
@@ -300,17 +290,15 @@ export const deleteOccupationItem = async (req, res) => {
       );
 
       if (!updatedCompany) {
-        return res
-          .status(404)
-          .json({ message: "deleteOccupationItem: Company not found" });
+        throw { message: "Find and update company failed", statusCode: 404 };
       }
     }
 
     res.status(200).json({
-      message: "deleteOccupationItem: Profile updated successfully",
+      message: "Profile updated successfully",
       user: updatedUser,
     });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    next(err);
   }
 };

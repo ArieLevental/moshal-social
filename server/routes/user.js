@@ -11,7 +11,6 @@ import {
 } from "../controllers/user.js";
 import { verifyToken } from "../middleware/auth.js";
 
-// Handle all routes that start with /user
 const userRouter = express.Router();
 
 userRouter

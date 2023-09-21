@@ -1,58 +1,63 @@
-import mongoose from "mongoose";
 import WhatsappGroup from "../models/WhatsappGroup.js";
 
-// get all WhatsappGroups from db and send to frontend
-export const getAllWhatsappGroups = async (req, res) => {
+export const getAllWhatsappGroups = async (req, res, next) => {
   try {
     const whatsappGroups = await WhatsappGroup.find();
+
     if (!whatsappGroups) {
-      return res.status(404).json({ message: "WhatsappGroups not found" });
+      throw { message: "WhatsApp group not found", statusCode: 404 };
     }
+
     res.status(200).json(whatsappGroups);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    next(err);
   }
 };
 
-// new WhatsappGroup
-export const newWhatsappGroup = async (req, res) => {
+export const newWhatsappGroup = async (req, res, next) => {
   const whatsappGroup = req.body;
   const newWhatsappGroup = new WhatsappGroup(whatsappGroup);
+
   try {
     await newWhatsappGroup.save();
+
     res.status(201).json(newWhatsappGroup);
   } catch (err) {
-    res.status(409).json({ message: err.message });
+    next(err);
   }
 };
 
-// update a WhatsappGroup in db
-export const updateWhatsappGroup = async (req, res) => {
-  const { id: _id } = req.params;
-  const whatsappGroup = req.body;
+export const updateWhatsappGroup = async (req, res, next) => {
+  try {
+    const { id: _id } = req.params;
+    const whatsappGroup = req.body;
 
-  if (!mongoose.Types.ObjectId.isValid(_id)) {
-    return res.status(404).send("No WhatsappGroup with that id");
+    const updatedWhatsappGroup = await WhatsappGroup.findByIdAndUpdate(
+      _id,
+      whatsappGroup,
+      { new: true }
+    );
+    if (!updatedWhatsappGroup) {
+      throw { message: "Failed to update WhatsApp group", statusCode: 400 };
+    }
+
+    res.status(200).json(updatedWhatsappGroup);
+  } catch (err) {
+    next(err);
   }
-
-  const updatedWhatsappGroup = await WhatsappGroup.findByIdAndUpdate(
-    _id,
-    whatsappGroup,
-    { new: true }
-  );
-
-  res.json(updatedWhatsappGroup);
 };
 
-// delete a WhatsappGroup from db
-export const deleteWhatsappGroup = async (req, res) => {
-  const { id } = req.params;
+export const deleteWhatsappGroup = async (req, res, next) => {
+  try {
+    const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).send("No WhatsappGroup with that id");
+    await WhatsappGroup.findByIdAndRemove(id);
+    if (!WhatsappGroup) {
+      throw { message: "Failed to delete WhatsApp group", statusCode: 400 };
+    }
+
+    res.status(200).json({ message: "Whatsapp Group deleted successfully" });
+  } catch (err) {
+    next(err);
   }
-
-  await WhatsappGroup.findByIdAndRemove(id);
-
-  res.json({ message: "WhatsappGroup deleted successfully" });
 };

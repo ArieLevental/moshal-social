@@ -5,7 +5,6 @@ import multer from "multer";
 
 const upload = multer();
 
-// Handle all routes that start with /storage
 const storageRouter = express.Router();
 
 storageRouter

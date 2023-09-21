@@ -14,7 +14,7 @@ const Icons = (props) => {
       <a href={`/user/${props.signedUserId}`}>
         <img
           className="navbar-user-picture"
-          src={props.singedUserPicturePath || "/assets/general/genericUser.png"}
+          src={props.singedUserPicturePath || process.env.REACT_APP_GENERIC_PICTURE_PATH}
           alt="User"
         />
       </a>

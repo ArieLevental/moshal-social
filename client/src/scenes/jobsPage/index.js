@@ -17,7 +17,7 @@ const JobsPage = () => {
   const [presentedJobsData, setPresentedJobsData] = useState(jobsData || []);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/jobs`, {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/jobs`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then(async (res) => {
       const resJson = await res.json();
@@ -36,7 +36,7 @@ const JobsPage = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/companies`, {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/companies`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then(async (res) => {
       const resJson = await res.json();

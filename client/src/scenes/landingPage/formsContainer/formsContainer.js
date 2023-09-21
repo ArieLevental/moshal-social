@@ -16,7 +16,7 @@ export const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    await fetch("http://localhost:3001/auth/login", {
+    await fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -128,7 +128,7 @@ export const Register = () => {
     ) {
       console.log("Passwords are different!");
     }
-    await fetch("http://localhost:3001/auth/register", {
+    await fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
