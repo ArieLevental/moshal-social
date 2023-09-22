@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { validateUser, validateCompany } from "../utils/validators.js";
+import { validateUser, validateCompany, validateEndYear } from "../utils/validators.js";
 
 const currentYear = new Date().getFullYear();
 const MIN_START_YEAR = 1990;
@@ -41,13 +41,11 @@ const occupationSchema = new mongoose.Schema(
     },
     endYear: {
       type: Number,
-      min: [
-        function () {
-          return this.startYear;
-        },
-        "End year must be greater than or equal to start year.",
-      ],
-      max: [MAX_END_YEAR, `End year cannot exceed ${MAX_END_YEAR}.`],
+      validate: {
+        validator: validateEndYear,
+        message: "End year must be greater than or equal to start year.",
+      },
+      max: [MAX_START_YEAR, `End year cannot exceed ${MAX_START_YEAR}.`],
     },
   },
   { timestamps: true }

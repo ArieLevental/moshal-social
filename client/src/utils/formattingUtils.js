@@ -1,5 +1,7 @@
 // Helper function to format the date as "yyyy-MM-dd"
 export const formatDate = (dateString) => {
+  if (!dateString) return "";
+
   const date = new Date(dateString);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");

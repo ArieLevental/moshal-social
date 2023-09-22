@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import { ref, getDownloadURL } from "firebase/storage";
-import { storage } from "../utils/firebase.js";
+import { storage } from "../firebase.js";
 
 const userIds = [
   new mongoose.Types.ObjectId(), // 1
@@ -163,7 +163,7 @@ export const users = [
     location: "San Fran, CA",
     bio: "Not here",
     dateOfBirth: new Date("1998-09-14"),
-    phoneNumber: "05419324595",
+    phoneNumber: "0541924595",
     linkedIn: "",
     moshalStatus: "Alumni",
     education: [educationIds[6]],
@@ -332,56 +332,56 @@ export const institutions = [
   {
     _id: institutionId[0],
     name: "Ariel University",
-    logoPath: institutionUrl0,
     students: [userIds[0]],
+    logoPath: institutionUrl0,
   },
   {
     _id: institutionId[1],
     name: "Bar-Ilan University",
-    logoPath: institutionUrl1,
     students: [userIds[0]],
+    logoPath: institutionUrl1,
   },
   {
     _id: institutionId[2],
     name: "Ben-Gurion University",
-    logoPath: institutionUrl2,
     students: [userIds[1]],
+    logoPath: institutionUrl2,
   },
   {
     _id: institutionId[3],
     name: "Haifa University",
-    logoPath: institutionUrl3,
     students: [userIds[2], userIds[1]],
+    logoPath: institutionUrl3,
   },
   {
     _id: institutionId[4],
     name: "Hebrew University",
-    logoPath: institutionUrl4,
     students: [userIds[3]],
+    logoPath: institutionUrl4,
   },
   {
     _id: institutionId[5],
     name: "Technion",
-    logoPath: institutionUrl5,
     students: [userIds[4]],
+    logoPath: institutionUrl5,
   },
   {
     _id: institutionId[6],
     name: "Tel-Aviv University",
-    logoPath: institutionUrl6,
     students: [userIds[5]],
+    logoPath: institutionUrl6,
   },
   {
     _id: institutionId[7],
     name: "The Open University",
+    students: [userIds[5]],
     logoPath: institutionUrl7,
-    students: [],
   },
   {
     _id: institutionId[8],
     name: "Weizmann",
     logoPath: institutionUrl8,
-    students: [],
+    students: [userIds[5]],
   },
 ];
 
@@ -709,56 +709,56 @@ export const jobs = [
 export const whatsappGroups = [
   {
     _id: new mongoose.Types.ObjectId(),
-    created_by: userIds[0],
+    userId: userIds[0],
     link: "https://chat.whatsapp.com/invite/6KQd8h4z2QlK7z1eY0j3qa",
     name: "Moshal HUJI 2023",
     tags: ["Hebrew Uni", "2023", "Scholars"],
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    created_by: userIds[1],
+    userId: userIds[1],
     link: "https://chat.whatsapp.com/invite/6KQd8h4z2QlK7z1eY0j3qb",
     name: "Prof. Moshal's Group",
     tags: ["Jobs", "Alumni", "Scholars"],
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    created_by: userIds[2],
+    userId: userIds[2],
     link: "https://chat.whatsapp.com/invite/6KQd8h4z2QlK7z1eY0j3qc",
     name: "Moshal Staff 2021",
     tags: ["Staff", "2021"],
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    created_by: userIds[3],
+    userId: userIds[3],
     link: "https://chat.whatsapp.com/invite/6KQd8h4z2QlK7z1eY0j3qd",
     name: "Hackathon Medical blabla",
     tags: ["Hackathon", "Med", "2024", "Private"],
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    created_by: userIds[4],
+    userId: userIds[4],
     link: "https://chat.whatsapp.com/invite/6KQd8h4z2QlK7z1eY0j3qe",
     name: "Induction 2021-2022 staff",
     tags: ["Induction", "2021", "2022", "Staff"],
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    created_by: userIds[5],
+    userId: userIds[5],
     link: "https://chat.whatsapp.com/invite/6KQd8h4z2QlK7z1eY0j3qf",
     name: "Moshal computer-science 2023 Technion",
     tags: ["moshal", "moshalim", "moshalnikim"],
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    created_by: userIds[6],
+    userId: userIds[6],
     link: "https://chat.whatsapp.com/invite/6KQd8h4z2QlK7z1eY0j3qg",
     name: "Zina's circle",
     tags: ["moshal", "moshalim", "moshalnikim"],
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    created_by: userIds[7],
+    userId: userIds[7],
     link: "https://chat.whatsapp.com/invite/6KQd8h4z2QlK7z1eY0j3qh",
     name: "Prosapp hightech",
     tags: ["moshal", "moshalim", "moshalnikim"],

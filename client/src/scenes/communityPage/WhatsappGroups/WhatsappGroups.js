@@ -20,13 +20,17 @@ const WhatsappGroups = () => {
     is_active: false,
     edited_group_id: null,
   });
+  const [groupEditFormData, setGroupEditFormData] = useState(null);
 
   useEffect(() => {
     const getGroups = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/whatsapp`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_API_BASE_URL}/whatsapp`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         if (response.ok) {
           const data = await response.json();
           setGroups(data);
@@ -53,18 +57,26 @@ const WhatsappGroups = () => {
     const newGroup = {
       name: e.target.groupName.value,
       link: e.target.groupLink.value,
-      tags: e.target.groupTags.value.split(","),
+      // move tags handle logic to backend
+      tags: [
+        ...new Set(
+          e.target.groupTags.value.split(",").map((tag) => tag.trim())
+        ),
+      ],
       userId: signedUserData._id,
     };
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/whatsapp`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(newGroup),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/whatsapp`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(newGroup),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -80,14 +92,64 @@ const WhatsappGroups = () => {
     }
   };
 
+  const handleUpdateGroup = async (e) => {
+    e.preventDefault();
+    const updatedGroup = {
+      name: e.target.name.value,
+      link: e.target.link.value,
+      // move tags handle logic to backend
+      tags: [
+        ...new Set(e.target.tags.value.split(",").map((tag) => tag.trim())),
+      ],
+    };
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/whatsapp/${editGroupModeSettings.edited_group_id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedGroup),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Group updated:", data);
+        setGroups(
+          groups.map((group) => {
+            if (group._id === editGroupModeSettings.edited_group_id) {
+              return { ...group, ...updatedGroup };
+            } else {
+              return group;
+            }
+          })
+        );
+        setEditGroupModeSettings({
+          ...editGroupModeSettings,
+          is_active: false,
+        });
+      } else {
+        console.error("Failed to add a new group");
+      }
+    } catch (err) {
+      console.error("Error adding new group:", err);
+    }
+  };
+
   const handleDeleteGroup = async (id) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/whatsapp/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/whatsapp/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (response.ok) {
         console.log("Group deleted successfully");
         setGroups(groups.filter((group) => group._id !== id));
@@ -111,14 +173,17 @@ const WhatsappGroups = () => {
       tags: document.getElementsByName("groupTags")[0].value.split(","),
     };
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/whatsapp/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(updatedGroup),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/whatsapp/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedGroup),
+        }
+      );
       if (response.ok) {
         console.log("Group updated successfully");
         setGroups(
@@ -188,12 +253,19 @@ const WhatsappGroups = () => {
                 !editGroupModeSettings.is_active && (
                   <button
                     className="group-edit-button"
-                    onClick={() =>
+                    onClick={() => {
+                      console.log(groupEditFormData);
                       setEditGroupModeSettings({
                         is_active: !editGroupModeSettings.is_active,
                         edited_group_id: group._id,
-                      })
-                    }
+                      });
+                      setGroupEditFormData({
+                        name: group.name,
+                        link: group.link,
+                        tags: group.tags,
+                        userId: signedUserData._id,
+                      });
+                    }}
                   >
                     <FontAwesomeIcon icon={faPen} />
                   </button>
@@ -225,21 +297,76 @@ const WhatsappGroups = () => {
                     >
                       <FontAwesomeIcon icon={faCancel} />
                     </button>
+                    <form
+                      className="add-group-form"
+                      onSubmit={handleUpdateGroup}
+                    >
+                      <input
+                        type="text"
+                        placeholder="Group name"
+                        name="name"
+                        value={groupEditFormData.name}
+                        onChange={(e) => {
+                          console.log(groupEditFormData);
+                          setGroupEditFormData({
+                            ...groupEditFormData,
+                            [e.target.name]: e.target.value,
+                          });
+                        }}
+                        required
+                      />
+                      <input
+                        type="text"
+                        placeholder="Group link"
+                        name="link"
+                        value={groupEditFormData.link}
+                        onChange={(e) => {
+                          setGroupEditFormData({
+                            ...groupEditFormData,
+                            [e.target.name]: e.target.value,
+                          });
+                        }}
+                        required
+                      />
+                      <input
+                        type="text"
+                        placeholder="Group tags, split with commas"
+                        name="tags"
+                        value={groupEditFormData.tags.join(",")}
+                        onChange={(e) => {
+                          setGroupEditFormData({
+                            ...groupEditFormData,
+                            [e.target.name]: e.target.value,
+                          });
+                        }}
+                        required
+                      />
+                      <button type="submit">Update</button>
+                    </form>
                   </div>
                 )}
             </div>
-            <a href={group.link} target="_blank" rel="noopener noreferrer">
-              <FontAwesomeIcon icon={faWhatsapp} color="#25d366" size="2x" />{" "}
-              Join Group
-            </a>
-            <div className="group-tags">
-              Tags:{" "}
-              {group.tags.map((tag, tagIndex) => (
-                <span key={tagIndex} className="tag">
-                  {tag}
-                </span>
-              ))}
-            </div>
+            {(!editGroupModeSettings.is_active ||
+              editGroupModeSettings.edited_group_id !== group._id) && (
+              <>
+                <a href={group.link} target="_blank" rel="noopener noreferrer">
+                  <FontAwesomeIcon
+                    icon={faWhatsapp}
+                    color="#25d366"
+                    size="2x"
+                  />
+                  Join Group
+                </a>
+                <div className="group-tags">
+                  Tags:
+                  {group.tags.map((tag, tagIndex) => (
+                    <span key={tagIndex} className="tag">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         ))}
       </div>

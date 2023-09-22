@@ -10,6 +10,7 @@ const companySchema = mongoose.Schema(
       maxlength: [50, "Name cannot exceed 50 characters."],
       unique: [true, "Name must be unique."],
       index: true,
+      trim: true,
     },
     employees: [
       {
@@ -17,7 +18,7 @@ const companySchema = mongoose.Schema(
         ref: "User",
         validate: {
           validator: validateUser,
-          message: "Invalid userId.",
+          message: "Invalid user ID.",
         },
       },
     ],
@@ -26,7 +27,7 @@ const companySchema = mongoose.Schema(
       default: "",
       validate: {
         validator: validateLink,
-        message: "Invalid logoPath value",
+        message: "Invalid logo path value",
       },
     },
   },

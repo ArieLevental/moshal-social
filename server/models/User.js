@@ -3,6 +3,7 @@ import {
   validateEmail,
   validateLinkedInUrl,
   validateLink,
+  validatePhoneNumber,
 } from "../utils/validators.js";
 
 const userSchema = new mongoose.Schema(
@@ -28,7 +29,7 @@ const userSchema = new mongoose.Schema(
       index: true,
       validate: {
         validator: validateEmail,
-        message: "Invalid email address.",
+        message: "Invalid email address format.",
       },
       lowercase: true,
     },
@@ -68,13 +69,18 @@ const userSchema = new mongoose.Schema(
     },
     dateOfBirth: {
       type: Date,
-      trim: true,
+      default: "",
     },
     phoneNumber: {
       type: String,
-      minlength: [7, "Phone number must be at least 7 characters."],
-      maxlength: [17, "Phone number cannot exceed 17 characters."],
-      unique: [true, "Phone number is already in use."],
+      index: {
+        unique: true,
+        partialFilterExpression: { phoneNumber: { $type: "string" } },
+      },
+      validate: {
+        validator: validatePhoneNumber,
+        message: "Invalid phone number.",
+      },
       default: "",
     },
     linkedIn: {

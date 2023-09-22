@@ -61,6 +61,7 @@ const ProfilePage = () => {
     }).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
+        console.error(resJson);
         localStorage.setItem("institutions_data", JSON.stringify(resJson));
         setInstitutionsData(resJson);
       } else if (res.status === 401) {
@@ -79,6 +80,7 @@ const ProfilePage = () => {
     }).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
+        console.error(resJson);
         localStorage.setItem("companies_data", JSON.stringify(resJson));
         setCompaniesData(resJson);
       } else if (res.status === 401) {
@@ -109,7 +111,7 @@ const ProfilePage = () => {
         //     resJson[experienceItems].slice(-1)[0][organizationId].name // TODO: company to general case
         //   );
         // }
-        setEducationItems(resJson.educationItems);
+        setEducationItems(resJson);
       } else if (res.status === 401) {
         console.log("You are not authorized to view this page");
         handleExpiredToken(setSignedUserData, setToken);
@@ -137,7 +139,7 @@ const ProfilePage = () => {
         //     resJson[experienceItems].slice(-1)[0][organizationId].name // TODO: company to general case
         //   );
         // }
-        setOccupationItems(resJson.occupationItems);
+        setOccupationItems(resJson);
       } else if (res.status === 401) {
         console.log("You are not authorized to view this page");
         handleExpiredToken(setSignedUserData, setToken);
@@ -153,6 +155,7 @@ const ProfilePage = () => {
     }).then(async (res) => {
       const resJson = await res.json();
       if (res.status === 200) {
+        console.error(resJson);
         setUserData(resJson);
         setDetailsFormData({
           location: resJson.location,
@@ -291,8 +294,9 @@ const ProfilePage = () => {
     });
   };
 
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
+
     const updatedData = {
       location: e.target.location.value,
       bio: e.target.bio.value,
@@ -300,25 +304,36 @@ const ProfilePage = () => {
       linkedIn: e.target.linkedIn.value,
       dateOfBirth: formatDate(e.target.dateOfBirth.value),
     };
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/user/${userId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(updatedData),
-    }).then(async (res) => {
-      const resJson = await res.json();
+
+    console.log(updatedData);
+
+    try {
+      const res = await fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/user/${userId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedData),
+        }
+      );
+
       if (res.status === 200) {
+        const resJson = await res.json();
         setInEditMode(false);
         setUserData({ ...userData, ...resJson });
+        console.log(resJson);
       } else if (res.status === 401) {
         console.log("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
       } else {
         console.log("Something went wrong, please try again later");
       }
-    });
+    } catch (err) {
+      console.error("An error occurred:", err);
+    }
   };
 
   const handleProfileImgUpload = (e) => {

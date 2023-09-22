@@ -5,9 +5,10 @@ const institutionSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Institution name is required."],
-      minlength: [2, "Institution name must be at least 2 characters."],
-      maxlength: [50, "Institution name cannot exceed 50 characters."],
+      required: [true, "Name is required."],
+      minlength: [2, "Name must be at least 2 characters long."],
+      maxlength: [50, "Name cannot exceed 50 characters."],
+      unique: [true, "Name must be unique."],
       index: true,
       trim: true,
     },
