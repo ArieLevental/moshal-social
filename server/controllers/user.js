@@ -9,7 +9,11 @@ export const getUser = async (req, res, next) => {
     const userId = req.params.id;
     const user = await User.findById(userId).select("-password");
 
-    res.status(200).json({ message: "Got user", user });
+    if (!user) {
+      throw { message: "Failed to get user", statusCode: 404 };
+    }
+
+    res.status(200).json(user);
   } catch (err) {
     next(err);
   }
@@ -29,11 +33,11 @@ export const updateUser = async (req, res, next) => {
       throw { message: "Failed to update user", statusCode: 404 };
     }
 
-    // TODO: check no password is returned
-    res.status(200).json({
-      message: "User updated successfully",
-      user: updatedUser,
-    });
+    // TODO: need to generalize this logic
+    updatedUser.password = undefined;
+    delete updatedUser.password;
+
+    res.status(200).json({ user: updatedUser });
   } catch (err) {
     next(err);
   }
@@ -87,7 +91,6 @@ export const addEducationItem = async (req, res, next) => {
     await savedEducation.populate("institutionId");
 
     res.status(200).json({
-      message: "Profile updated successfully",
       user: updatedUser,
       newItem: savedEducation,
     });
@@ -104,9 +107,7 @@ export const getEducationItems = async (req, res, next) => {
       _id: { $in: user.education },
     }).populate("institutionId");
 
-    res
-      .status(200)
-      .json({ message: "Profile updated successfully", educationItems });
+    res.status(200).json(educationItems);
   } catch (err) {
     next(err);
   }
@@ -164,10 +165,7 @@ export const deleteEducationItem = async (req, res, next) => {
       }
     }
 
-    res.status(200).json({
-      message: "Profile updated successfully",
-      user: updatedUser,
-    });
+    res.status(200).json({ user: updatedUser });
   } catch (err) {
     next(err);
   }
@@ -221,7 +219,6 @@ export const addOccupationItem = async (req, res, next) => {
 
     await savedOccupation.populate("companyId");
     res.status(200).json({
-      message: "Profile updated successfully",
       user: updatedUser,
       newItem: savedOccupation,
     });
@@ -238,9 +235,7 @@ export const getOccupationItems = async (req, res, next) => {
       _id: { $in: user.occupation },
     }).populate("companyId");
 
-    res
-      .status(200)
-      .json({ message: "Profile updated successfully", occupationItems });
+    res.status(200).json(occupationItems);
   } catch (err) {
     next(err);
   }
@@ -295,7 +290,6 @@ export const deleteOccupationItem = async (req, res, next) => {
     }
 
     res.status(200).json({
-      message: "Profile updated successfully",
       user: updatedUser,
     });
   } catch (err) {

@@ -18,7 +18,7 @@ export const register = async (req, res, next) => {
     });
     const savedUser = await newUser.save();
 
-    res.status(201).json({ message: "Successful register", savedUser });
+    res.status(201).json(savedUser);
   } catch (err) {
     next(err);
   }
@@ -47,7 +47,7 @@ export const login = async (req, res, next) => {
     user.password = undefined;
     delete user.password;
 
-    res.status(200).json({ message: "Successful login", token, user });
+    res.status(200).json({ token, user });
   } catch (err) {
     next(err);
   }
@@ -57,7 +57,7 @@ export const logout = async (req, res, next) => {
   try {
     res.clearCookie("token");
 
-    res.status(200).json({ message: "Successful logout" });
+    res.status(200);
   } catch (err) {
     next(err);
   }
