@@ -305,7 +305,7 @@ const ProfilePage = () => {
       dateOfBirth: formatDate(e.target.dateOfBirth.value),
     };
 
-    console.log(updatedData);
+    // console.log(updatedData);
 
     try {
       const res = await fetch(
