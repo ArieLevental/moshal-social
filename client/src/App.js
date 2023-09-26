@@ -23,7 +23,6 @@ import {
 
 import handleExpiredToken from "./utils/authUtils.js";
 
-
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [signedUserData, setSignedUserData] = useState(
@@ -58,7 +57,7 @@ function App() {
               }}
             >
               <BrowserRouter>
-                <Navbar className="navbar" />
+                {token && <Navbar className="navbar" />}
 
                 <div className="app-content">
                   <Routes>
