@@ -2,7 +2,11 @@ import JobOffer from "../models/JobOffer.js";
 
 export const getJobOffers = async (req, res, next) => {
   try {
-    const jobs = await JobOffer.find().populate("companyId").populate("userId");
+    // Get all job offers sorted by descending order of updatedAt
+    const jobs = await JobOffer.find()
+      .sort({ updatedAt: -1 })
+      .populate("companyId")
+      .populate("userId");
     if (!jobs) {
       throw { message: "Jobs not found", statusCode: 404 };
     }

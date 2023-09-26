@@ -13,7 +13,7 @@ export const uploadProfileImg = async (req, res, next) => {
     }
 
     // Save the file to Firebase Storage
-    const storageRef = ref(storage, `profile/${req.params.id}.jpeg`);
+    const storageRef = ref(storage, `avatars/${req.params.id}.jpeg`);
     await uploadFile(storageRef, req.file.buffer);
     const url = await getDownloadURL(storageRef);
 
@@ -38,7 +38,7 @@ export const uploadProfileImg = async (req, res, next) => {
 
 export const getProfileImg = async (req, res, next) => {
   try {
-    const pathReference = ref(storage, `profile/${req.params.id}.jpeg`);
+    const pathReference = ref(storage, `avatars/${req.params.id}.jpeg`);
     const url = await getDownloadURL(pathReference);
 
     res.status(200).json({ url: url });
