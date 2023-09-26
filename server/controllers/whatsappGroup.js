@@ -16,6 +16,7 @@ export const getAllWhatsappGroups = async (req, res, next) => {
 
 export const newWhatsappGroup = async (req, res, next) => {
   const whatsappGroup = req.body;
+  console.log(whatsappGroup);
   const newWhatsappGroup = new WhatsappGroup(whatsappGroup);
 
   try {
