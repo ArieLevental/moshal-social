@@ -2,7 +2,7 @@ import WhatsappGroup from "../models/WhatsappGroup.js";
 
 export const getAllWhatsappGroups = async (req, res, next) => {
   try {
-    const whatsappGroups = await WhatsappGroup.find();
+    const whatsappGroups = await WhatsappGroup.find().sort({ updatedAt: -1 });
 
     if (!whatsappGroups) {
       throw { message: "WhatsApp group not found", statusCode: 404 };
@@ -16,7 +16,7 @@ export const getAllWhatsappGroups = async (req, res, next) => {
 
 export const newWhatsappGroup = async (req, res, next) => {
   const whatsappGroup = req.body;
-  console.log(whatsappGroup);
+  // console.log(whatsappGroup);
   const newWhatsappGroup = new WhatsappGroup(whatsappGroup);
 
   try {
@@ -24,6 +24,7 @@ export const newWhatsappGroup = async (req, res, next) => {
 
     res.status(201).json(newWhatsappGroup);
   } catch (err) {
+    console.error(err);
     next(err);
   }
 };
