@@ -13,8 +13,10 @@
 
 .user-card-img {
   height: 100px;
+  width: 100px;
   border-radius: 33%;
   filter: drop-shadow(2px 2px 4px var(--dark-background));
+  object-fit: cover;
 }
 
 .user-card-icons {

@@ -14,10 +14,7 @@ const Searchbar = ({ institutionsData, companiesData }) => {
     setPresentedData(
       usersDbData.filter((user) => {
         return (
-          (query
-            ? user.firstName.toLowerCase().includes(query) ||
-              user.lastName.toLowerCase().includes(query)
-            : true) &&
+          (query ? user.fullName.toLowerCase().includes(query) : true) &&
           (companyFilter
             ? user.occupation.some(
                 (occupation) => occupation.companyId === companyFilter
@@ -51,7 +48,6 @@ const Searchbar = ({ institutionsData, companiesData }) => {
     setUniversityFilter(event.target.value.toLowerCase());
     activateFilter(query, companyFilter, event.target.value.toLowerCase());
   };
-
 
   const randomMoshalnikHandler = (event) => {
     setPresentedData(
