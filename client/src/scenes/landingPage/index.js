@@ -25,12 +25,19 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page-container">
+      <img
+        className="landing-page-container-bg"
+        src="./assets/landingpage/DIMA0511.jpg"
+        alt=""
+      ></img>
       <authContext.Provider
         value={{ INITIAL_FORMDATA, setActiveForm, formData, setFormData }}
       >
-        {activeForm === "login" && <Login />}
-        {activeForm === "register" && <Register />}
-        {activeForm === "recovery" && <PasswordRecovery />}
+        <div className="landing-page-content">
+          {activeForm === "login" && <Login />}
+          {activeForm === "register" && <Register />}
+          {activeForm === "recovery" && <PasswordRecovery />}
+        </div>
       </authContext.Provider>
     </div>
   );

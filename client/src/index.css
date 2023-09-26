@@ -1,6 +1,7 @@
 :root {
-  --primary-color: rgb(29, 82, 151, 1);
+  --primary-color: rgb(29, 82, 151);
   --primary-color-09: rgb(29, 82, 151, 0.9);
+  --primary-color-08: rgb(29, 82, 151, 0.8);
   --primary-color-06: rgb(29, 82, 151, 0.6);
   --black: rgba(0, 0, 0, 1);
   --black-09: rgba(0, 0, 0, 0.9);
@@ -16,6 +17,7 @@
   --red-warning-06: rgba(183, 30, 30, 0.6);
   --dark-background: #191b1c;
   --almost-white: #f4f2ee;
+  --almost-white-09: #f4f2eee6;
   --light-blue: #6bade8;
   --accent-color: #ffc51b;
   --darker-accent-color: #a17100;

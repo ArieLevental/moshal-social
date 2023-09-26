@@ -165,41 +165,41 @@ const WhatsappGroups = () => {
     }
   };
 
-  // TODO: TEMP!
-  const handleEditGroup = async (id) => {
-    const updatedGroup = {
-      name: document.getElementsByName("groupName")[0].value,
-      link: document.getElementsByName("groupLink")[0].value,
-      tags: document.getElementsByName("groupTags")[0].value.split(","),
-    };
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_BASE_URL}/whatsapp/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(updatedGroup),
-        }
-      );
-      if (response.ok) {
-        console.log("Group updated successfully");
-        setGroups(
-          groups.map((group) => (group._id === id ? updatedGroup : group))
-        );
-        setEditGroupModeSettings({
-          ...editGroupModeSettings,
-          is_active: false,
-        });
-      } else {
-        console.error("Failed to update group");
-      }
-    } catch (err) {
-      console.error("Error updating group:", err);
-    }
-  };
+  // // TODO: TEMP!
+  // const handleEditGroup = async (id) => {
+  //   const updatedGroup = {
+  //     name: document.getElementsByName("groupName")[0].value,
+  //     link: document.getElementsByName("groupLink")[0].value,
+  //     tags: document.getElementsByName("groupTags")[0].value.split(","),
+  //   };
+  //   try {
+  //     const response = await fetch(
+  //       `${process.env.REACT_APP_API_BASE_URL}/whatsapp/${id}`,
+  //       {
+  //         method: "PATCH",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         body: JSON.stringify(updatedGroup),
+  //       }
+  //     );
+  //     if (response.ok) {
+  //       console.log("Group updated successfully");
+  //       setGroups(
+  //         groups.map((group) => (group._id === id ? updatedGroup : group))
+  //       );
+  //       setEditGroupModeSettings({
+  //         ...editGroupModeSettings,
+  //         is_active: false,
+  //       });
+  //     } else {
+  //       console.error("Failed to update group");
+  //     }
+  //   } catch (err) {
+  //     console.error("Error updating group:", err);
+  //   }
+  // };
 
   return (
     // TODO: styling issue - height
@@ -248,7 +248,10 @@ const WhatsappGroups = () => {
         {filteredGroups.map((group) => (
           <div key={group._id} className="group-item">
             <div className="group-item-header">
-              <div className="group-name">{group.name}</div>
+              {(!editGroupModeSettings.is_active ||
+                editGroupModeSettings.edited_group_id !== group._id) && (
+                <div className="group-name">{group.name}</div>
+              )}
               {group.userId === signedUserData._id &&
                 !editGroupModeSettings.is_active && (
                   <button
@@ -273,76 +276,84 @@ const WhatsappGroups = () => {
               {group.userId === signedUserData._id &&
                 editGroupModeSettings.is_active &&
                 editGroupModeSettings.edited_group_id === group._id && (
-                  <div className="group-edit-buttons">
-                    <button
-                      className="group-delete-button"
-                      onClick={() => handleDeleteGroup(group._id)}
-                    >
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                    <button
+                  <div className="group-edit-container">
+                    <div className="group-edit-buttons">
+                      <button
+                        className="group-delete-button"
+                        onClick={() => handleDeleteGroup(group._id)}
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
+                      {/* <button
                       className="group-confirm-edit-button"
-                      onClick={() => handleEditGroup(group._id)}
+                      onClick={handleUpdateGroup}
                     >
                       <FontAwesomeIcon icon={faCheck} />
-                    </button>
-                    <button
-                      className="group-cancel-edit-button"
-                      onClick={() =>
-                        setEditGroupModeSettings({
-                          ...editGroupModeSettings,
-                          is_active: !editGroupModeSettings.is_active,
-                        })
-                      }
-                    >
-                      <FontAwesomeIcon icon={faCancel} />
-                    </button>
-                    <form
-                      className="add-group-form"
-                      onSubmit={handleUpdateGroup}
-                    >
-                      <input
-                        type="text"
-                        placeholder="Group name"
-                        name="name"
-                        value={groupEditFormData.name}
-                        onChange={(e) => {
-                          console.log(groupEditFormData);
-                          setGroupEditFormData({
-                            ...groupEditFormData,
-                            [e.target.name]: e.target.value,
-                          });
-                        }}
-                        required
-                      />
-                      <input
-                        type="text"
-                        placeholder="Group link"
-                        name="link"
-                        value={groupEditFormData.link}
-                        onChange={(e) => {
-                          setGroupEditFormData({
-                            ...groupEditFormData,
-                            [e.target.name]: e.target.value,
-                          });
-                        }}
-                        required
-                      />
-                      <input
-                        type="text"
-                        placeholder="Group tags, split with commas"
-                        name="tags"
-                        value={groupEditFormData.tags.join(",")}
-                        onChange={(e) => {
-                          setGroupEditFormData({
-                            ...groupEditFormData,
-                            [e.target.name]: e.target.value,
-                          });
-                        }}
-                        required
-                      />
-                      <button type="submit">Update</button>
-                    </form>
+                    </button> */}
+                      <button
+                        className="group-cancel-edit-button"
+                        onClick={() =>
+                          setEditGroupModeSettings({
+                            ...editGroupModeSettings,
+                            is_active: !editGroupModeSettings.is_active,
+                          })
+                        }
+                      >
+                        <FontAwesomeIcon icon={faCancel} />
+                      </button>
+                    </div>
+                    <div>
+                      <form
+                        /* this is the group edit form */
+                        // className="add-group-form"
+                        className="add-group-form"
+                        onSubmit={handleUpdateGroup}
+                      >
+                        <input
+                          type="text"
+                          placeholder="Group name"
+                          name="name"
+                          value={groupEditFormData.name}
+                          onChange={(e) => {
+                            console.log(groupEditFormData);
+                            setGroupEditFormData({
+                              ...groupEditFormData,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          required
+                        />
+                        <input
+                          type="text"
+                          placeholder="Group link"
+                          name="link"
+                          value={groupEditFormData.link}
+                          onChange={(e) => {
+                            setGroupEditFormData({
+                              ...groupEditFormData,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          required
+                        />
+                        <input
+                          type="text"
+                          placeholder="Group tags, split with commas"
+                          name="tags"
+                          value={groupEditFormData.tags.join(",")}
+                          onChange={(e) => {
+                            setGroupEditFormData({
+                              ...groupEditFormData,
+                              [e.target.name]: e.target.value,
+                            });
+                          }}
+                          required
+                        />
+                        <button type="submit">
+                          <FontAwesomeIcon icon={faCheck} />
+                        </button>
+                      </form>
+                    </div>
                   </div>
                 )}
             </div>
