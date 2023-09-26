@@ -1,6 +1,32 @@
 .landing-page-container {
   width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  background: rgb(29,82,151);
+  background: linear-gradient(0deg, var(--primary-color) 40%, var(--light-blue) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.landing-page-container-bg {
+  opacity: 0.5;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  filter: blur(0.1rem);
+
+}
+
+.landing-page-content {
+  /* width: fit-content; */
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  position: relative;
+  width: 100%;
 }
