@@ -127,6 +127,7 @@ export const Register = () => {
       event.target.password.value != event.target.passwordConfirmation.value
     ) {
       console.log("Passwords are different!");
+      return;
     }
     await fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/register`, {
       method: "POST",
