@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect, createContext } from "react";
 import { useParams } from "react-router-dom";
+import imageCompression from "browser-image-compression";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPen,
@@ -336,35 +337,50 @@ const ProfilePage = () => {
     }
   };
 
-  const handleProfileImgUpload = (e) => {
+  const handleProfileImgUpload = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("userImage", imgValue);
+    try {
+      const options = {
+        maxSizeMB: 0.1,
+        maxWidthOrHeight: 800,
+      };
 
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/storage/profile/${userId}`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    }).then(async (res) => {
-      const resJson = await res.json();
-      setInImgMode(false);
-      if (res.status === 200) {
+      const compressedImage = await imageCompression(imgValue, options);
+
+      const formData = new FormData();
+      formData.append("userImage", compressedImage);
+
+      const response = await fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/storage/profile/${userId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
+
+      const resJson = await response.json();
+
+      if (response.status === 200) {
         const updatedSignedUser = {
           ...signedUserData,
           picturePath: resJson.picturePath,
         };
         setSignedUserData(updatedSignedUser);
         localStorage.setItem("user_data", JSON.stringify(updatedSignedUser));
-      } else if (res.status === 401) {
+        setInImgMode(false);
+      } else if (response.status === 401) {
         console.log("You are not authorized to view this page");
         handleExpiredToken(setToken, setSignedUserData);
       } else {
         console.log("Something went wrong, please try again later");
       }
-    });
+    } catch (error) {
+      console.error("Error uploading profile image:", error);
+    }
   };
 
   return (

@@ -22,7 +22,7 @@ const Navbar = () => {
       <Link to="/" className="navbar-logo">
         <img
           className="navbar-logo-img"
-          src="/assets/logos/moshal/white-logo.png"
+          src="/assets/logos/moshal/moshal-white.png"
           alt="Moshal Logo"
         />
       </Link>
