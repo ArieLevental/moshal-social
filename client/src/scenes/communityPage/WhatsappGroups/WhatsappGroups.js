@@ -80,9 +80,9 @@ const WhatsappGroups = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("New group added:", data);
-        console.log(data.userId, signedUserData._id);
-        setGroups([...groups, data]); // TODO: Maybe update useEffect to fetch groups again?
+        // console.log("New group added:", data);
+        // console.log(data.userId, signedUserData._id);
+        setGroups([data, ...groups]); // TODO: Maybe update useEffect to fetch groups again?
         setAddGroupMode(false);
       } else {
         console.error("Failed to add a new group");
