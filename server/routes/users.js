@@ -1,9 +1,9 @@
-import express from "express";
-import { getAllUsers } from "../controllers/users.js";
-import { verifyToken } from "../middleware/auth.js";
+import express from 'express'
+import { getAllUsers } from '../controllers/users.js'
+import { verifyToken } from '../middleware/auth.js'
 
-const usersRouter = express.Router();
+const usersRouter = express.Router()
 
-usersRouter.route("/").get(verifyToken, getAllUsers);
+usersRouter.route('/').get(verifyToken, getAllUsers)
 
-export default usersRouter;
+export default usersRouter

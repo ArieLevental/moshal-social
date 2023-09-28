@@ -1,23 +1,32 @@
-// Helper function to format the date as "yyyy-MM-dd"
+/**
+ * Formats a date string to the format "YYYY-MM-DD".
+ * @param {string} dateString - The date string to format.
+ * @returns {string} The formatted date string.
+ */
 export const formatDate = (dateString) => {
-  if (!dateString) return "";
+  if (!dateString) return ''
 
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
+  const date = new Date(dateString)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
 
-// Helper function to capitalize first letter of each word
+/**
+ * Capitalizes the first letter of each word in a string.
+ *
+ * @param {string} string - The string to capitalize.
+ * @returns {string} The capitalized string.
+ */
 export const capitalizeFirstLetters = (string) => {
   // convert to string
-  string = string + "";
-  // If string is empty or not a string, return an empty string
-  if (!string) return "";
+  string = string + ''
+
+  if (!string) return ''
 
   return string
-    .split(" ")
+    .split(' ')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-};
+    .join(' ')
+}

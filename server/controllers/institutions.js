@@ -1,14 +1,14 @@
-import Institution from "../models/Institution.js";
+import Institution from '../models/Institution.js'
 
 export const getAllInstitutions = async (req, res, next) => {
   try {
-    const institutions = await Institution.find();
+    const institutions = await Institution.find()
     if (!institutions) {
-      throw { message: "Institutions not found", statusCode: 404 };
+      throw { message: 'Institutions not found', statusCode: 404 }
     }
 
-    res.status(200).json(institutions);
+    res.status(200).json(institutions)
   } catch (err) {
-    next(err);
+    next(err)
   }
-};
+}

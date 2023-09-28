@@ -67,12 +67,13 @@
 
 .born-today-user-img {
   width: 5rem;
+  height: 5rem;
   background-color: var(--black-02);
   border: 2px solid var(--black-02);
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .born-today-user-name {
-  
   font-weight: bold;
 }

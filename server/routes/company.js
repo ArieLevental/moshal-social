@@ -1,9 +1,9 @@
-import express from "express";
-import { getCompany } from "../controllers/company.js";
-import { verifyToken } from "../middleware/auth.js";
+import express from 'express'
+import { getCompany } from '../controllers/company.js'
+import { verifyToken } from '../middleware/auth.js'
 
-const companyRouter = express.Router();
+const companyRouter = express.Router()
 
-companyRouter.route("/:id").get(verifyToken, getCompany);
+companyRouter.route('/:id').get(verifyToken, getCompany)
 
-export default companyRouter;
+export default companyRouter

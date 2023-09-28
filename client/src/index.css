@@ -25,26 +25,39 @@
 
 /* Custom fonts */
 @font-face {
-  font-family: "FenomenSans-Book";
-  src: url("../public/assets/fonts/FenomenSans-Book.woff2") format("woff2"),
-    url("../public/assets/fonts/FenomenSans-Book.woff") format("woff");
+  font-family: 'FenomenSans-Book';
+  src:
+    url('../public/assets/fonts/FenomenSans-Book.woff2') format('woff2'),
+    url('../public/assets/fonts/FenomenSans-Book.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "NarkissBlock-Regular";
-  src: url("../public/assets/fonts/NarkissBlock-Regular.woff2") format("woff2"),
-    url("../public/assets/fonts/NarkissBlock-Regular.woff") format("woff");
+  font-family: 'NarkissBlock-Regular';
+  src:
+    url('../public/assets/fonts/NarkissBlock-Regular.woff2') format('woff2'),
+    url('../public/assets/fonts/NarkissBlock-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 body {
   margin: 0;
-  font-family: "FenomenSans-Book", "NarkissBlock-Regular", -apple-system,
-    BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family:
+    'FenomenSans-Book',
+    'NarkissBlock-Regular',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

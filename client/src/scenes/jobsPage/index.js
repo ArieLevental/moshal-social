@@ -1,55 +1,41 @@
-import { useContext, useState, useEffect, createContext } from "react";
-import FeedContainer from "./FeedContainer/FeedContainer";
-import Searchbar from "./Searchbar/Searchbar";
-import { globalAuthContext } from "../../state/state.js";
-import { companiesDataContext } from "../../state/state.js";
+import { useContext, useState, useEffect, createContext } from 'react'
+import { globalAuthContext } from '../../state/state.js'
+import { companiesDataContext } from '../../state/state.js'
+import fetchData from '../../utils/fetchData.js'
+import useLocalStorageState from '../../hooks/useLocalStorageState.js'
+import FeedContainer from './FeedContainer/FeedContainer'
+import Searchbar from './Searchbar/Searchbar'
 
-export const jobsDataContext = createContext();
+export const jobsDataContext = createContext()
 
 const JobsPage = () => {
-  const { setToken, setSignedUserData, token, handleExpiredToken } =
-    useContext(globalAuthContext);
-  const { companiesData, setCompaniesData } = useContext(companiesDataContext);
-  const [jobsData, setJobsData] = useState(
-    JSON.parse(localStorage.getItem("jobs_data"))
-  );
-
-  const [presentedJobsData, setPresentedJobsData] = useState(jobsData || []);
+  const { setToken, setSignedUserData, token, handleExpiredToken } = useContext(globalAuthContext)
+  const { companiesData, setCompaniesData } = useContext(companiesDataContext)
+  const [jobsData, setJobsData] = useLocalStorageState('jobs_data', [])
+  const [presentedJobsData, setPresentedJobsData] = useState(jobsData || [])
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/jobs`, {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then(async (res) => {
-      const resJson = await res.json();
-      if (res.status === 200) {
-        localStorage.setItem("jobs_data", JSON.stringify(resJson));
-        setJobsData(resJson);
-        setPresentedJobsData(resJson);
-      } else if (res.status === 401) {
-        console.log("You are not authorized to view this page");
-        handleExpiredToken(setToken, setSignedUserData);
-      } else {
-        console.log("Something went wrong, please try again later");
-      }
-    });
-    // TODO: merge with second useEffect
-  }, []);
+    fetchData(
+      '/jobs',
+      { headers: { Authorization: `Bearer ${token}` } },
+      (resJsonData) => {
+        setJobsData(resJsonData)
+        setPresentedJobsData(resJsonData)
+      },
+      setToken,
+      setSignedUserData
+    )
 
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/companies`, {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then(async (res) => {
-      const resJson = await res.json();
-      if (res.status === 200) {
-        setCompaniesData(resJson);
-      } else if (res.status === 401) {
-        console.log("You are not authorized to view this page");
-        handleExpiredToken(setToken, setSignedUserData);
-      } else {
-        console.log("Something went wrong, please try again later");
-      }
-    });
-  }, []);
+    fetchData(
+      '/companies',
+      { headers: { Authorization: `Bearer ${token}` } },
+      (resJsonData) => {
+        setCompaniesData(resJsonData)
+      },
+      setToken,
+      setSignedUserData
+    )
+  }, [])
 
   return (
     <>
@@ -58,14 +44,14 @@ const JobsPage = () => {
           jobsData,
           setJobsData,
           presentedJobsData,
-          setPresentedJobsData,
+          setPresentedJobsData
         }}
       >
         <Searchbar />
         <FeedContainer />
       </jobsDataContext.Provider>
     </>
-  );
-};
+  )
+}
 
-export default JobsPage;
+export default JobsPage

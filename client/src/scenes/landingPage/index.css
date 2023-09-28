@@ -3,13 +3,12 @@
   height: 100%;
   overflow: hidden;
   position: relative;
-  background: rgb(29,82,151);
+  background: rgb(29, 82, 151);
   background: linear-gradient(0deg, var(--primary-color) 40%, var(--light-blue) 100%);
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 
 .landing-page-container-bg {
   opacity: 0.5;
@@ -19,7 +18,6 @@
   width: 100%;
   height: auto;
   filter: blur(0.1rem);
-
 }
 
 .landing-page-content {
