@@ -1,12 +1,22 @@
-const handleExpiredToken = (setToken, setSignedUserData) => {
-  fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/logout`, {
-    method: "POST",
-  });
-  // TODO: Need to check if the response is ok
-  localStorage.removeItem("user_data");
-  localStorage.removeItem("token");
-  setToken("");
-  setSignedUserData(null);
-};
+import { API_BASE_URL } from './constants'
 
-export default handleExpiredToken;
+const handleExpiredToken = (setToken, setSignedUserData) => {
+  try {
+    fetch(`${API_BASE_URL}/auth/logout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+  } catch (error) {
+    console.error({ msg: 'Error logging out', error })
+  } finally {
+    setToken(null)
+    setSignedUserData(null)
+    localStorage.removeItem('token')
+    localStorage.removeItem('signedUserData')
+  }
+}
+
+export default handleExpiredToken

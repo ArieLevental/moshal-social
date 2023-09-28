@@ -1,34 +1,23 @@
-import { useState, useContext } from "react";
-import "./NewJobForm.css";
-import {
-  generalDataContext,
-  globalAuthContext,
-  companiesDataContext,
-} from "../../../../state/state.js";
-import { capitalizeFirstLetters } from "../../../../utils/formattingUtils";
-import { jobsDataContext } from "../../index.js";
+import { useState, useContext } from 'react'
+import { generalDataContext, globalAuthContext, companiesDataContext } from '../../../../state/state.js'
+import { capitalizeFirstLetters } from '../../../../utils/formattingUtils'
+import fetchData from '../../../../utils/fetchData.js'
+import { jobsDataContext } from '../../index.js'
+import './NewJobForm.css'
 
 const NewJobForm = () => {
-  const { israelCities } = useContext(generalDataContext);
-  const {
-    setToken,
-    setSignedUserData,
-    signedUserData,
-    token,
-    handleExpiredToken,
-  } = useContext(globalAuthContext);
-  const { companiesData } = useContext(companiesDataContext);
-  const { jobsData, setJobsData, setPresentedJobsData } =
-    useContext(jobsDataContext);
-
-  const [newJobOfferForm, setNewJobOfferForm] = useState(false);
+  const { israelCities } = useContext(generalDataContext)
+  const { setToken, setSignedUserData, signedUserData, token } = useContext(globalAuthContext)
+  const { companiesData } = useContext(companiesDataContext)
+  const { jobsData, setJobsData, setPresentedJobsData } = useContext(jobsDataContext)
+  const [newJobOfferForm, setNewJobOfferForm] = useState(false)
 
   const revealNewJobOfferForm = () => {
-    setNewJobOfferForm(!newJobOfferForm);
-  };
+    setNewJobOfferForm((prevState) => !prevState)
+  }
 
   const addJobOfferHandler = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const newJobOffer = {
       userId: signedUserData._id,
       companyId: e.target.company.value,
@@ -37,38 +26,33 @@ const NewJobForm = () => {
       offerLink: e.target.link.value,
       location: e.target.location.value,
       expReq: e.target.expReq.value,
-      referral: e.target.referral.value,
-    };
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/jobs`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+      referral: e.target.referral.value
+    }
+
+    fetchData(
+      '/jobs',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(newJobOffer)
       },
-      body: JSON.stringify(newJobOffer),
-    })
-      .then(async (res) => {
-        const resJson = await res.json();
-        if (res.status === 201) {
-          // console.log(resJson);
-          const newJobsData = [...jobsData, resJson];
-          localStorage.setItem("jobs_data", JSON.stringify(newJobsData));
-          setJobsData(newJobsData);
-          setPresentedJobsData(newJobsData);
-          revealNewJobOfferForm();
-        } else if (res.status === 401) {
-          console.log("You are not authorized to view this page");
-          handleExpiredToken(setSignedUserData, setToken);
-        } else {
-          console.log("Something went wrong, please try again later");
-        }
-      })
-      .catch((err) => console.log(err));
-  };
+      (resJsonData) => {
+        const newJobsData = [resJsonData, ...jobsData]
+        setJobsData(newJobsData)
+        setPresentedJobsData(newJobsData)
+        revealNewJobOfferForm()
+      },
+      setToken,
+      setSignedUserData
+    )
+  }
 
   return (
-    <div className="jobs-page-new-job-offer">
-      <div className="jobs-page-add-job-button">
+    <div className='jobs-page-new-job-offer'>
+      <div className='jobs-page-add-job-button'>
         {newJobOfferForm ? (
           <button onClick={revealNewJobOfferForm}>Cancel</button>
         ) : (
@@ -76,70 +60,58 @@ const NewJobForm = () => {
         )}
       </div>
       {newJobOfferForm ? (
-        <form
-          className="jobs-page-new-job-offer-form"
-          onSubmit={addJobOfferHandler}
-        >
-          <label htmlFor="title">Title</label>
-          <input type="text" name="title" required tabIndex="1" />
-          <label htmlFor="company">Company</label>
-          <select type="text" name="company" required tabIndex="2">
+        <form className='jobs-page-new-job-offer-form' onSubmit={addJobOfferHandler}>
+          <label htmlFor='title'>Title</label>
+          <input type='text' name='title' required tabIndex='1' />
+          <label htmlFor='company'>Company</label>
+          <select type='text' name='company' required tabIndex='2'>
             {companiesData?.map((company) => (
               <option key={company._id} value={company._id}>
                 {company.name}
               </option>
             ))}
           </select>
-          <label htmlFor="content" required>
+          <label htmlFor='content' required>
             Content
           </label>
           <textarea
-            tabIndex="3"
-            name="content"
-            rows="5"
-            minLength="10"
-            maxLength="2000"
-            placeholder="Describe the job offer"
+            tabIndex='3'
+            name='content'
+            rows='5'
+            minLength='10'
+            maxLength='2000'
+            placeholder='Describe the job offer'
           />
-          <label htmlFor="location" required>
+          <label htmlFor='location' required>
             Location:
           </label>
-          <select id="location" name="location">
+          <select id='location' name='location'>
             {israelCities.city.map((c) => (
-              <option
-                key={c.city_symbol}
-                value={capitalizeFirstLetters(c.english_name)}
-              >
+              <option key={c.city_symbol} value={capitalizeFirstLetters(c.english_name)}>
                 {capitalizeFirstLetters(c.english_name)}
               </option>
             ))}
           </select>
-          <label htmlFor="link">Link</label>
-          <input type="text" name="link" tabIndex="5" />
-          <label htmlFor="expReq">Experience Required</label>
-          <textarea
-            tabIndex="6"
-            name="expReq"
-            rows="3"
-            maxLength="1000"
-            placeholder="Expected experience or skills"
-          />
-          <label htmlFor="referral">Referral</label>
+          <label htmlFor='link'>Link</label>
+          <input type='text' name='link' tabIndex='5' />
+          <label htmlFor='expReq'>Experience Required</label>
+          <textarea tabIndex='6' name='expReq' rows='3' maxLength='1000' placeholder='Expected experience or skills' />
+          <label htmlFor='referral'>Referral</label>
           <input
-            tabIndex="7"
-            type="text"
-            name="referral"
-            minLength="2"
-            maxLength="300"
-            placeholder="Referral link or name to mention"
+            tabIndex='7'
+            type='text'
+            name='referral'
+            minLength='2'
+            maxLength='300'
+            placeholder='Referral link or name to mention'
           />
-          <button type="submit" tabIndex="8">
+          <button type='submit' tabIndex='8'>
             Submit
           </button>
         </form>
       ) : null}
     </div>
-  );
-};
+  )
+}
 
-export default NewJobForm;
+export default NewJobForm

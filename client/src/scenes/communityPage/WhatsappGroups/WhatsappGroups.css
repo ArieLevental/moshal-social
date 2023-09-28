@@ -110,7 +110,7 @@
   background-color: rgb(37, 211, 102, 0.2);
 }
 
-.group-edit-container{
+.group-edit-container {
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -1,39 +1,39 @@
-import mongoose from "mongoose";
-import { validateUser, validateLink } from "../utils/validators.js";
+import mongoose from 'mongoose'
+import { validateUser, validateLink } from '../utils/validators.js'
 
 const companySchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Name is required."],
-      minlength: [2, "Name must be at least 2 characters long."],
-      maxlength: [50, "Name cannot exceed 50 characters."],
-      unique: [true, "Name must be unique."],
+      required: [true, 'Name is required.'],
+      minlength: [2, 'Name must be at least 2 characters long.'],
+      maxlength: [50, 'Name cannot exceed 50 characters.'],
+      unique: [true, 'Name must be unique.'],
       index: true,
-      trim: true,
+      trim: true
     },
     employees: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: 'User',
         validate: {
           validator: validateUser,
-          message: "Invalid user ID.",
-        },
-      },
+          message: 'Invalid user ID.'
+        }
+      }
     ],
     logoPath: {
       type: String,
-      default: "",
+      default: '',
       validate: {
         validator: validateLink,
-        message: "Invalid logo path value",
-      },
-    },
+        message: 'Invalid logo path value'
+      }
+    }
   },
   { timestamps: true }
-);
+)
 
-const Company = mongoose.model("Company", companySchema);
+const Company = mongoose.model('Company', companySchema)
 
-export default Company;
+export default Company

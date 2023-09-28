@@ -1,11 +1,10 @@
-import { useContext, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import ExperienceBox from "../experienceBox/experienceBox.js";
-import "./experienceContainer.css";
-import { globalAuthContext } from "../../../state/state.js";
-import { userDataContext } from "../index.js";
+import { useContext, useState } from 'react'
+import ExperienceBox from '../experienceBox/experienceBox.js'
+import './experienceContainer.css'
+import { globalAuthContext } from '../../../state/state.js'
+import { userDataContext } from '../index.js'
 
-const currentYear = new Date().getFullYear();
+const currentYear = new Date().getFullYear()
 
 const ExperienceContainer = ({
   organizationsData,
@@ -13,43 +12,37 @@ const ExperienceContainer = ({
   deleteExperienceItem,
   addExperienceItem,
   organizationType,
-  field,
+  field
 }) => {
-  const [inAddMode, setInAddMode] = useState(false);
-  const [inRemoveMode, setInRemoveMode] = useState(false);
-  const { signedUserData } = useContext(globalAuthContext);
-  const { userData } = useContext(userDataContext);
-  const toggleRemoveItems = () => {
-    setInRemoveMode(!inRemoveMode);
-  };
+  const [inAddMode, setInAddMode] = useState(false)
+  const [inRemoveMode, setInRemoveMode] = useState(false)
+  const { signedUserData } = useContext(globalAuthContext)
+  const { userData } = useContext(userDataContext)
 
   const handleExperienceAdd = (e) => {
-    e.preventDefault();
-    setInAddMode(false);
+    e.preventDefault()
+    setInAddMode(false)
     addExperienceItem({
       organizationId: e.target.organizationId.value,
       startYear: e.target.startYear.value,
       endYear: e.target.endYear.value,
-      [field.toLowerCase()]: e.target.field.value,
-    });
-  };
+      [field.toLowerCase()]: e.target.field.value
+    })
+  }
 
   return (
-    <div className="experience-container">
+    <div className='experience-container'>
       {signedUserData._id === userData._id && !inAddMode && (
-        <div className="experience-container-buttons">
-          <button onClick={toggleRemoveItems}>Remove items</button>
-          <button onClick={() => setInAddMode(!inAddMode)}>Add new item</button>
+        <div className='experience-container-buttons'>
+          <button onClick={(e) => setInRemoveMode((prevState) => !prevState)}>Remove items</button>
+          <button onClick={() => setInAddMode((prevState) => !prevState)}>Add new item</button>
         </div>
       )}
 
       {inAddMode && (
-        <form
-          className="experience-container-new-form"
-          onSubmit={handleExperienceAdd}
-        >
-          <label htmlFor="organizationId">{organizationType}:</label>
-          <select id="organizationId" name="organizationId">
+        <form className='experience-container-new-form' onSubmit={handleExperienceAdd}>
+          <label htmlFor='organizationId'>{organizationType}:</label>
+          <select id='organizationId' name='organizationId'>
             {organizationsData.map((organization) => (
               <option key={organization._id} value={organization._id}>
                 {organization.name}
@@ -57,34 +50,20 @@ const ExperienceContainer = ({
             ))}
           </select>
 
-          <label htmlFor="startYear">Start year:</label>
-          <input
-            type="number"
-            min="1990"
-            max={currentYear + 1}
-            defaultValue="1990"
-            name="startYear"
-            id="startYear"
-          />
+          <label htmlFor='startYear'>Start year:</label>
+          <input type='number' min='1990' max={currentYear + 1} defaultValue='1990' name='startYear' id='startYear' />
 
-          <label htmlFor="endYear">End year:</label>
-          <input
-            type="number"
-            min="1990"
-            max={currentYear + 10}
-            defaultValue="2000"
-            name="endYear"
-            id="endYear"
-          />
+          <label htmlFor='endYear'>End year:</label>
+          <input type='number' min='1990' max={currentYear + 10} defaultValue='2000' name='endYear' id='endYear' />
 
-          <label htmlFor="field">{field}:</label>
-          <input type="text" name="field" id="field" />
+          <label htmlFor='field'>{field}:</label>
+          <input type='text' name='field' id='field' />
 
-          <div className="new-form-buttons-container">
-            <button type="submit">Add</button>
+          <div className='new-form-buttons-container'>
+            <button type='submit'>Add</button>
             <button
               onClick={() => {
-                setInAddMode(!inAddMode);
+                setInAddMode((prevState) => !prevState)
               }}
             >
               Cancel
@@ -93,22 +72,20 @@ const ExperienceContainer = ({
         </form>
       )}
 
-      <div className="experience-section">
+      <div className='experience-section'>
         {experienceItems.map((experienceItem) => (
           <ExperienceBox
             key={experienceItem._id}
             experienceItem={experienceItem}
             inRemoveMode={inRemoveMode}
             deleteExperienceItem={deleteExperienceItem}
-            organization={
-              experienceItem.companyId || experienceItem.institutionId
-            }
+            organization={experienceItem.companyId || experienceItem.institutionId}
             field={field}
           />
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ExperienceContainer;
+export default ExperienceContainer
