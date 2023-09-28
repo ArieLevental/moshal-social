@@ -23,9 +23,9 @@ const Navbar = () => {
           <Navigation />
           <Icons
             signedUserId={signedUserData._id}
-            singedUserPicturePath={signedUserData.picturePath}
-            className='navbar-icons'
+            signedUserPicturePath={signedUserData.picturePath}
             handleLogout={handleLogout}
+            className='navbar-icons'
           />
         </>
       )}

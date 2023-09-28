@@ -46,6 +46,7 @@ const JobOffer = (props) => {
       )}
       {props.job.offerLink && (
         <a id='job-offer-link' href={props.job.offerLink} target='_blank'>
+        {/* <a id='job-offer-link' href="home" target='_blank'> */}
           Click here for external post
         </a>
       )}

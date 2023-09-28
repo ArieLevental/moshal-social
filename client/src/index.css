@@ -64,7 +64,6 @@ body {
   cursor: default;
 }
 
-/* Cancel link visited or active styling */
 a:link,
 a:visited,
 a:hover,
@@ -107,7 +106,6 @@ textarea:focus {
 
 select {
   border: 1px solid var(--dark-background);
-  /* background-color: var(--almost-white); */
   border-radius: 5px;
   padding: 5px;
 }

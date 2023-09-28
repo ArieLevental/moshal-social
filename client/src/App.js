@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
-import israelCities from './utils/israel_cities.json'
 import { generalDataContext, globalAuthContext, institutionsDataContext, companiesDataContext } from './state/state.js'
+import israelCities from './utils/israel_cities.json'
 import handleExpiredToken from './utils/authUtils'
 import initializeIconLibrary from './utils/initializeIconLibrary'
 import useLocalStorageState from './hooks/useLocalStorageState'

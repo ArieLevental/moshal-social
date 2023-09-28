@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-export const urlRegex = /^(https?:\/\/[^\s]+|\S+\.\S+)$/
+export const urlRegex = /^(https?:\/\/[^\s$.?#].[^\s]*)$/
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 export const linkedInUrlRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]*\/?$/
 export const phoneNumberRegex = /^05\d{8}$/
