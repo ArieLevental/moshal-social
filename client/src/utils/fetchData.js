@@ -1,8 +1,8 @@
 import handleExpiredToken from './authUtils'
-import { API_BASE_URL } from './constants'
+// import { API_BASE_URL } from './constants'
 
 const fetchData = async (route, options, onSuccess, setToken = null, setSignedUserData = null) => {
-  const url = `${API_BASE_URL}${route}`
+  const url = `${process.env.REACT_APP_API_BASE_URL}${route}`
 
   try {
     const response = await fetch(url, options)

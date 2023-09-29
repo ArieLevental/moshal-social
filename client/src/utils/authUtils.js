@@ -1,8 +1,8 @@
-import { API_BASE_URL } from './constants'
+// import { API_BASE_URL } from './constants'
 
 const handleExpiredToken = (setToken, setSignedUserData) => {
   try {
-    fetch(`${API_BASE_URL}/auth/logout`, {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
