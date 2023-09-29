@@ -49,7 +49,6 @@ function App() {
               <BrowserRouter>
                 {token && <Navbar className='navbar' />}
                 <div className='app-content'>
-                  <CustomToast/>
                   <Routes>
                     <Route path='/' element={!token ? <LandingPage /> : <Navigate to='/home' />} />
                     <Route path='/home' element={token ? <HomePage /> : <Navigate to='/' />} />
@@ -60,6 +59,7 @@ function App() {
                   </Routes>
                 </div>
                 <Footer className='footer' />
+                <CustomToast/>
               </BrowserRouter>
             </institutionsDataContext.Provider>
           </companiesDataContext.Provider>
