@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { globalAuthContext } from '../../../state/state.js'
 import fetchData from '../../../utils/fetchData'
+import { successToast } from '../../../utils/toastUtils.js'
 import { authContext } from '..'
 import './formsContainer.css'
 
@@ -33,6 +34,7 @@ export const Login = () => {
         setSignedUserData(userData)
         setFormData(INITIAL_FORM_DATA)
         navigate('/home')
+        successToast(`Welcome ${userData.firstName}.`)
       },
       setToken,
       setSignedUserData
@@ -124,6 +126,7 @@ export const Register = () => {
       },
       () => {
         setActiveForm('login')
+        successToast('Registered successfuly. Now you can log in!')
       }
     )
   }
