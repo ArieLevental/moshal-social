@@ -13,6 +13,7 @@ import {
 } from '../../state/state.js'
 import { capitalizeFirstLetters, formatDate } from '../../utils/formattingUtils'
 import { GENERIC_PICTURE_PATH } from '../../utils/constants'
+import { infoToast, successToast, warningToast } from '../../utils/toastUtils'
 
 import SocialMediaIcons from '../../components/Widgets/SocialMediaIcons/SocialMediaIcons'
 import ExperienceContainer from './experienceContainer/experienceContainer'
@@ -119,6 +120,7 @@ const ProfilePage = () => {
       },
       () => {
         setEducationItems(educationItems.filter((educationItem) => educationItem._id !== educationId))
+        warningToast('Education item deleted.')
       },
       setToken,
       setSignedUserData
@@ -139,6 +141,7 @@ const ProfilePage = () => {
       (resJsonData) => {
         setUserData({ ...userData, ...resJsonData })
         setEducationItems([...educationItems, resJsonData.newItem])
+        successToast('Education item added.')
       },
       setToken,
       setSignedUserData
@@ -158,6 +161,7 @@ const ProfilePage = () => {
       },
       () => {
         setOccupationItems(occupationItems.filter((occupationItem) => occupationItem._id !== occupationId))
+        warningToast('Occupation item deleted.')
       },
       setToken,
       setSignedUserData
@@ -178,6 +182,7 @@ const ProfilePage = () => {
       (resJsonData) => {
         setUserData({ ...userData, ...resJsonData })
         setOccupationItems([...occupationItems, resJsonData.newItem])
+        successToast('Occupation item added.')
       },
       setToken,
       setSignedUserData
@@ -208,6 +213,7 @@ const ProfilePage = () => {
       (resJsonData) => {
         setInEditMode(false)
         setUserData({ ...userData, ...resJsonData })
+        infoToast('Your information has been updated.')
       },
       setToken,
       setSignedUserData
@@ -241,6 +247,7 @@ const ProfilePage = () => {
         }
         setSignedUserData(updatedSignedUser)
         setInImgMode(false)
+        successToast('Your new image has been uploaded.')
       },
       setToken,
       setSignedUserData
@@ -370,8 +377,8 @@ const ProfilePage = () => {
                           value={detailsFormData.location}
                         >
                           {israelCities.city.map((c) => (
-                            <option key={c.city_symbol} value={capitalizeFirstLetters(c.english_name)}>
-                              {capitalizeFirstLetters(c.english_name)}
+                            <option key={c.city_symbol} value={capitalizeFirstLetters(c.english_name) || "asd"}>
+                              {capitalizeFirstLetters(c.english_name)|| "asddd"} 
                             </option>
                           ))}
                         </select>

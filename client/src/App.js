@@ -15,6 +15,8 @@ import LandingPage from './scenes/landingPage'
 import JobsPage from './scenes/jobsPage/index'
 import CommunityPage from './scenes/communityPage'
 
+import CustomToast from './components/Widgets/CustomToast/CustomToast.js'
+
 import './App.css'
 
 function App() {
@@ -47,6 +49,7 @@ function App() {
               <BrowserRouter>
                 {token && <Navbar className='navbar' />}
                 <div className='app-content'>
+                  <CustomToast/>
                   <Routes>
                     <Route path='/' element={!token ? <LandingPage /> : <Navigate to='/home' />} />
                     <Route path='/home' element={token ? <HomePage /> : <Navigate to='/' />} />

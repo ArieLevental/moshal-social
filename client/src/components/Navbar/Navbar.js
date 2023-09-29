@@ -5,11 +5,13 @@ import Icons from './Icons/Icons'
 import Navigation from './Navigation/Navigation'
 import './Navbar.css'
 
+
 const Navbar = () => {
   const { setToken, setSignedUserData, signedUserData, token, handleExpiredToken } = useContext(globalAuthContext)
   const handleLogout = () => {
     handleExpiredToken(setToken, setSignedUserData)
   }
+        
 
   return (
     <div className='navbar'>
