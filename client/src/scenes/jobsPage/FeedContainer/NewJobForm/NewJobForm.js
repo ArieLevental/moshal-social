@@ -2,6 +2,7 @@ import { useState, useContext } from 'react'
 import { generalDataContext, globalAuthContext, companiesDataContext } from '../../../../state/state.js'
 import { capitalizeFirstLetters } from '../../../../utils/formattingUtils'
 import fetchData from '../../../../utils/fetchData.js'
+import { successToast } from '../../../../utils/toastUtils.js'
 import { jobsDataContext } from '../../index.js'
 import './NewJobForm.css'
 
@@ -44,6 +45,7 @@ const NewJobForm = () => {
         setJobsData(newJobsData)
         setPresentedJobsData(newJobsData)
         revealNewJobOfferForm()
+        successToast(`Thank you for posting this ${newJobOffer.offerTitle} job position!`)
       },
       setToken,
       setSignedUserData
