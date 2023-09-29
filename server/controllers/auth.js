@@ -14,11 +14,13 @@ export const register = async (req, res, next) => {
       lastName,
       email,
       password: passwordHash,
-      phoneNumber
+      phoneNumber,
+      picturePath: `https://ui-avatars.com/api/?name=${firstName}+${lastName}`
     })
     const savedUser = await newUser.save()
 
     res.status(201).json(savedUser)
+    console.log(savedUser)
   } catch (err) {
     next(err)
   }

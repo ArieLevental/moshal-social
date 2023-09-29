@@ -1,4 +1,5 @@
 import { useContext, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import useLocalStorageState from '../../hooks/useLocalStorageState.js'
@@ -31,7 +32,7 @@ const HomePage = () => {
       birthdayMode = true
       return (
         <div className='born-today-user' key={user._id || user.id}>
-          <a href={`/user/${user._id}`}>
+          <Link href={`/user/${user._id}`}>
             <img
               className='born-today-user-img'
               src={user.picturePath || './assets/general/genericUser.png'}
@@ -40,7 +41,7 @@ const HomePage = () => {
             <div className='born-today-user-name'>
               {user.firstName} {user.lastName}
             </div>
-          </a>
+          </Link>
         </div>
       )
     }

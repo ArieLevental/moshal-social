@@ -1,55 +1,60 @@
+import {memo} from 'react'
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './JobOffer.css'
 
-const JobOffer = (props) => {
-  const date = new Date(props.job.createdAt)
+const formatDate = (date) => {
+  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+}
+
+const JobOffer = memo((props) => {
+  const jobOfferData = props.job
+  const userData = jobOfferData.userId
+  const formattedDate = formatDate(new Date(jobOfferData.createdAt))
+
   return (
     <div className='job-offer'>
       <div className='job-offer-header'>
         <div className='job-offer-header-date'>
-          <FontAwesomeIcon className='job-offer-footer-icon' icon='fa-solid fa-clock' /> {date.getDate()}/
-          {date.getMonth() + 1}/{date.getFullYear()}
+          <FontAwesomeIcon className='job-offer-footer-icon' icon='fa-solid fa-clock' /> {formattedDate}
         </div>
-        <a href={`/user/${props.job.userId._id}`} className='job-offer-header-publisher' target='_blank'>
-          <FontAwesomeIcon className='job-offer-footer-icon' icon='fa-solid fa-user' /> {props.job.userId.firstName}{' '}
-          {props.job.userId.lastName}
-        </a>
+        <Link to={`/user/${userData._id}`} className='job-offer-header-publisher'>
+          <FontAwesomeIcon className='job-offer-footer-icon' icon='fa-solid fa-user' /> {userData.fullName}
+        </Link>
       </div>
 
-      <div className='job-offer-title'>{props.job.offerTitle}</div>
-      {/* TODO: pic and company name links to filtered search */}
-      <img className='job-offer-company-img' src={props.job.companyId.logoPath} alt='company logo' />
-
-      {/* <div className="job-offer-company">{props.job.companyId.name}</div> */}
-
-      {/* <div className="job-offer-location">Location: {props.job.location}</div> */}
+      <div className='job-offer-title'>{jobOfferData.offerTitle}</div>
+      <img className='job-offer-company-img' src={jobOfferData.companyId.logoPath} alt='company logo' />
       <div className='job-offer-detail-holder'>
         Details:
-        <div className='job-offer-detail'>{props.job.content}</div>
-      </div>
-      {props.job.expReq && (
-        <div className='job-offer-detail-holder'>
-          Experience Required:
-          <div className='job-offer-detail'>{props.job.expReq}</div>
-        </div>
-      )}
-      <div className='job-offer-detail-holder'>
-        Location:
-        <div className='job-offer-detail'>{props.job.location}</div>
+        <div className='job-offer-detail'>{jobOfferData.content}</div>
       </div>
 
-      {props.job.referral && (
+      {jobOfferData.expReq && (
         <div className='job-offer-detail-holder'>
-          Referral:
-          <div className='job-offer-detail'> {props.job.referral}</div>
+          Experience Required:
+          <div className='job-offer-detail'>{jobOfferData.expReq}</div>
         </div>
       )}
-      {props.job.offerLink && (
-        <a id='job-offer-link' href={props.job.offerLink} target='_blank'>
-        {/* <a id='job-offer-link' href="home" target='_blank'> */}
+
+      <div className='job-offer-detail-holder'>
+        Location:
+        <div className='job-offer-detail'>{jobOfferData.location}</div>
+      </div>
+
+      {jobOfferData.referral && (
+        <div className='job-offer-detail-holder'>
+          Referral:
+          <div className='job-offer-detail'> {jobOfferData.referral}</div>
+        </div>
+      )}
+
+      {jobOfferData.offerLink && (
+        <a id='job-offer-link' href={jobOfferData.offerLink} target='_blank' rel='noopener noreferrer'>
           Click here for external post
         </a>
       )}
+
       <div className='job-offer-footer-icons'>
         <FontAwesomeIcon className='job-offer-footer-icon' icon='fa-solid fa-heart' />
         <FontAwesomeIcon className='job-offer-footer-icon' icon='fa-solid fa-pen' />
@@ -57,6 +62,6 @@ const JobOffer = (props) => {
       </div>
     </div>
   )
-}
+})
 
 export default JobOffer

@@ -19,7 +19,9 @@ import {
   faRightFromBracket,
   faTrash,
   faUser,
-  faUsers
+  faUsers,
+  faFaceSurprise,
+  faHandPointLeft
 } from '@fortawesome/free-solid-svg-icons'
 
 const initializeIconLibrary = () => {
@@ -47,7 +49,9 @@ const initializeIconLibrary = () => {
     faRectangleList,
     faClock,
     faHeart,
-    faUser
+    faUser,
+    faFaceSurprise,
+    faHandPointLeft
   )
 }
 
