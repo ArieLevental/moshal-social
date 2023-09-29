@@ -3,6 +3,7 @@ import useLocalStorageState from '../../../hooks/useLocalStorageState.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { globalAuthContext } from '../../../state/state.js'
 import fetchData from '../../../utils/fetchData.js'
+import { infoToast, successToast, warningToast } from '../../../utils/toastUtils.js'
 import './WhatsappGroups.css'
 
 const WhatsappGroups = () => {
@@ -54,6 +55,7 @@ const WhatsappGroups = () => {
       (resJsonData) => {
         setGroups([resJsonData, ...groups])
         setAddGroupMode(false)
+        successToast(`Thank you for sharing ${newGroup.name} WhatsApp group with everyone!`)
       },
       setToken,
       setSignedUserData
@@ -92,6 +94,7 @@ const WhatsappGroups = () => {
           ...editGroupModeSettings,
           is_active: false
         })
+        infoToast('the WhatsApp group information has been updated')
       },
       setToken,
       setSignedUserData
@@ -111,6 +114,7 @@ const WhatsappGroups = () => {
           ...editGroupModeSettings,
           is_active: false
         })
+        warningToast('the WhatsApp group has been deleted.')
       },
       setToken,
       setSignedUserData
