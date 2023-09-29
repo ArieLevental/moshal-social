@@ -42,7 +42,7 @@
   z-index: 1;
   background-color: rgba(0, 0, 0, 0.8);
   color: #fff;
-  padding: 0 0.5rem;
+  padding: 0.5rem;
   border-radius: 5px;
   width: 42rem;
   max-width: 450px;
@@ -60,4 +60,12 @@
 .tooltip-container:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
+}
+
+.icon-on-hover .fa-hand-point-left {
+  display: none;
+}
+
+.icon-on-hover:hover .fa-hand-point-left {
+  display: inline-block
 }

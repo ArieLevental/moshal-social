@@ -119,6 +119,7 @@ export const Register = () => {
         headers: {
           'Content-Type': 'application/json'
         },
+        // Add to form data the picture path
         body: JSON.stringify(formData)
       },
       () => {

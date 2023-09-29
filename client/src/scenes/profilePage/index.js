@@ -14,6 +14,7 @@ import {
 import { capitalizeFirstLetters, formatDate } from '../../utils/formattingUtils'
 import { GENERIC_PICTURE_PATH } from '../../utils/constants'
 
+import SocialMediaIcons from '../../components/Widgets/SocialMediaIcons/SocialMediaIcons'
 import ExperienceContainer from './experienceContainer/experienceContainer'
 import DataItem from './components/DataItem/DataItem'
 import './index.css'
@@ -313,15 +314,11 @@ const ProfilePage = () => {
                 {/* TODO: user bio just sits in a p tag with no styling and control over it */}
                 <p>{userData.bio || 'No bio available'}</p>
                 <div className='user-data-container'>
-                  <a href={userData.linkedIn} target='_blank' rel='noreferrer'>
-                    <FontAwesomeIcon className='icon' icon='fa-brands fa-linkedin' />
-                  </a>
-                  <a href={`https://wa.me/+972${userData.phoneNumber.slice(1)}`} target='_blank' rel='noreferrer'>
-                    <FontAwesomeIcon className='icon' icon='fa-brands fa-whatsapp' />
-                  </a>
-                  <a href={`mailto:${userData.email}`}>
-                    <FontAwesomeIcon className='icon' icon='fa-solid fa-envelope' />
-                  </a>
+                  <SocialMediaIcons
+                    linkedIn={userData.linkedIn}
+                    phoneNumber={userData.phoneNumber}
+                    email={userData.email}
+                  />
                   {!inEditMode && (
                     <div className='profile-page-data'>
                       <DataItem
