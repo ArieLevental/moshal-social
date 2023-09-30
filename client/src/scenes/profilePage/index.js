@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect, createContext } from 'react'
 import { useParams } from 'react-router-dom'
+import useFetchCache from '../../hooks/useFetchCache'
 import fetchData from '../../utils/fetchData'
 import imageCompression from 'browser-image-compression'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -38,74 +39,101 @@ const ProfilePage = () => {
   const [educationItems, setEducationItems] = useState([])
   const [occupationItems, setOccupationItems] = useState([])
 
-  useEffect(() => {
-    fetchData(
-      '/institutions',
-      { headers: { Authorization: `Bearer ${token}` } },
-      (resJsonData) => {
-        setInstitutionsData(resJsonData)
-      },
-      setToken,
-      setSignedUserData
-    )
+  useFetchCache('/institutions', (resJsonData) => {
+    setInstitutionsData(resJsonData)
+  })
 
-    fetchData(
-      '/companies',
-      { headers: { Authorization: `Bearer ${token}` } },
-      (resJsonData) => {
-        setCompaniesData(resJsonData)
-      },
-      setToken,
-      setSignedUserData
-    )
+  useFetchCache('/companies', (resJsonData) => {
+    setCompaniesData(resJsonData)
+  })
 
-    fetchData(
-      `/user/getEducationItems/${userId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      },
-      (resJsonData) => {
-        setEducationItems(resJsonData)
-      },
-      setToken,
-      setSignedUserData
-    )
+  useFetchCache(`/user/getEducationItems/${userId}`, (resJsonData) => {
+    setEducationItems(resJsonData)
+  })
 
-    fetchData(
-      `/user/getOccupationItems/${userId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      },
-      (resJsonData) => {
-        setOccupationItems(resJsonData)
-      },
-      setToken,
-      setSignedUserData
-    )
-  }, [])
+  useFetchCache(`/user/getOccupationItems/${userId}`, (resJsonData) => {
+    setOccupationItems(resJsonData)
+  })
 
-  useEffect(() => {
-    fetchData(
-      `/user/${userId}`,
-      { headers: { Authorization: `Bearer ${token}` } },
-      (resJsonData) => {
-        setUserData(resJsonData)
-        setDetailsFormData({
-          location: resJsonData.location,
-          linkedIn: resJsonData.linkedIn,
-          bio: resJsonData.bio,
-          dateOfBirth: resJsonData.dateOfBirth
-        })
-      },
-      setToken,
-      setSignedUserData
-    )
-    // eslint-disable-next-line
-  }, [inEditMode, inImgMode])
+  useFetchCache(`/user/${userId}`, (resJsonData) => {
+    setUserData(resJsonData)
+    setDetailsFormData({
+      location: resJsonData.location,
+      linkedIn: resJsonData.linkedIn,
+      bio: resJsonData.bio,
+      moshalStatus: resJsonData.moshalStatus,
+      dateOfBirth: resJsonData.dateOfBirth
+    })
+  })
+
+  // useEffect(() => {
+  // fetchData(
+  //   '/institutions',
+  //   { headers: { Authorization: `Bearer ${token}` } },
+  //   (resJsonData) => {
+  //     setInstitutionsData(resJsonData)
+  //   },
+  //   setToken,
+  //   setSignedUserData
+  // )
+
+  // fetchData(
+  //   '/companies',
+  //   { headers: { Authorization: `Bearer ${token}` } },
+  //   (resJsonData) => {
+  //     setCompaniesData(resJsonData)
+  //   },
+  //   setToken,
+  //   setSignedUserData
+  // )
+
+  //   fetchData(
+  //     `/user/getEducationItems/${userId}`,
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     },
+  //     (resJsonData) => {
+  //       setEducationItems(resJsonData)
+  //     },
+  //     setToken,
+  //     setSignedUserData
+  //   )
+
+  //   fetchData(
+  //     `/user/getOccupationItems/${userId}`,
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     },
+  //     (resJsonData) => {
+  //       setOccupationItems(resJsonData)
+  //     },
+  //     setToken,
+  //     setSignedUserData
+  //   )
+  // }, [])
+
+  // useEffect(() => {
+  //   fetchData(
+  //     `/user/${userId}`,
+  //     { headers: { Authorization: `Bearer ${token}` } },
+  //     (resJsonData) => {
+  //       setUserData(resJsonData)
+  //       setDetailsFormData({
+  //         location: resJsonData.location,
+  //         linkedIn: resJsonData.linkedIn,
+  //         bio: resJsonData.bio,
+  //         dateOfBirth: resJsonData.dateOfBirth
+  //       })
+  //     },
+  //     setToken,
+  //     setSignedUserData
+  //   )
+  //   // eslint-disable-next-line
+  // }, [])
 
   const deleteEducationItem = (educationId, institutionId) => {
     fetchData(
@@ -212,7 +240,7 @@ const ProfilePage = () => {
       },
       (resJsonData) => {
         setInEditMode(false)
-        setUserData({ ...userData, ...resJsonData })
+        setUserData({ ...userData, ...updatedData })
         infoToast('Your information has been updated.')
       },
       setToken,
@@ -246,6 +274,7 @@ const ProfilePage = () => {
           picturePath: resJsonData.picturePath
         }
         setSignedUserData(updatedSignedUser)
+        setUserData({ ...userData, picturePath: resJsonData.picturePath })
         setInImgMode(false)
         successToast('Your new image has been uploaded.')
       },
@@ -305,7 +334,7 @@ const ProfilePage = () => {
               <div className='profile-page-right-box'>
                 <div className='profile-page-name-and-status'>
                   <div className='profile-page-name-and-edit'>
-                    {userData.firstName} {userData.lastName}
+                    {userData.fullName}
                     {signedUserData._id === userId && (
                       <button
                         onClick={() => {
@@ -377,8 +406,8 @@ const ProfilePage = () => {
                           value={detailsFormData.location}
                         >
                           {israelCities.city.map((c) => (
-                            <option key={c.city_symbol} value={capitalizeFirstLetters(c.english_name) || "asd"}>
-                              {capitalizeFirstLetters(c.english_name)|| "asddd"} 
+                            <option key={c.city_symbol} value={capitalizeFirstLetters(c.english_name)}>
+                              {capitalizeFirstLetters(c.english_name)}
                             </option>
                           ))}
                         </select>
@@ -427,7 +456,7 @@ const ProfilePage = () => {
                           className='form-element-input'
                           id='moshalStatus'
                           name='moshalStatus'
-                          defaultValue={userData.moshalStatus}
+                          defaultValue={detailsFormData.moshalStatus}
                         >
                           <option value='Scholar'>Scholar</option>
                           <option value='Alumni'>Alumni</option>
