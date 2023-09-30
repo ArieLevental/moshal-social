@@ -46,15 +46,14 @@ export const Login = () => {
       <h1>Log In</h1>
       <form onSubmit={(e) => handleSubmit(e)} className='login-form'>
         <div className='form-element'>
-          <label htmlFor='email' className='login-form-label'>
-            Email:
-          </label>
           <input
             tabIndex='1'
             className='login-form-input'
             type='email'
             id='email'
             name='email'
+            placeholder='Email'
+
             onChange={(e) => {
               setFormData({
                 ...formData,
@@ -64,15 +63,14 @@ export const Login = () => {
           />
         </div>
         <div className='form-element'>
-          <label htmlFor='password' className='login-form-label'>
-            Password:
-          </label>
           <input
             tabIndex='2'
             className='login-form-input'
             type='password'
             id='password'
             name='password'
+            placeholder='Password'
+
             onChange={(e) => {
               setFormData({
                 ...formData,

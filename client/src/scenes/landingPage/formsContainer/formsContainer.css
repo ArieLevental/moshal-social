@@ -1,5 +1,36 @@
 .login-form-container {
-  width: 25%;
+  width: 40%;
+}
+
+@media (min-width: 900px) {
+  .login-form-container {
+    width: 30%;
+  }
+}
+
+@media (min-width: 1300px) {
+  .login-form-container {
+    width: 20%;
+  }
+}
+
+@media (min-width: 2000px) {
+  .login-form-container {
+    width: 15%;
+  }
+}
+
+@media (min-width: 2500px) {
+  .login-form-container {
+    width: 12%;
+  }
+}
+
+
+@media (min-width: 3000px) {
+  .login-form-container {
+    width: 10%;
+  }
 }
 
 .register-form-container {
@@ -31,11 +62,8 @@
   flex-direction: row;
   justify-content: space-between;
   column-gap: 1%;
-}
-
-.login-form-label {
-  flex-basis: 20%;
-  text-align: left;
+  width: 80%;
+  align-self: center;
 }
 
 .register-form-label {
@@ -43,9 +71,10 @@
   text-align: left;
 }
 
-.login-form-input {
-  flex-basis: 60%;
-  flex-grow: 0;
+.login-form-input,
+.register-form-input {
+  width: 100%;
+  align-self: center;
 }
 
 .register-form-input {
