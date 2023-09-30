@@ -56,7 +56,7 @@ function App() {
                   </Routes>
                 </div>
                 <Footer className='footer' />
-                <CustomToast />
+                <CustomToast/>
               </BrowserRouter>
             </institutionsDataContext.Provider>
           </companiesDataContext.Provider>
