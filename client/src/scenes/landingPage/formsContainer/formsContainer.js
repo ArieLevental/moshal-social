@@ -269,7 +269,7 @@ export const PasswordRecovery = (props) => {
     event.preventDefault()
   }
   return (
-    <div>
+    <div className='recovery-form-container'>
       <h1>Password Recovery</h1>
       <form onSubmit={(e) => handleSubmit(e)}>
         <label htmlFor='email'>Email: </label>
