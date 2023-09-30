@@ -7,9 +7,12 @@ const Icons = ({ signedUserId, signedUserPicturePath, handleLogout }) => {
   return (
     <div className='icons'>
       <FontAwesomeIcon className='icon' icon='fa-solid fa-gear' title='Settings' />
-      <Link to={`/user/${signedUserId}`}>
+      {/* <Link to={`/user/${signedUserId}`}>
         <img className='navbar-user-picture' src={signedUserPicturePath || GENERIC_PICTURE_PATH} alt='User' />
-      </Link>
+      </Link> */}
+      <a href={`/user/${signedUserId}`} rel='noreferer'>
+        <img className='navbar-user-picture' src={signedUserPicturePath || GENERIC_PICTURE_PATH} alt='User' />
+      </a>
       <FontAwesomeIcon className='icon' icon='fa-solid fa-envelope' title='Mail' />
       <FontAwesomeIcon className='icon' icon='fa-solid fa-right-from-bracket' title='Logout' onClick={handleLogout} />
     </div>

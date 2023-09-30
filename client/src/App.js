@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 import { generalDataContext, globalAuthContext, institutionsDataContext, companiesDataContext } from './state/state.js'
@@ -24,12 +25,13 @@ function App() {
   const [signedUserData, setSignedUserData] = useLocalStorageState('user_data', null)
   const [institutionsData, setInstitutionsData] = useLocalStorageState('institutions_data', [])
   const [companiesData, setCompaniesData] = useLocalStorageState('companies_data', [])
+  const [requestCache, setRequestCache] = useState({})
 
   initializeIconLibrary()
 
   return (
     <div className='app'>
-      <generalDataContext.Provider value={{ israelCities }}>
+      <generalDataContext.Provider value={{ israelCities, requestCache, setRequestCache }}>
         <globalAuthContext.Provider
           value={{
             signedUserData,
@@ -40,12 +42,7 @@ function App() {
           }}
         >
           <companiesDataContext.Provider value={{ companiesData, setCompaniesData }}>
-            <institutionsDataContext.Provider
-              value={{
-                institutionsData,
-                setInstitutionsData
-              }}
-            >
+            <institutionsDataContext.Provider value={{ institutionsData, setInstitutionsData }}>
               <BrowserRouter>
                 {token && <Navbar className='navbar' />}
                 <div className='app-content'>
@@ -59,7 +56,7 @@ function App() {
                   </Routes>
                 </div>
                 <Footer className='footer' />
-                <CustomToast/>
+                <CustomToast />
               </BrowserRouter>
             </institutionsDataContext.Provider>
           </companiesDataContext.Provider>

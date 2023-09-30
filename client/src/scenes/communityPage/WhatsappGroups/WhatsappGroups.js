@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import useLocalStorageState from '../../../hooks/useLocalStorageState.js'
+import useFetchCache from '../../../hooks/useFetchCache.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { globalAuthContext } from '../../../state/state.js'
 import fetchData from '../../../utils/fetchData.js'
@@ -17,17 +18,21 @@ const WhatsappGroups = () => {
   })
   const [groupEditFormData, setGroupEditFormData] = useState(null)
 
-  useEffect(() => {
-    fetchData(
-      '/whatsapp',
-      { headers: { Authorization: `Bearer ${token}` } },
-      (resJsonData) => {
-        setGroups(resJsonData)
-      },
-      setToken,
-      setSignedUserData
-    )
-  }, [])
+  useFetchCache('/whatsapp', (resJsonData) => {
+    setGroups(resJsonData)
+  })
+
+  // useEffect(() => {
+  //   fetchData(
+  //     '/whatsapp',
+  //     { headers: { Authorization: `Bearer ${token}` } },
+  //     (resJsonData) => {
+  //       setGroups(resJsonData)
+  //     },
+  //     setToken,
+  //     setSignedUserData
+  //   )
+  // }, [])
 
   const filteredGroups = groups.filter((group) => {
     const query = searchQuery.toLowerCase()
